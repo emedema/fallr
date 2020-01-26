@@ -1,5 +1,5 @@
 # fallr
-A blogging website for falling into deep holes.
+A blogging website for falling into deep holes. Built with MySQL, Cassandra, PHP and JavaScript.
 
 ## Setup
 
