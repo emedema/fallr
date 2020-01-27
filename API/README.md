@@ -45,6 +45,15 @@ $.ajax({
 });
 ```
 
+## Create Account
+This creates an account and creates a session token.
+
+Takes: username, password, firstName, lastName, email, image
+
+```
+POST | [domain]/createAccount
+```
+
 ## Logging In
 
 This creates the session token.
@@ -58,7 +67,7 @@ POST | [domain]/login
 ### Get User Page Data
 
 ```
-GET | [domain]/userpages/[username]
+GET | [domain]/userpages/[userID]
 ```
 
 ## User Data
@@ -67,7 +76,7 @@ GET | [domain]/userpages/[username]
 Depending on if you send a key that has permission, you will recieve all of the user information or just what the public has been allowed to see.
 
 ```
-GET | [domain]/users/[username]
+GET | [domain]/users/[userID]
 ```
 
 ### Update user information
@@ -75,7 +84,7 @@ GET | [domain]/users/[username]
 Requires valid key [Owner].
 
 ```
-POST | [domain]/users/[username]
+POST | [domain]/users/[userID]
 ``` 
 
 ## Feed
@@ -85,7 +94,7 @@ POST | [domain]/users/[username]
 Requires valid key [Owner].
 
 ```
-GET | [domain]/[userID]/feed
+GET | [domain]/feed/[userID]
 ```
 
 ### Get the hot feed
@@ -121,17 +130,19 @@ DELETE | [domain]/posts/[postID]
 Requires a valid key [logged in].
 
 ```
-POST | [domain]/posts/[postID]/comments
+POST | [domain]/posts/comments/[postID]
 ```
 
 ### Get Comments
 
 ```
-GET | [domain]/posts/[postID]/comments
+GET | [domain]/posts/comments/[postID]
 ```
 
 ### Delete Comment
 
+Requires a valid key [Owner].
+
 ```
-DELETE | [domain]/posts/[postID]/comments/[commentID]
+DELETE | [domain]/posts/comments/[postID]/[commentID]
 ```
