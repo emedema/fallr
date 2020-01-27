@@ -7,14 +7,26 @@ require_once '../Login.php';
 
 header('Content-type: application/json');
 
+if(isset($_POST['username']))
+    $username = $_POST['username'];
 
-if (
-    ($username = isset($_POST['username'])) 
-    && ($password = isset($_POST['password']))
-    && ($firstName = isset($_POST['firstName']))
-    && ($lastName = isset($_POST['lastName']))
-    && ($email = isset($_POST['email']))
-    && ($image = isset($_POST['image']))) {
+if(isset($_POST['password']))
+    $password = $_POST['password'];
+
+if(isset($_POST['firstName']))
+    $firstName = $_POST['firstName'];
+
+if(isset($_POST['lastName']))
+    $lastName = $_POST['lastName'];
+
+if(isset($_POST['email']))
+    $email = $_POST['email'];
+
+if(isset($_FILES['image']))
+$image = $_FILES['image'];
+
+
+if ($username && $password && $email) {
  
     $connection = createConnection();
 

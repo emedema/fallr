@@ -3,9 +3,13 @@
 require_once '../Login.php';
 require_once '../connection.php';
 
+header("Content-Type:application/json");
 
-if (($username = isset($_POST['username'])) && ($password = isset($_POST['password']))) {
- 
+if (isset($_POST['username']) && isset($_POST['password'])) {
+
+    $password = $_POST['password'];
+    $username = $_POST['username'];
+    
     $connection = createConnection();
 
     /* Checks to see if the user and pass are correct */
@@ -14,7 +18,6 @@ if (($username = isset($_POST['username'])) && ($password = isset($_POST['passwo
     if($loginResult) {
         /* Creates a random token to auth the user for the session */
         // Sets the type to be JSON
-        header("Content-Type:application/json");
         echo(Login::createToken($connection, $userid));
     }
     else
