@@ -18,21 +18,28 @@
 
 CREATE DATABASE fallr;
 
+CREATE USER 'fallr'@'localhost' IDENTIFIED BY '';
+
+GRANT ALL ON fallr.* to 'fallr'@'localhost';
+
+FLUSH PRIVILEGES;
+
 CREATE TABLE users 
     (
+        userID int NOT NULL AUTO_INCREMENT,
         username VARCHAR(30) NOT NULL,
         email VARCHAR(40),
         firstName VARCHAR(255),
         lastName VARCHAR(255),
         image TEXT,
         password CHAR(60) NOT NULL,
-        PRIMARY KEY(username)
+        PRIMARY KEY(userID)
     );
 
 CREATE TABLE tokens 
     (
-        tokenId INT NOT NULL AUTO_INCREMENT,
-        username VARCHAR(30) NOT NULL,
+        tokenID INT NOT NULL AUTO_INCREMENT,
+        userID int NOT NULL,
         token VARCHAR(512),
         PRIMARY KEY (tokenID)
     );
