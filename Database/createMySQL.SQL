@@ -27,8 +27,8 @@ FLUSH PRIVILEGES;
 CREATE TABLE users 
     (
         userID int NOT NULL AUTO_INCREMENT,
-        username VARCHAR(30) NOT NULL,
-        email VARCHAR(40),
+        username VARCHAR(30) NOT NULL UNIQUE, /* As we want each user to have a unique username */
+        email VARCHAR(40) UNIQUE, /* As we want each user to have a unique email (avoid duplicates) */
         firstName VARCHAR(255),
         lastName VARCHAR(255),
         image TEXT,
