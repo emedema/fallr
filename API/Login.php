@@ -59,7 +59,6 @@ class Login {
         $cookie = $user . ':'. $tokenID .':' . $token;
         $hash = hash_hmac('sha256', $cookie, $SECRET_KEY);
         $cookie .= ':' . $hash;
-        setcookie('loggedIn', $cookie);
         return $cookie;
     }
 
