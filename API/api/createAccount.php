@@ -35,7 +35,7 @@ if ($username && $password && $email) {
     if($userid > 0) {
         /* Creates a random token to auth the user for the session */
         // Sets the type to be JSON
-        echo(Login::createToken($connection, $userid));
+        echo(json_encode(["LoggedIn" => Login::createToken($connection, $userid)]));
     }
     else
         header("HTTP/1.1 405 Create Account Failure");
