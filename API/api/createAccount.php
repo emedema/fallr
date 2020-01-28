@@ -23,7 +23,7 @@ if(isset($_POST['email']))
     $email = $_POST['email'];
 
 if(isset($_FILES['image']))
-$image = $_FILES['image'];
+    $image = $_FILES['image'];
 
 
 if ($username && $password && $email) {
