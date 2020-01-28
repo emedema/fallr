@@ -3,7 +3,11 @@
 require_once '../Login.php';
 require_once '../connection.php';
 
-header("Content-Type:application/json");
+// Allows the server to send data to other site //
+header("Access-Control-Allow-Origin: *"); 
+
+// Sets the type to be JSON/Javascript
+header("Content-Type:application/javascript");
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
 
@@ -17,13 +21,12 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     
     if($loginResult) {
         /* Creates a random token to auth the user for the session */
-        // Sets the type to be JSON
-        echo(Login::createToken($connection, $userid));
+        echo(json_encode(["LoggedIn" => Login::createToken($connection, $userid)]));
     }
     else
-        header("HTTP/1.1 405 Login Failure");
+        header("HTTP/1.1 401 Login Failure");
 }
 else
-    header("HTTP/1.1 406 Parameters Not Passed");
+    header("HTTP/1.1 404 Parameters Not Passed");
 
 ?>
