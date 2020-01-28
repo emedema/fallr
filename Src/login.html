@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <header>
+
+        </header>
+        <body>
+            <form>
+                <input type="text" name="username">
+                <input type="password" name="password">
+                <input id="login-button" type="button" value="submit">
+            </form>
+        </body>
+        <footer>
+
+        </footer>
+        <script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous">
+        </script>
+        <script>
+            $("#login-button").click(function() {
+                $.ajax({
+                    url: 'http://localhost/fallrAPI/login',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: $('form').serialize(),
+                    success: function(data) {
+                        console.log(data["LoggedIn"]);
+                        document.cookie = 'loggedIn=' + data["LoggedIn"] + ";path=/";
+                    }
+                });
+            });   
+        </script>
+    </body>
+</html>
