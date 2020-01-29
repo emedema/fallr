@@ -5,7 +5,7 @@ class Login {
         /* Function that checks to see if a user exists and the passwords match */
 
         /* Gets the hashed password from the entered user */
-        $query = $connection->prepare("SELECT password FROM users WHERE username = ?");
+        $query = $connection->prepare("SELECT password FROM Users WHERE username = ?");
         $query->bind_param("s", $username); 
         $query->execute();
         $serverPassword = $query->get_result()->fetch_assoc()["password"];
@@ -23,7 +23,7 @@ class Login {
         /* Function to store the value for the token for a user in the database 
             Returns the id for the insertion.
         */
-        $query = $connection->prepare("INSERT INTO tokens (userID, token) VALUES (?, ?) ");
+        $query = $connection->prepare("INSERT INTO Tokens (username, token) VALUES (?, ?) ");
         $query->bind_param("ss", $user, $token);
         $query->execute();
         return $query->insert_id;
@@ -32,18 +32,18 @@ class Login {
     public function fetchToken($connection, $user, $tokenId){
         /* Function to get the token and id for some user from the database */
 
-        $query = $connection->prepare("SELECT token FROM tokens WHERE userID=? and tokenID=?");
+        $query = $connection->prepare("SELECT token FROM Tokens WHERE username=? and tokenID=?");
         $query->bind_param("si", $user, $tokenId);
         $query->execute();
         $token = $query->get_result()->fetch_assoc();
         return $token["token"];
     }
 
-    public function removeToken($connection, $userid, $tokenId) {
+    public function removeToken($connection, $username, $tokenId) {
         /* Function to remove the token for some user */
         
-        $query = $connection->prepare("DELETE from tokens WHERE userID=? and tokenID=?");
-        $query->bind_param("si", $userid, $tokenId);
+        $query = $connection->prepare("DELETE from Tokens WHERE username=? and tokenID=?");
+        $query->bind_param("si", $username, $tokenId);
         $query->execute();
     }
 
@@ -62,14 +62,9 @@ class Login {
         return $cookie;
     }
 
-    public function checkToken($connection) {
+    public function checkToken($connection, $cookie) {
         /* Function that checks to see if the current user is logged in based on their cookie */
 
-        $cookie = isset($_COOKIE['loggedIn']) ? $_COOKIE['loggedIn'] : '';
-        /* 
-            This should be moved to a better spot, it's only here for testing and should be changed ASAP
-            DO NOT DEPLOY WITH THIS! IT IS NOT SECURE!
-        */
         $SECRET_KEY = getSecretKey();
 
         /* This checks to see if the cookie exists */
@@ -88,12 +83,17 @@ class Login {
         }
     }
 
+    public function getIDFromToken($cookie) {
+        $username = explode(':', $cookie)[0]; 
+        return $username;
+    }
+
     public function removeSessionToken($connection){
         $cookie = $_COOKIE["loggedIn"];
-        $userId = explode(":", $cookie)[0];
+        $username = explode(":", $cookie)[0];
         $tokenId = explode(":", $cookie)[1];
         setcookie('loggedIn', NULL);
-        self::removeToken($connection, $userId, $tokenId);
+        self::removeToken($connection, $username, $tokenId);
     }
 }
 ?>

@@ -30,19 +30,19 @@ if ($username && $password && $email) {
  
     $connection = createConnection();
 
-    $userid = Account::createAccount($connection, $username, $password, $firstName, $lastName, $email, $image);
+    $createSuccess = Account::createAccount($connection, $username, $password, $firstName, $lastName, $email, $image);
     
-    if($userid > 0) {
+    if($createSuccess) {
         /* Creates a random token to auth the user for the session */
-        // Sets the type to be JSON
-        echo(json_encode(["LoggedIn" => Login::createToken($connection, $userid)]));
+        echo(json_encode(["LoggedIn" => Login::createToken($connection, $username)]));
     }
     else
         header("HTTP/1.1 405 Create Account Failure");
 
-    $connection->close();
 }
 else
     header("HTTP/1.1 406 Parameters Not Passed");
+
+$connection->close();
 
 ?>
