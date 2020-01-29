@@ -12,14 +12,14 @@ class Account {
 		$password = self::createHashedPassword($password);
 	
 		/* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("INSERT INTO users (username, password, firstName, lastName, email, image) VALUES (?, ?, ?, ?, ?, ?)");
+		$query = $connection->prepare("INSERT INTO Users (username, password, firstName, lastName, email, image) VALUES (?, ?, ?, ?, ?, ?)");
+
 		/* Passes the values into the query */
-		$query->bind_param("ssssss", $username, $password, $firstName, $lastName, $email, $image);
-		
-        $query->execute();
-        
-		/* Returns inserted_id */
-		return $query->insert_id;
+		if($query != NULL) {
+			$query->bind_param("ssssss", $username, $password, $firstName, $lastName, $email, $image);	
+			/* Returns success */
+			return $query->execute();
+		}
 	}
 }
 
