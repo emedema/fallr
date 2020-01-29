@@ -26,10 +26,10 @@ class Post {
     public function getFeed($connection, $username) {
          /* Prepares the function so we can pass in the values from the user */
 		$query = $connection->prepare("SELECT s.subscribedUsername, s.username, p.postID, p.username, 
-                                        postName, postContent, count(l.username) likes FROM Posts p, 
-                                        Subscriptions s, Likes l WHERE p.postID = l.postID AND s.subscribedUsername = ?
-                                        AND s.username = p.username GROUP BY p.postID ORDER BY likes");		
-        
+                                        postName, postContent FROM Posts p, Subscriptions s 
+                                        WHERE s.subscribedUsername = (?)
+                                        AND s.username = p.username");		
+
         $query->bind_param("s", $username);
 
         $query->execute();
