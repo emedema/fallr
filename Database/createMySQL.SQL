@@ -24,22 +24,55 @@ GRANT ALL ON fallr.* to 'fallr'@'localhost';
 
 FLUSH PRIVILEGES;
 
-CREATE TABLE users 
+CREATE TABLE Users 
     (
-        userID int NOT NULL AUTO_INCREMENT,
         username VARCHAR(30) NOT NULL UNIQUE, /* As we want each user to have a unique username */
-        email VARCHAR(40) UNIQUE, /* As we want each user to have a unique email (avoid duplicates) */
+        email VARCHAR(40) NOT NULL UNIQUE, /* As we want each user to have a unique email (avoid duplicates) */
         firstName VARCHAR(255),
         lastName VARCHAR(255),
         image TEXT,
         password CHAR(60) NOT NULL,
-        PRIMARY KEY(userID)
+        PRIMARY KEY(username)
     );
 
-CREATE TABLE tokens 
+CREATE TABLE Tokens 
     (
         tokenID INT NOT NULL AUTO_INCREMENT,
-        userID int NOT NULL,
+        username VARCHAR(30) NOT NULL,
         token VARCHAR(512),
         PRIMARY KEY (tokenID)
+    );
+
+
+CREATE TABLE Posts 
+    (
+        postID INT NOT NULL AUTO_INCREMENT,
+        username VARCHAR(30) NOT NULL,
+        postName VARCHAR(128),
+        postContent TEXT,
+        PRIMARY KEY (postID)
+    );
+
+
+CREATE TABLE Subscriptions 
+    (
+        subscribedUsername VARCHAR(30) NOT NULL,
+        username VARCHAR(30) NOT NULL,
+        PRIMARY KEY (subscribedUsername, username)
+    );
+
+CREATE TABLE Likes 
+    (
+        username VARCHAR(30) NOT NULL,
+        postID int NOT NULL,
+        PRIMARY KEY (username, postID)
+    );
+
+
+CREATE TABLE Comments 
+    (
+        commentID INT NOT NULL AUTO_INCREMENT,
+        username VARCHAR(30) NOT NULL,
+        comment TEXT,
+        PRIMARY KEY (commentID)
     );
