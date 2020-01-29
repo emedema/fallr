@@ -16,7 +16,7 @@ class Post {
     
     public function getHot($connection) {
         /* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("SELECT p.postID, p.username, postName, postContent, count(l.username) likes FROM Posts p, Likes l WHERE p.postID = l.postID GROUP BY p.postID ORDER BY likes");		
+		$query = $connection->prepare("SELECT p.postID, p.username, postName, postContent, count(l.username) likes FROM Posts p, Likes l WHERE p.postID = l.postID GROUP BY p.postID ORDER BY likes DESC");		
         $query->execute();
         
 		/* Returns inserted_id */
