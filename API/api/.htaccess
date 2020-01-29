@@ -2,7 +2,7 @@
     Header set Access-Control-Allow-Origin "*"
 </IfModule>
 
-RewriteEngine On    # Turn on the rewriting engine
+RewriteEngine On
 
 RewriteRule ^login$ login.php [NC,L]
 RewriteRule ^createAccount$ createAccount.php [NC,L] 
