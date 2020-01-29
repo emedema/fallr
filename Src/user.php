@@ -22,8 +22,11 @@
                     <div>
                         <img>
                         <p>Username</p>
-                        <a><p>Followers</p></a>
-                        <a><p>Follow</p></a>
+                        <p>Followers</p>
+                        <form id="follow-form">
+                            <input hidden name="username" value="<?php echo($_GET["username"]);?>">
+                            <input id="follow-button" type="button" value="Follow"></input>
+                        </form>
                     </div>
                 </div>
                 <div>
@@ -49,5 +52,27 @@
         <footer>
             <p>View the code on <a href="https://github.com/Nathan-Nesbitt/fallr">github</a></p>
         </footer>
+        <script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous">
+        </script>
+
+        <!-- Cookie CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+        
+        <script>
+            $("#follow-button").click(function() {
+                $.ajax({
+                    url: 'http://localhost/fallrAPI/subscribe',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: $('#follow-form').serialize(),
+                    success: function(data) {
+                        console.log("success");
+                    }
+                });
+            }); 
+        </script>
     </body>
 </html>
