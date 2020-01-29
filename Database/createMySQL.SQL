@@ -24,7 +24,7 @@ GRANT ALL ON fallr.* to 'fallr'@'localhost';
 
 FLUSH PRIVILEGES;
 
-CREATE TABLE Users 
+CREATE TABLE fallr.Users 
     (
         username VARCHAR(30) NOT NULL UNIQUE, /* As we want each user to have a unique username */
         email VARCHAR(40) NOT NULL UNIQUE, /* As we want each user to have a unique email (avoid duplicates) */
@@ -35,44 +35,78 @@ CREATE TABLE Users
         PRIMARY KEY(username)
     );
 
-CREATE TABLE Tokens 
+CREATE TABLE fallr.Tokens 
     (
         tokenID INT NOT NULL AUTO_INCREMENT,
         username VARCHAR(30) NOT NULL,
         token VARCHAR(512),
-        PRIMARY KEY (tokenID)
+        PRIMARY KEY (tokenID),
+        FOREIGN KEY (username)
+            REFERENCES Users(username)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE 
     );
 
 
-CREATE TABLE Posts 
+CREATE TABLE fallr.Posts 
     (
         postID INT NOT NULL AUTO_INCREMENT,
         username VARCHAR(30) NOT NULL,
         postName VARCHAR(128),
         postContent TEXT,
-        PRIMARY KEY (postID)
+        PRIMARY KEY (postID),
+        FOREIGN KEY (username)
+            REFERENCES Users(username)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
     );
 
 
-CREATE TABLE Subscriptions 
+CREATE TABLE fallr.Subscriptions 
     (
         subscribedUsername VARCHAR(30) NOT NULL,
         username VARCHAR(30) NOT NULL,
-        PRIMARY KEY (subscribedUsername, username)
+        CONSTRAINT uniqueSubscription 
+            UNIQUE (subscribedUsername, username),
+        FOREIGN KEY (username)
+            REFERENCES Users(username)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+        FOREIGN KEY (subscribedUsername)
+            REFERENCES Users(username)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
     );
 
-CREATE TABLE Likes 
+CREATE TABLE fallr.Likes 
     (
         username VARCHAR(30) NOT NULL,
         postID int NOT NULL,
-        PRIMARY KEY (username, postID)
+        PRIMARY KEY (username, postID),
+        FOREIGN KEY (username)
+            REFERENCES Users(username)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+        FOREIGN KEY (postID)
+            REFERENCES Posts(postID)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
     );
 
 
-CREATE TABLE Comments 
+CREATE TABLE fallr.Comments 
     (
         commentID INT NOT NULL AUTO_INCREMENT,
+        postID int NOT NULL,
         username VARCHAR(30) NOT NULL,
         comment TEXT,
-        PRIMARY KEY (commentID)
+        PRIMARY KEY (commentID),
+        FOREIGN KEY (username)
+            REFERENCES Users(username)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+        FOREIGN KEY (postID)
+            REFERENCES Posts(postID)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE    
     );
