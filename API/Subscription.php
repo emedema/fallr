@@ -19,7 +19,27 @@ class Subscription {
         
 		/* Returns success */
 		return $query->execute();
-    }
+	}
+	
+	public function getSubscriptions($connection, $yourUsername) {
+		/* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("SELECT * from Subscriptions WHERE subscribedUsername = ?");
+		/* Passes the values into the query */
+		$query->bind_param("s", $yourUsername);
+        
+		/* Returns success */
+		return $query->execute()->get_result();
+	}
+
+	public function isSubscribed($connection, $yourUsername, $theirUsername){
+		/* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("SELECT EXISTS(SELECT * from Subscriptions WHERE subscribedUsername = ? AND username = ?)");
+		/* Passes the values into the query */
+		$query->bind_param("ss", $yourUsername, $theirUsername);
+        
+		/* Returns existance variable */
+		return $query->execute()->get_result()->fetch_assoc()[0];
+	}
 }
 
 ?>

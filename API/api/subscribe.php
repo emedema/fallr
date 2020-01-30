@@ -20,8 +20,12 @@ if ($username && $token) {
 
     $success = Subscription::createSubscription($connection, $myUsername, $username);
     
-    if(!$success)
-        $success = Subscription::removeSubscription($connection, $myUsername, $username);
+    if(!$success){
+        Subscription::removeSubscription($connection, $myUsername, $username);
+        echo(0);
+    }
+    else
+        echo(1);
     
     $connection->close();
 }
