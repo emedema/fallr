@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+        <title>Login - Fallr</title>        
     </head>
     <body>
         <header>
@@ -17,14 +17,6 @@
         <footer>
 
         </footer>
-        <script
-			  src="https://code.jquery.com/jquery-3.4.1.min.js"
-			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-			  crossorigin="anonymous">
-        </script>
-
-        <!-- Cookie CDN -->
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
         
         <script>
             document.getElementById("login-button").addEventListener("click", function(){
@@ -32,7 +24,7 @@
                 
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        
+                        window.location.href = "/fallr/feed"
                     }
                 };
 

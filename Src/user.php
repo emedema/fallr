@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Userpage</title>
+        <title><?php echo($_GET["username"]);?>'s Userpage - Fallr</title>
     </head>
     <body>
         <header>
@@ -37,17 +37,9 @@
         <footer>
             <p>View the code on <a href="https://github.com/Nathan-Nesbitt/fallr">github</a></p>
         </footer>
-        <script
-			  src="https://code.jquery.com/jquery-3.4.1.min.js"
-			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-			  crossorigin="anonymous">
-        </script>
-
-        <!-- Cookie CDN -->
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
         
         <script>
-            $( document ).ready(function(){
+            document.addEventListener('DOMContentLoaded', function(){
                 xhttp = new XMLHttpRequest();
                 
                 xhttp.onreadystatechange = function() {
@@ -70,10 +62,11 @@
                         document.getElementById('body').innerHTML += newPosts;
                     }
                 };
-
-                xhttp.open("POST", "http://localhost/fallrAPI/feed/", true);
+                // If the user is looking at someone elses page
+                xhttp.open("POST", "http://localhost/fallrAPI/posts/<?php echo($_GET["username"]);?>", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("userID=" + document.cookie.split(":")[0]);
+                xhttp.send("username=" + document.cookie.split(":")[0]);
+                
 
                 // This code creates a follow on like button click //
 
@@ -112,7 +105,7 @@
                         }
                     };
 
-                    xhttp.open("POST", "http://localhost/fallrAPI/likes", true);
+                    xhttp.open("POST", "http://localhost/fallrAPI/like", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send("postID=" + element.id);
                 };
