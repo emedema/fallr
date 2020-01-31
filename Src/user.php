@@ -47,74 +47,94 @@
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
         
         <script>
-            $( document ).ready(
-                $.ajax({
-                    url: 'http://localhost/fallrAPI/feed/',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: "userID=" + Cookies.get("loggedIn").split(":")[0],
-                    success: function(data) {
+            $( document ).ready(function(){
+                xhttp = new XMLHttpRequest();
+                
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+
+                        var data = xhttp.responseText;
+                        data = JSON.parse(data);
+                        console.log(data);
+
                         var newPosts = "";
-                        $.each(data, function(key, value){
-                            newPosts += "<section><form><input type='hidden' name='postID' class='postID' value='" + value.postID + "'>";
+                        data.forEach(function(key, value){
+
+                            console.log(key["postName"]);
+                            newPosts += "<section><form><input type='hidden' name='postID' class='postID' value='" + key["postID"] + "'>";
                             newPosts += "<div><div><img></div>";
-                            newPosts += "<div><p>" + value.postName + "</p></div></div>";
-                            newPosts += "<div><p>" + value.postContent + "</p></div>";
-                            newPosts += "<div><button class='like-button' type='button'>Like</button><button class='view-comments-button' type='button'>View Comments</button></div></form></section>";
+                            newPosts += "<div><p>" + key["postName"] + "</p></div></div>";
+                            newPosts += "<div><p>" + key["postContent"] + "</p></div>";
+                            newPosts += "<div><button id='" + key["postID"] + "' class='like-button' onClick='like(this)' type='button'>Like</button><button onClick='viewComments(this)' class='view-comments-button' type='button'>View Comments</button></div></form></section>";
                         });
-                        $('#body').html(newPosts);
+                        document.getElementById('body').innerHTML += newPosts;
                     }
-                }),
-            );
+                };
 
-            $("#follow-button").click(function() {
-                $.ajax({
-                    url: 'http://localhost/fallrAPI/subscribe',
-                    type: 'POST',
-                    dataType:'text',
-                    data: $('form').serialize(),
-                    success: function(data) {
-                        if(data == 1)
-                            $("#follow-button").html("Unsubscribe");
-                        else
-                            $("#follow-button").html("Subscribe");
-                    }
-                });
-            });
+                xhttp.open("POST", "http://localhost/fallrAPI/feed/", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("userID=" + document.cookie.split(":")[0]);
 
-            $("#body").on('click','.like-button', function(event){
-                // This selects the parent form for the button and submits the like for it //
-                var button = this;
-                $.ajax({
-                    url: 'http://localhost/fallrAPI/likes',
-                    type: 'POST',
-                    dataType:'text',
-                    data: 'postID=' + $(button).closest("form").find(".postID").val(),
-                    success: function(data) {
-                        if(data == 1)
-                            $(button).html("Unlike");
-                        else
-                            $(button).html("Like");
-                    }
-                });
-            });
+                // This code creates a follow on like button click //
 
-            $("#body").on('click','.view-comments-button', function(event){
-                // This selects the parent form for the button and submits the like for it //
-                var button = this;
-                $.ajax({
-                    url: 'http://localhost/fallrAPI/comments',
-                    type: 'POST',
-                    dataType:'text',
-                    data: 'postID=' + $(button).closest("form").find(".postID").val(),
-                    success: function(data) {
-                        if(data == 1)
-                            $(button).html("Unlike");
-                        else
-                            $(button).html("Like");
-                    }
-                });
+                var followButton = document.getElementById("follow-button");
+                
+                followButton.addEventListener("click", function(){
+                    xhttp = new XMLHttpRequest();
+                    
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var data = xhttp.responseText;
+                            if(data == 1){
+                                followButton.innerHTML = "Unsubscribe";
+                            }
+                            else
+                                followButton.innerHTML = "Subscribe";
+                        }
+                    };
+
+                xhttp.open("POST", "http://localhost/fallrAPI/subscribe", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("username=" + document.getElementsByName("username")[0].value);
+                })
             });
+                function like(element){
+                    xhttp = new XMLHttpRequest();
+                    
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var data = xhttp.responseText;
+                            if(data == 1){
+                                element.innerHTML = "Unlike";
+                            }
+                            else
+                                element.innerHTML = "Like";
+                        }
+                    };
+
+                    xhttp.open("POST", "http://localhost/fallrAPI/likes", true);
+                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhttp.send("postID=" + element.id);
+                };
+                
+            function viewComments(element) {
+                xhttp = new XMLHttpRequest();
+                    
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var data = xhttp.responseText;
+                        if(data == 1){
+                            element.innerHTML = "Unlike";
+                        }
+                        else
+                            element.innerHTML = "Like";
+                    }
+                };
+
+                xhttp.open("POST", "http://localhost/fallrAPI/likes", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("postID=" + element.id);
+            }
         </script>
     </body>
 </html>
