@@ -6,6 +6,11 @@ require_once '../Comment.php';
 
 header('Content-type: application/json');
 
+$postID = NULL;
+$comment = NULL;
+$token = NULL;
+
+
 if(isset($_POST['postID']))
     $postID = $_POST['postID'];
 
@@ -33,7 +38,5 @@ if ($postID && $token && $comment) {
     }
 else
     header("HTTP/1.1 406 Parameters Not Passed");
-
-$connection->close();
 
 ?>
