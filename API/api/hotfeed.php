@@ -18,6 +18,8 @@ $connection = createConnection();
         $hotFeedData[] = $row;
     echo(json_encode($hotFeedData));
 
-$connection->close();
+
+if(isset($connection) && $connection)
+    $connection->close();
 
 ?>

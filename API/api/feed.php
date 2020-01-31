@@ -11,7 +11,8 @@ header('Content-type: application/json');
 
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];
-    
+
+// Just getting the logged in users data //
 if ($token) {
  
     $connection = createConnection();
@@ -37,4 +38,6 @@ if ($token) {
 else
     header("HTTP/1.1 406 Parameters Not Passed");
 
+if(isset($connection) && $connection)
+    $connection->close();
 ?>

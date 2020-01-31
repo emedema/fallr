@@ -7,6 +7,13 @@ require_once '../Login.php';
 
 header('Content-type: application/json');
 
+$username = NULL;
+$password = NULL;
+$firstName = NULL;
+$lastName = NULL;
+$email = NULL;
+$image = NULL;
+
 if(isset($_POST['username']))
     $username = $_POST['username'];
 
@@ -43,6 +50,8 @@ if ($username && $password && $email) {
 else
     header("HTTP/1.1 406 Parameters Not Passed");
 
-$connection->close();
+
+if(isset($connection) && $connection)
+    $connection->close();
 
 ?>

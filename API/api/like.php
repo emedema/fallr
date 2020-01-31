@@ -36,6 +36,7 @@ if ($postID && $token) {
 else
     header("HTTP/1.1 406 Parameters Not Passed");
 
-$connection->close();
+if(isset($connection) && $connection)
+    $connection->close();
 
 ?>
