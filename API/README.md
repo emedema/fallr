@@ -31,21 +31,7 @@ This will be done in the following pattern:
 
 3. If the user has admin privileges, the API will check to see if they are able to access/modify the information.
 
-## Layout of the API
-
-The API will use the following layout. For any function that requires verification, the AJAX request will pass the session key for the user in the header:
-
-```
-$.ajax({
-  type: 'GET',
-  url: 'localhost/userpage/1',
-  headers: {
-    "auth-key":"0as8dha9s8dhaasc79asc98agsjacna98"
-  }
-});
-```
-
-## Create Account
+## Create Account (Completed)
 This creates an account and creates a session token.
 
 Takes: username, password, firstName, lastName, email, image
@@ -54,7 +40,7 @@ Takes: username, password, firstName, lastName, email, image
 POST | [domain]/createAccount
 ```
 
-## Logging In
+## Logging In (Completed)
 
 This creates the session token.
 
@@ -62,24 +48,16 @@ This creates the session token.
 POST | [domain]/login
 ```
 
-## User Page Data
-
-### Get User Page Data
-
-```
-GET | [domain]/userpages/[userID]
-```
-
 ## User Data
 
-### Getting the user information
-Depending on if you send a key that has permission, you will recieve all of the user information or just what the public has been allowed to see.
+### Getting user information (Completed)
+Depending on if you are logged in, you will recieve all of the user information or just what the public has been allowed to see.
 
 ```
 GET | [domain]/users/[userID]
 ```
 
-### Update user information
+### Update user information 
 
 Requires valid key [Owner].
 
@@ -89,15 +67,15 @@ POST | [domain]/users/[userID]
 
 ## Feed
 
-### Get the feed for a user
+### Get the feed for a user (Completed)
 
 Requires valid key [Owner].
 
 ```
-GET | [domain]/feed/[userID]
+GET | [domain]/feed
 ```
 
-### Get the hot feed
+### Get the hot feed (Completed)
 
 ```
 GET | [domain]/feed/hot
@@ -105,38 +83,55 @@ GET | [domain]/feed/hot
 
 ## Posts
 
-### Get a post
-
+### Create a post (Completed)
 ```
-GET | [domain]/posts/[postID]
-```
-
-### Update a post
-
-```
-POST | [domain]/posts/[postID]
+POST | [domain]/post
 ```
 
-### Deleting a post
+### Get a users posts (Completed)
+
+```
+GET | [domain]/posts/[username]
+```
+
+### Get a post (Completed)
+
+```
+GET | [domain]/posts/id/[postID]
+```
+
+### Update a post (Not Tested)
+
+```
+POST | [domain]/posts/id/[postID]
+```
+
+### Deleting a post (Not Tested)
 
 Requires a valid key [Owner].
 
 ```
-DELETE | [domain]/posts/[postID]
+DELETE | [domain]/posts/id/[postID]
 ```
 
-### Comment on a post
+### Comment on a post (Completed)
 
 Requires a valid key [logged in].
 
 ```
-POST | [domain]/posts/comments/[postID]
+POST | [domain]/comment
 ```
 
-### Get Comments
+### Get Comments for a post (Completed)
 
 ```
 GET | [domain]/posts/comments/[postID]
+```
+
+### Get Comment (Completed)
+
+```
+GET | [domain]/comments/[commentID]
 ```
 
 ### Delete Comment
@@ -144,5 +139,29 @@ GET | [domain]/posts/comments/[postID]
 Requires a valid key [Owner].
 
 ```
-DELETE | [domain]/posts/comments/[postID]/[commentID]
+DELETE | [domain]/comments/[commentID]
+```
+
+## Subscriptions
+
+### Subscribing/Unsubscribing (Completed)
+```
+POST | [domain]/subscribe
+```
+
+### Get subscriptions for a user
+```
+GET | [domain]/users/subscriptions/[userID]
+```
+
+## Likes
+
+### Liking/UnLiking (Completed)
+```
+POST | [domain]/like
+```
+
+### Get Likes for a post
+```
+GET | [domain]/posts/likes/[postID]
 ```
