@@ -31,6 +31,17 @@ class Comment {
 		
 		return $query->get_result();
 	}
+
+	public function getComment($connection, $commentID) {
+        /* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("SELECT commentID, username, postID, comment FROM Comments WHERE commentID = ?");		
+		$query->bind_param("i", $commentID);
+        
+		/* Returns success */
+		$query->execute();
+		
+		return $query->get_result();
+	}
 }
 
 ?>
