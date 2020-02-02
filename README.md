@@ -7,7 +7,7 @@ A blogging website for falling into deep holes. Built with MySQL, PHP and JavaSc
 2. PHP
 3. MySQL
 
-## Mild Explenation of credentials.php file
+## Mild Explanation of credentials.php file
 I know there are credentials in here, they are not actual credentials and **MUST** be updated before launching.
 
 ## Setup
