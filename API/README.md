@@ -149,7 +149,7 @@ DELETE | [domain]/comments/[commentID]
 POST | [domain]/subscribe
 ```
 
-### Get subscriptions for a user
+### Get subscriptions for a user (Completed)
 ```
 GET | [domain]/users/subscriptions/[userID]
 ```
@@ -161,7 +161,7 @@ GET | [domain]/users/subscriptions/[userID]
 POST | [domain]/like
 ```
 
-### Get Likes for a post
+### Get Likes for a post (Completed)
 ```
 GET | [domain]/posts/likes/[postID]
 ```
