@@ -23,12 +23,13 @@ class Subscription {
 	
 	public function getSubscriptions($connection, $yourUsername) {
 		/* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("SELECT * from Subscriptions WHERE subscribedUsername = ?");
+		$query = $connection->prepare("SELECT * FROM Subscriptions WHERE subscribedUsername = ?");
 		/* Passes the values into the query */
 		$query->bind_param("s", $yourUsername);
-        
+        $query->execute();
+		
 		/* Returns success */
-		return $query->execute()->get_result();
+		return $query->get_result();
 	}
 
 	public function isSubscribed($connection, $yourUsername, $theirUsername){

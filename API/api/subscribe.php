@@ -11,24 +11,54 @@ if(isset($_POST['username']))
 
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];
+
+if(isset($_GET["username"]))
+    $username = $_GET["username"];
     
-if ($username && $token) {
+if ($username && $token && $_SERVER['REQUEST_METHOD'] === 'POST') {
  
     $connection = createConnection();
 
-    $myUsername = Login::getIDFromToken($token);
+    /* If the user is logged in */
+    if(Login::checkToken($connection, $token)) {
+        $myUsername = Login::getIDFromToken($token);
 
-    $success = Subscription::createSubscription($connection, $myUsername, $username);
-    
-    if(!$success){
-        Subscription::removeSubscription($connection, $myUsername, $username);
-        echo(0);
+        $success = Subscription::createSubscription($connection, $myUsername, $username);
+        
+        if(!$success){
+            Subscription::removeSubscription($connection, $myUsername, $username);
+            echo(0);
+        }
+        else
+            echo(1);
+        
     }
     else
-        echo(1);
-    
+        header("HTTP/1.1 406 Login Invalid");
+
     $connection->close();
 }
+
+else if($username && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    
+    $connection = createConnection();
+
+    $subscriptions = Subscription::getSubscriptions($connection, $username);
+        
+    /* Loop through the data and send it to the user */
+    if($subscriptions) {
+        $subscriptionsData = array();
+        while($row = $subscriptions->fetch_assoc())
+            $subscriptionsData[] = $row;
+        echo(json_encode($subscriptionsData));
+    }
+    else
+        header("HTTP/1.1 406 Parameters Not Passed");
+
+
+    $connection->close();
+}
+
 else
     header("HTTP/1.1 406 Parameters Not Passed");
 
