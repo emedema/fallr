@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login - Fallr</title>        
+    </head>
+    <body>
+        <header>
+
+        </header>
+        <body>
+            <form>
+                <input id="username" type="text" name="username" placeholder="username">
+                <input id="password" type="password" name="password" placeholder="password">
+                <input id="login-button" type="button" value="submit">
+            </form>
+        </body>
+        <footer>
+
+        </footer>
+        
+        <script>
+            document.getElementById("login-button").addEventListener("click", function(){
+                xhttp = new XMLHttpRequest();
+                
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        window.location.href = "/fallr/feed"
+                    }
+                };
+
+                xhttp.open("POST", "http://localhost/fallrAPI/login", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("username=" + document.getElementById("username").value 
+                    + "&password=" + document.getElementById("password").value);
+            })
+        </script>
+    </body>
+</html>

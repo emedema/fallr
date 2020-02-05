@@ -1,0 +1,52 @@
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+RewriteEngine On
+
+## SETTERS
+
+# Create accounts and login
+RewriteRule ^login$ login.php [NC,L]
+RewriteRule ^createAccount$ createAccount.php [NC,L] 
+
+# This creates a post
+RewriteRule ^post$ posts.php [NC,L] 
+
+# This creates a comment for a post 
+RewriteRule ^comment$ comments.php [NC,L]
+
+# This subscribes / Unsubscribes from a user
+RewriteRule ^subscribe$ subscribe.php [NC,L]
+
+# This likes / unlikes a post
+RewriteRule ^like$ like.php [NC,L]
+
+## GETTERS 
+
+# This gets the data for a user (depending on if logged in as user, personal or not)
+RewriteRule ^users/([A-Za-z0-9]*)$ users.php?username=$1 [QSA]
+
+# This gets the posts for a user
+RewriteRule ^posts/([A-Za-z0-9]*)$ posts.php?username=$1 [QSA]
+
+# This gets a post based on a postID
+RewriteRule ^posts/id/([0-9]*)$ posts.php?postID=$1 [QSA]
+
+# This gets the feed for a user (people they have subscribed to)
+RewriteRule ^feed$ feed.php [NC,L]
+
+# This gets the hotfeed for all users
+RewriteRule ^feed/hot$ hotfeed.php [NC,L]
+
+# This gets a comment based on an id
+RewriteRule ^comments/([0-9]*)$ getComments.php?commentID=$1 [QSA]
+
+# This gets all comments for a post
+RewriteRule ^posts/comments/([0-9]*)$ getComments.php?postID=$1 [QSA]
+
+# This gets the subsciptions for a user
+RewriteRule ^users/subscriptions/([A-Za-z0-9]*)$ subscribe.php?username=$1 [QSA]
+
+# This gets all likes for a post
+RewriteRule ^posts/likes/([A-Za-z0-9]*)$ like.php?postID=$1 [QSA]
