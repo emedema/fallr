@@ -34,7 +34,29 @@ if ($postID && $token && $comment) {
     }
     else
         header("HTTP/1.1 406 Login Invalid");
+}
+
+else if($postID && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    
+    $connection = createConnection();
+
+    $loggedIn = Login::checkToken($connection, $token);
+
+    // If we are logged in, we try to create the like //
+    if($loggedIn){
+        
+        $username = Login::getIDFromToken($token);
+
+        if($username == Comment::getCommentOwner($connection, $commentID)) {
+            Comment::deleteComment($connection, $commentID);
+        }
+        else
+            header("HTTP/1.1 406 Login Invalid");
     }
+    else
+        header("HTTP/1.1 406 Login Invalid");
+}
+
 else
     header("HTTP/1.1 406 Parameters Not Passed");
 

@@ -42,6 +42,24 @@ class Comment {
 		
 		return $query->get_result();
 	}
+
+	public function deleteComment($connection, $commentID) {
+        /* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("DELETE FROM Comments WHERE commentID = ?");		
+		$query->bind_param("i", $commentID);
+        
+		/* Returns success */
+		return $query->execute();
+	}
+
+	public function getCommentOwner($connection, $commentID) {
+		/* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("SELECT username FROM Comments WHERE commentID = ?");		
+		$query->bind_param("i", $commentID);
+		$query->execute();
+		/* Returns success */
+		return $query->get_result();
+	}
 }
 
 ?>
