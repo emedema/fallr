@@ -13,7 +13,10 @@ if(isset($_POST['postID']))
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];
 
-if ($postID && $token) {
+if(isset($_GET['postID']))
+    $postID = $_GET['postID'];
+
+if ($postID && $token && $_SERVER['REQUEST_METHOD'] === 'POST') {
  
     $connection = createConnection();
 
@@ -33,6 +36,21 @@ if ($postID && $token) {
     else
         header("HTTP/1.1 406 Login Invalid");
     }
+
+else if($postID && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    $connection = createConnection();
+
+    $likesForPost = Like::getLikesForPost($connection, $postID);
+    /* Loop through the data and send it to the user */
+    if($likesForPost) {
+        $postGetData = array();
+        while($row = $likesForPost->fetch_assoc())
+            $postGetData[] = $row;
+        echo(json_encode($postGetData));
+    }
+    else
+        header("HTTP/1.1 406 Parameters Not Passed");
+}
 else
     header("HTTP/1.1 406 Parameters Not Passed");
 
