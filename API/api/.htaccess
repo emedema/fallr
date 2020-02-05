@@ -44,3 +44,9 @@ RewriteRule ^comments/([0-9]*)$ getComments.php?commentID=$1 [QSA]
 
 # This gets all comments for a post
 RewriteRule ^posts/comments/([0-9]*)$ getComments.php?postID=$1 [QSA]
+
+# This gets the subsciptions for a user
+RewriteRule ^users/subscriptions/([A-Za-z0-9]*)$ subscribe.php?username=$1 [QSA]
+
+# This gets all likes for a post
+RewriteRule ^posts/likes/([A-Za-z0-9]*)$ like.php?postID=$1 [QSA]
