@@ -57,12 +57,12 @@ Depending on if you are logged in, you will recieve all of the user information 
 GET | [domain]/users/[userID]
 ```
 
-### Update user information 
+### Update user information
 
 Requires valid key [Owner].
 
 ```
-POST | [domain]/users/[userID]
+POST | [domain]/users
 ``` 
 
 ## Feed
