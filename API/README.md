@@ -134,7 +134,7 @@ GET | [domain]/posts/comments/[postID]
 GET | [domain]/comments/[commentID]
 ```
 
-### Delete Comment
+### Delete Comment (Not Tested)
 
 Requires a valid key [Owner].
 

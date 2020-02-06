@@ -16,6 +16,9 @@ RewriteRule ^post$ posts.php [NC,L]
 # This creates a comment for a post 
 RewriteRule ^comment$ comments.php [NC,L]
 
+# This deletes a comment for a post
+RewriteRule ^comments/([0-9]*)$ comments.php?commentID=$1 [NC,L]
+
 # This subscribes / Unsubscribes from a user
 RewriteRule ^subscribe$ subscribe.php [NC,L]
 
