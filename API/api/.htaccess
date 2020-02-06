@@ -10,6 +10,9 @@ RewriteEngine On
 RewriteRule ^login$ login.php [NC,L]
 RewriteRule ^createAccount$ createAccount.php [NC,L] 
 
+# Updates user information
+RewriteRule ^users$ users.php [NC,L] 
+
 # This creates a post
 RewriteRule ^post$ posts.php [NC,L] 
 
