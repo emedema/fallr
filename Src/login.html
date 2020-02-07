@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login - Fallr</title>        
+        <title>Login - Fallr</title>   
     </head>
     <body>
         <header>
-
+            <nav>
+                <ul>
+                    <li><a href = '#'>Feed</a></li> 
+                    <li><a href = "#">Trending</a></li> 
+                    <li id = 'right'><a href = 'createAccount.html'>Sign Up</a></li> 
+                    <li id = 'right' class = 'active'><a href = 'login.html'>Login</a></li>
+                </ul>
+            </nav>  
         </header>
         <body>
-            <form>
-                <input id="username" type="text" name="username" placeholder="username">
-                <input id="password" type="password" name="password" placeholder="password">
-                <input id="login-button" type="button" value="submit">
-            </form>
+            <div id = "form_wrap">
+                <form>
+                    <input id="username" type="text" name="username" placeholder="username">
+                    <input id="password" type="password" name="password" placeholder="password">
+                    <input id="login-button" type="button" value="submit">
+                </form>
+            </div>
         </body>
         <footer>
 
