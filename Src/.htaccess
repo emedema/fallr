@@ -3,3 +3,5 @@ RewriteEngine On
 RewriteRule ^login$ login.html [NC,L]
 RewriteRule ^user/([0-9a-zA-Z_-]*)$ user.php?username=$1 [QSA]
 RewriteRule ^feed$ feed.html [NC,L]
+RewriteRule ^signup$ createAccount.html [NC,L]
+RewriteRule ^trending$ trending.html [NC,L]

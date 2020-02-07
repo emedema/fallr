@@ -45,6 +45,18 @@ class Account {
 		/* Returns inserted_id */
 		return $query->get_result();
 	}
+
+	public function updateUserInfo($connection, $username) {
+		/* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("UPDATE Users SET username = ?, email = ?, firstName = ?, lastName = ?, image = ? WHERE username = ?");		
+
+		$query->bind_param("s", $username);
+
+		$query->execute();
+		
+		/* Returns inserted_id */
+		return $query->get_result();
+	}
 }
 
 ?>
