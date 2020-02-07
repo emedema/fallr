@@ -15,38 +15,7 @@ body{
 .navbar-light .navbar-nav .nav-link:hover:not(#active) {
     color: #438173;
   }
-figure img#blog_pic{
-    width: 96%;
-    height: 240px;
-}
-.image{
-    text-align: center;
-    display: block;
-    margin-top: 2em;
-}
-figure{
-    position: relative;
-}
-figcaption{
-    position: absolute;
-    background-color: #3A4B48;
-    color: #F0F7F4;
-    top: 50%;
-    left: 50%;
-    opacity: 75%;
-    width: 150px;
-}
-#flex{
-    display: flex;
-    flex-direction: row;
-}
-#user_bar{
-    background-color:#3A4B48;
-    width: 25%;
-    margin-right: 2em;
-    margin-left: 2em;
-    height: 100vh;
-}
+
 
 #img_container{
     text-align: center;
@@ -63,16 +32,14 @@ img#user_pic{
     margin-top: 2em;
 }
 
-#user_info{
-    color: #F0F7F4;
-    text-align: center;
-}
-
 #posts{
     background-color:#3A4B48;
     width: 90%;
-    margin-right: 2em;
+    margin-left: auto;
+    margin-right: auto;
     height: 100vh;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 #post{
