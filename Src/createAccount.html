@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset = "UTF-8"/>
         <title>Login - Fallr</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -57,23 +58,24 @@
                     <form>
                         <h2>Create Account</h2>
                         <div>
-                            <input id="username"  class="form-control" type="text" name="username" placeholder="Username">
+                            <input id="username"  class="form-control" type="text" name="username" placeholder="Username" />
                         </div>
                         <div>
-                            <input id="email"  class="form-control" type="email" name="email" placeholder="Email">
+                            <input id="email"  class="form-control" type="email" name="email" placeholder="Email"/>
                         </div>
                         <div>
-                            <input id="firstName"  class="form-control" type="text" name="firstName" placeholder="First Name">
+                            <input id="firstName"  class="form-control" type="text" name="firstName" placeholder="First Name" />
                         </div>
                         <div>
-                            <input id="lastName"  class="form-control" type="text" name="lastName" placeholder="Last Name">
+                            <input id="lastName"  class="form-control" type="text" name="lastName" placeholder="Last Name" />
                         </div>
                         <div>
-                            <input id="password"  class="form-control" type="password" name="password" placeholder="Password">                            
+                            <input id="password"  class="form-control" type="password" name="password" placeholder="Password" />                            
                         </div>
                         <div>
                             <input id="login-button"  class="form-control" type="button" value="submit">
                         </div>
+                        <p id="submitError"></p>
                     </form>
                 </div>
             </div>
@@ -82,6 +84,18 @@
             <p>View the code on <a href="https://github.com/Nathan-Nesbitt/fallr">github</a></p>
         </footer>
         <script>
+
+            /* Function that takes an element id and checks the validity of the input */
+
+            function fieldCheck(fieldID) {
+                element = document.getElementById(fieldID);
+                if(element.value == "") {
+                    document.getElementById("submitError").innerHTML = fieldID + " is required."; 
+                    return false;
+                }
+                return true;
+            }
+
             document.getElementById("login-button").addEventListener("click", function(){
                 xhttp = new XMLHttpRequest();
                 
@@ -91,13 +105,29 @@
                     }
                 };
 
-                xhttp.open("POST", "http://localhost/fallrAPI/createAccount", true);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("username=" + document.getElementById("username").value 
-                    + "&email=" + document.getElementById("email")
-                    + "&firstName=" + document.getElementById("firstName")
-                    + "&lastName=" + document.getElementById("lastName")
+                // Checks to see if the user is missing any fields //
+                
+                var fields = ["username", "email", "firstName", "lastName", "password"];
+
+                var success;
+
+                for(i in fields) {
+                    console.log(fields[i])
+                    if(!(success = fieldCheck(fields[i])))
+                        break;
+                };
+
+                /* Makes the request if all fields are valid */
+
+                if(success) {
+                    xhttp.open("POST", "http://localhost/fallrAPI/createAccount", true);
+                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhttp.send("username=" + document.getElementById("username").value 
+                    + "&email=" + document.getElementById("email").value
+                    + "&firstName=" + document.getElementById("firstName").value
+                    + "&lastName=" + document.getElementById("lastName").value
                     + "&password=" + document.getElementById("password").value);
+                } 
             })
         </script>
     </body>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset = "UTF-8"/>
         <title>Login - Fallr</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -65,6 +66,7 @@
                         <div>
                             <input id="login-button"  class="form-control" type="button" value="submit">
                         </div>
+                        <p id="submitError"></p>
                     </form>
                 </div>
             </div>
@@ -73,19 +75,47 @@
             <p>View the code on <a href="https://github.com/Nathan-Nesbitt/fallr">github</a></p>
         </footer>
         <script>
+
+            /* Function that takes an element id and checks the validity of the input */
+
+            function fieldCheck(fieldID) {
+                element = document.getElementById(fieldID);
+                if(element.value == "") {
+                    document.getElementById("submitError").innerHTML = fieldID + " is required."; 
+                    return false;
+                }
+                return true;
+            }
+
             document.getElementById("login-button").addEventListener("click", function(){
                 xhttp = new XMLHttpRequest();
                 
                 xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
+                    if (this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined" ) {
                         window.location.href = "/fallr/feed"
                     }
                 };
 
-                xhttp.open("POST", "http://localhost/fallrAPI/login", true);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("username=" + document.getElementById("username").value 
-                    + "&password=" + document.getElementById("password").value);
+                // Checks to see if the user is missing any fields //
+                                
+                var fields = ["username", "password"];
+
+                var success;
+
+                for(i in fields) {
+                    console.log(fields[i])
+                    if(!(success = fieldCheck(fields[i])))
+                        break;
+                };
+                
+                
+                /* Makes the request if all fields are valid */
+                if(success) {
+                    xhttp.open("POST", "http://localhost/fallrAPI/login", true);
+                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhttp.send("username=" + document.getElementById("username").value 
+                        + "&password=" + document.getElementById("password").value);
+                }
             })
         </script>
     </body>
