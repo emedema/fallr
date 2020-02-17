@@ -16,22 +16,7 @@ body{
     color: #438173;
   }
 
-  .float{
-	position:fixed;
-	width:60px;
-	height:60px;
-	bottom:40px;
-	right:40px;
-	background-color:#6F857D;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-}
 
-.my-float{
-	margin-top:22px;
-}
 #img_container{
     text-align: center;
     display: block;
@@ -52,6 +37,7 @@ img#user_pic{
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    height: 100vh;
     padding-top: 1em;
     padding-bottom: 1em;
 }
@@ -65,52 +51,6 @@ img#user_pic{
     margin-bottom: 2em;
     padding-bottom: 1em;
 
-}
-#content_create{
-    margin-left: 1em;
-    margin-right: 1em;
-    margin-bottom: 1em;
-    margin-top: 1em;
-    background-color: #F0F7F4;
-    padding-top: 0.5em;
-    padding-bottom: 1em;
-    height: fit-content;
-    position: relative;
-}
-#create{
-    background-color: #6F857D;
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2em;
-    margin-bottom: 2em;
-    padding-bottom: 1em;
-    position: relative;
-    padding-top: 1em;
-}
-#create form{
-    margin-bottom: 2em;
-}
-#create_bt{
-    margin-bottom: 0.5em;
-}
-#create textarea{
-    margin-left: 1em;
-    margin-right: 1em;
-    margin-top: 1em;
-    width: 90%;
-}
-#add_pic{
-    width: 50px;
-    height: 50px;
-}
-#confirm{
-    display: flex;
-    align-items: flex-end;
-    bottom: 0;
-    width: 90%;
-    position: absolute;
-    overflow: scroll;
 }
 #f{
     display: flex;
@@ -134,8 +74,8 @@ img#user_pic{
     margin-top: 1em;
     margin-right: 1em;
     margin-bottom: 1em;
+    padding-left: 1em;
 }
-
 #content{
     margin-left: 1em;
     margin-right: 1em;
@@ -143,7 +83,7 @@ img#user_pic{
     margin-top: 1em;
     background-color: #F0F7F4;
     padding-top: 0.5em;
-    padding-bottom: 10em;
+    padding-bottom: 1em;
     height: fit-content;
     position: relative;
 }
@@ -158,25 +98,21 @@ img#user_pic{
     display: flex;
     align-items: flex-end;
     bottom: 0;
-    width: 90%;
     position: absolute;
-    overflow: scroll;
-}
-#likes button{
-    margin-left: 1em;
-    margin-right: 1em;
-    margin-bottom: 0.5em;
-}
-#comment_input{
-    margin-bottom: 0.5em;
-}
-#comment_submit{
-    margin-left: 2em;
-    margin-bottom: 0.5em;
 }
 #like_bt{
     width: 50px;
     height: 50px;
+}
+#comment{
+    border: #6F857D 1px solid;
+    margin: 1em;
+}
+#post_content{
+    border: #6F857D 1px solid;
+    padding:2em;
+    margin: 1em;
+    padding-bottom: 5em;
 }
 @media (max-width: 543px) {
     /* Makes it so when the screen is small, it shrinks the size*/

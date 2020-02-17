@@ -15,6 +15,22 @@ body{
 .navbar-light .navbar-nav .nav-link:hover:not(#active) {
     color: #438173;
   }
+  .float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#6F857D;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:22px;
+}
 figure img#blog_pic{
     width: 96%;
     height: 240px;
