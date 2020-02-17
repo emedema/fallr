@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head lang="en">
-        <title>fallr - Trending</title>
+        <title>fallr - Admin</title>
         <meta charset = 'utf-8'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
         <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/trending.css">
+        <link rel="stylesheet" href="css/admin.css">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -33,7 +33,7 @@
                             <a class="nav-link" href="feed">Feed<span class="sr-only"></span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="trending" id = "active">Trending<span class="sr-only"></span></a>
+                            <a class="nav-link" href="trending">Trending<span class="sr-only"></span></a>
                         </li>
                     </ul>
                     <ul id="navbar-ul-center" class="navbar-nav ml-auto">
@@ -43,58 +43,42 @@
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="signup">Sign-Up</a>
+                            <a class="nav-link" href="admin" id = "active">Admin</a>
                         </li>
                         <li class="nav-item">
-                            <a id="login-nav" class="nav-link" href="login">Login</a>
+                            <a class="nav-link" href="settings">Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="login-nav" class="nav-link" href="user">User</a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <div id = 'main'>
-                <div id = 'posts'>
-                    <div id = post>
-                        <div id = "f">
-                            <div id = "img_container2">
-                                <img src = "images/placeholder.jpg" alt="user" id = 'user_img'>
-                            </div>
-                            <div id = 'user_blog'>
-                                <p>Username or Blog Name</p>
-                            </div>
-                        </div>
-                        <div id = "content">
-                            <div id = 'post_content'>
-                                <p>Content</p>
-                            </div>
-                            <div id = 'likes'>
-                                <input type="image" src="images/like.png" name="like" class="bt_like" id="like_bt" />
-                                <p>4 likes</p>
-                                <button type="button">View Comments</button>
-                                <input type = 'text' name = 'comment' placeholder="Enter your comment" id = 'comment_input'>
-                                <input type = 'submit' name = 'submit' id='comment_submit' value = 'Comment'>
+                <div id = 'functions'>
+                    <h2>Admin</h2>
+                    <div id = 'post'>
+                        <div id = 'content'>
+                            <h5>Search for User</h5>
+                            <p>Enter username, email, or post to find user</p>
+                            <div id = 'search_form'>
+                                <form>
+                                    <input type = "text" name = "query" id = "search_bar" placeholder="Enter search here">
+                                    <input type = 'submit' name = 'submit' id = "search_bt" value = 'Search'>
+                                </form>
                             </div>
                         </div>
                     </div>
                     <div id = post>
-                        <div id = "f">
-                            <div id = "img_container2">
-                                <img src = "images/placeholder.jpg" alt="user" id = 'user_img'>
-                            </div>
-                            <div id = 'user_blog'>
-                                <p>Username or Blog Name</p>
-                            </div>
-                        </div>
-                        <div id = "content">
-                            <div id = 'post_content'>
-                                <p>Content</p>
-                            </div>
-                            <div id = 'likes'>
-                                <input type="image" src="images/like.png" name="like" class="bt_like" id="like_bt" />
-                                <p>4 likes</p>
-                                <button type="button">View Comments</button>
-                                <input type = 'text' name = 'comment' placeholder="Enter your comment" id = 'comment_input'>
-                                <input type = 'submit' name = 'submit' id='comment_submit' value = "Comment">
+                        <div id = 'content'>
+                            <h5>Enable/Disable User</h5>
+                            <p>Enter username, email, or post to find user</p>
+                            <div id = 'search_form'>
+                                <form>
+                                    <input type = "text" name = "query" id = "search_bar" placeholder="Enter search here">
+                                    <input type = 'submit' name = 'submit' id = "search_bt" value = 'Search'>
+                                </form>
                             </div>
                         </div>
                     </div>

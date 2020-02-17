@@ -1,0 +1,84 @@
+body{
+    background-color: #438173;
+}
+.navbar{
+    background-color: #333333;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: #F0F7F4;
+}
+
+.navbar-light .navbar-nav #active {
+    color: #6F857D;
+  }
+  
+.navbar-light .navbar-nav .nav-link:hover:not(#active) {
+    color: #438173;
+  }
+
+h2{
+    color: #ADE6D9;
+    margin-left: 1em;
+}
+
+#functions{
+    background-color:#3A4B48;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100vh;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+#post{
+    background-color: #6F857D;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding-bottom: 1em;
+    padding-top: 1em;
+}
+
+#content{
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    background-color: #F0F7F4;
+}
+#content h5, #content p{
+    margin-left: 1em;
+}
+#content h5{
+    padding-top: 1em;
+}
+#search_form{
+    text-align: center;
+    padding-bottom: 5em;
+    padding-top: 3em;
+}
+#search_bar{
+    margin-right: 1em;
+    padding-right: 5em;
+    padding-left: 5em;
+}
+form{
+    display: inline-block;
+}
+@media (max-width: 543px) {
+    /* Makes it so when the screen is small, it shrinks the size*/
+    .container .row {
+      min-height: 400px;
+    }
+  }
+  
+  @media (min-width: 544px) {
+    /* Makes it so when the screen is large, it expands the size*/
+    .container .row {
+      min-height: 600px;
+    }
+  }
+
