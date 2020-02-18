@@ -60,13 +60,13 @@
                 <div id = post>
                     <div id = 'create'>
                         <div id = 'content_create'>
-                            <form action = '' method = 'POST'>
-                                <input type="text" name="postName" placeholder="Post Title" id = "title">
-                                <textarea name = 'postContent' rows="10" cols="100" id = "input">
+                            <form>
+                                <input type="text" name="postName" placeholder="Post Title" id = "title" class = 'form-control'>
+                                <textarea name = 'postContent' rows="10" cols="100" id = "input" class="form-control">
                                 </textarea>
                                 <div id = "confirm">
                                     <input type="image" src="images/pic.png" name="addpic" class="add_pic" id="add_pic"/> 
-                                    <input type = 'button' value = 'Create' id = 'post-button'>
+                                    <input type = 'button' value = 'Create' id = 'post-button' class = 'form-control'>
                                 </div>
                             </form>
                         </div>
@@ -111,7 +111,7 @@
                 return true;
             }
 
-            document.getElementById("#post-button").addEventListener("click", function(){
+            document.getElementById("post-button").addEventListener("click", function(){
                 xhttp = new XMLHttpRequest();
                 
                 xhttp.onreadystatechange = function() {
@@ -122,7 +122,7 @@
 
                 // Checks to see if the user is missing any fields //
                                 
-                var fields = ["postName", "textarea"];
+                var fields = ["title", "input"];
 
                 var success;
 
