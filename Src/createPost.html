@@ -122,7 +122,7 @@
 
                 // Checks to see if the user is missing any fields //
                                 
-                var fields = ["postName", "postContent"];
+                var fields = ["postName", "textarea"];
 
                 var success;
 
@@ -135,19 +135,10 @@
                 
                 /* Makes the request if all fields are valid */
                 if(success) {
-                    /*xhttp.open("POST", "http://localhost/fallrAPI/login", true);
+                    xhttp.open("POST", "http://localhost/fallrAPI/posts", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    xhttp.send("username=" + document.getElementById("username").value 
-                        + "&password=" + document.getElementById("password").value);*/
-                    $.ajax({
-                        url: 'http://localhost/fallrAPI/posts/',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: $('form').serialize(),
-                        success: function(data) {
-                            console.log("success");
-                        }
-                    });
+                    xhttp.send("postName=" + document.getElementById("postName").value 
+                        + "&postContent=" + document.getElementById("postContent").value);
                 }
             })
         </script>
