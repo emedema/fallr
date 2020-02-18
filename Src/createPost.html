@@ -61,11 +61,12 @@
                     <div id = 'create'>
                         <div id = 'content_create'>
                             <form>
-                                <input type="text" name="postName" placeholder="Post Title" id = "title" class = 'form-control'>
-                                <textarea name = 'postContent' rows="10" cols="100" id = "input" class="form-control">
+                                <input type="text" name="postName" placeholder="Post Title" id = "postName" class = 'form-control'>
+                                <textarea name = 'postContent' rows="10" cols="100" id = "postContent" class="form-control">
                                 </textarea>
                                 <div id = "confirm">
-                                    <input type="image" src="images/pic.png" name="addpic" class="add_pic" id="add_pic" class = "form-control"/> 
+                                    <input type="image" src="images/pic.png" name="addpic" class="add_pic" id="add_pic" class = "form-control"/>
+                                    <input type="file" id="my_file" style="display: none;" /> 
                                     <input type = 'button' value = 'Create' id = 'post-button' class = 'form-control'>
                                 </div>
                                 <p id="submitError"></p>
@@ -102,7 +103,9 @@
         <script>
 
             /* Function that takes an element id and checks the validity of the input */
-
+            $("input[type='image']").click(function() {
+                 $("input[id='my_file']").click();
+            });
             function fieldCheck(fieldID) {
                 element = document.getElementById(fieldID);
                 if(element.value == "") {
@@ -123,7 +126,7 @@
 
                 // Checks to see if the user is missing any fields //
                                 
-                var fields = ["title", "input"];
+                var fields = ["postName", "postContent"];
 
                 var success;
 
@@ -138,8 +141,8 @@
                 if(success) {
                     xhttp.open("POST", "http://localhost/fallrAPI/posts", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    xhttp.send("postName=" + document.getElementById("title").value 
-                        + "&postContent=" + document.getElementById("input").value);
+                    xhttp.send("postName=" + document.getElementById("postName").value 
+                        + "&postContent=" + document.getElementById("postContent").value);
                 }
             })
         </script>
