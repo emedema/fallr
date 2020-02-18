@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Settings - Fallr</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" type="text/css" href="CSS/settings.css">
+
+    <script>
+        // Function to fill the image input if there is no image selected //
+        function imageError() {
+            document.getElementById("profilePicture").onerror=null;
+            document.getElementById("profilePicture").style.borderStyle="solid";
+            document.getElementById("profilePicture").setAttribute( "src", "images/placeholder.jpg");
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar sticky-top navbar-expand-lg navbar-light">
+            <img alt="Brand" src="images/fallr_logo.png" style="width: 50px">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse mr-auto" id="navbarNav">
+                <ul id="navbar-ul-left" class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="feed">Feed<span class="sr-only"></span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="trending">Trending<span class="sr-only"></span></a>
+                    </li>
+                </ul>
+                <ul id="navbar-ul-center" class="navbar-nav ml-auto">
+                    <form id="search-form" class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search"
+                            aria-label="Search">
+                    </form>
+                </ul>
+                <ul id="navbar-ul-right" class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html">Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="login-nav" class="nav-link" href="personal_blog.html">Username</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main class="container">
+        <div class="row mx-auto justify-content-center" style="width: 80%;">
+                <form>
+                    <div id="login" style="padding: 2em;">
+                        <div class="row mx-auto justify-content-center" >
+                            <div>
+                                <div id="userPhoto">
+                                    <img id="profilePicture" src="" onerror="imageError();" style="max-width: 300px;" alt="User Profile Picture">
+                                </div>
+                                <input name="profilePictureInput" type="file" style="display: none" id="profilePictureInput">
+                            </div>
+                            <div>
+                                <div>
+                                    <input id="username" class="form-control" type="text" name="username"
+                                        placeholder="Username" />
+                                </div>
+                                <div>
+                                    <input id="email" class="form-control" type="email" name="email" placeholder="Email" />
+                                </div>
+                                <div class="row" style="margin-left: 1em;">
+                                    <input id="firstName" style="width: 45%;" class="form-control" type="text" name="firstName"
+                                        placeholder="First Name" />
+                                    <input id="lastName" style="width: 45%; margin-left: 1em;" class="form-control" type="text" name="lastName"
+                                        placeholder="Last Name" />
+                                </div>
+                                <div>
+                                    <input id="password" class="form-control" type="password" name="password"
+                                        placeholder="Password" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-auto justify-content-center">
+                            <div class="col-sm-4 text-center">
+                                <input id="login-button" class="form-control" type="button" value="submit">
+                                <p id="submitError"></p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </main>
+    <footer class="align-self-center">
+        <p>View the code on <a href="https://github.com/Nathan-Nesbitt/fallr">github</a></p>
+    </footer>
+    <script>
+
+        /* Function that selects the image input when you click the image */
+        document.getElementById("userPhoto").addEventListener("click", function () {
+           document.getElementById("profilePictureInput").click();
+        });
+
+        /* Function that takes an element id and checks the validity of the input */
+
+        function fieldCheck(fieldID) {
+            element = document.getElementById(fieldID);
+            if (element.value == "") {
+                document.getElementById("submitError").innerHTML = fieldID + " is required.";
+                return false;
+            }
+            return true;
+        }
+
+        document.getElementById("login-button").addEventListener("click", function () {
+            xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("submitError").innerHTML = "Password Successfully Changed";
+                }
+            };
+
+            // Checks to see if the user is missing any fields //
+
+            var fields = ["username", "email", "firstName", "lastName", "password"];
+
+            var success;
+
+            for (i in fields) {
+                if (!(success = fieldCheck(fields[i])))
+                    break;
+            };
+
+            /* Makes the request if all fields are valid */
+            if (success) {
+                xhttp.open("POST", "http://localhost/fallrAPI/updateUser", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("password=" + document.getElementById("password").value);
+
+                // Resets the error field to null on success //
+                document.getElementById("submitError").innerHTML = "";
+            }
+        })
+    </script>
+</body>
+
+</html>
