@@ -17,6 +17,15 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <link rel="stylesheet" type="text/css" href="CSS/settings.css">
+
+    <script>
+        // Function to fill the image input if there is no image selected //
+        function imageError() {
+            document.getElementById("profilePicture").onerror=null;
+            document.getElementById("profilePicture").style.borderStyle="solid";
+            document.getElementById("profilePicture").setAttribute( "src", "images/placeholder.jpg");
+        }
+    </script>
 </head>
 
 <body>
@@ -54,47 +63,56 @@
         </nav>
     </header>
     <main class="container">
-        <div class="row mx-auto justify-content-center">
-            <form class="col-lg-12 col-md-12 col-sm-12">
-                <div id="login" class="row mx-auto justify-content-center">
-                    <div>
-                        <img style="max-width: 200px;" src="images/placeholder.jpg">
+        <div class="row mx-auto justify-content-center" style="width: 80%;">
+                <form>
+                    <div id="login" style="padding: 2em;">
+                        <div class="row mx-auto justify-content-center" >
+                            <div>
+                                <div id="userPhoto">
+                                    <img id="profilePicture" src="" onerror="imageError();" style="max-width: 300px;" alt="User Profile Picture">
+                                </div>
+                                <input name="profilePictureInput" type="file" style="display: none" id="profilePictureInput">
+                            </div>
+                            <div>
+                                <div>
+                                    <input id="username" class="form-control" type="text" name="username"
+                                        placeholder="Username" />
+                                </div>
+                                <div>
+                                    <input id="email" class="form-control" type="email" name="email" placeholder="Email" />
+                                </div>
+                                <div class="row" style="margin-left: 1em;">
+                                    <input id="firstName" style="width: 45%;" class="form-control" type="text" name="firstName"
+                                        placeholder="First Name" />
+                                    <input id="lastName" style="width: 45%; margin-left: 1em;" class="form-control" type="text" name="lastName"
+                                        placeholder="Last Name" />
+                                </div>
+                                <div>
+                                    <input id="password" class="form-control" type="password" name="password"
+                                        placeholder="Password" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-auto justify-content-center">
+                            <div class="col-sm-4 text-center">
+                                <input id="login-button" class="form-control" type="button" value="submit">
+                                <p id="submitError"></p>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <div>
-                            <input id="username" class="form-control" type="text" name="username"
-                                placeholder="Username" />
-                        </div>
-                        <div>
-                            <input id="email" class="form-control" type="email" name="email" placeholder="Email" />
-                        </div>
-                        <div>
-                            <input id="firstName" class="form-control" type="text" name="firstName"
-                                placeholder="First Name" />
-                        </div>
-                        <div>
-                            <input id="lastName" class="form-control" type="text" name="lastName"
-                                placeholder="Last Name" />
-                        </div>
-                        <div>
-                            <input id="password" class="form-control" type="password" name="password"
-                                placeholder="Password" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div>
-                        <input id="login-button" class="form-control" type="button" value="submit">
-                        <p id="submitError"></p>
-                    </div>
-                </div>
-            </form>
+                </form>
         </div>
     </main>
     <footer class="align-self-center">
         <p>View the code on <a href="https://github.com/Nathan-Nesbitt/fallr">github</a></p>
     </footer>
     <script>
+
+        /* Function that selects the image input when you click the image */
+        document.getElementById("userPhoto").addEventListener("click", function () {
+           document.getElementById("profilePictureInput").click();
+        });
+
         /* Function that takes an element id and checks the validity of the input */
 
         function fieldCheck(fieldID) {
