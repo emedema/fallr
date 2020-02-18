@@ -35,7 +35,6 @@ h2{
     margin-right: auto;
     margin-top: 2em;
     margin-bottom: 2em;
-    padding-bottom: 1em;
 
 }
 #content_create{
@@ -82,7 +81,6 @@ h2{
     bottom: 0;
     width: 90%;
     position: absolute;
-    overflow: scroll;
     margin-left: 1em;
 }
 #post-button{
