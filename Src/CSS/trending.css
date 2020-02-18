@@ -132,6 +132,7 @@ img {
     margin-left: 1em;
     margin-bottom: 1em;
     margin-right: 1em;
+    border-radius: 50%;
 }
 #user_blog{
     width: 94%;
