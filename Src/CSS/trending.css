@@ -141,7 +141,10 @@ img {
     margin-right: 1em;
     margin-bottom: 1em;
 }
-
+#post p{
+    margin-left: 1em;
+    margin-top: 1em;
+}
 #content{
     margin-left: 1em;
     margin-right: 1em;
