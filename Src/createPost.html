@@ -65,9 +65,10 @@
                                 <textarea name = 'postContent' rows="10" cols="100" id = "input" class="form-control">
                                 </textarea>
                                 <div id = "confirm">
-                                    <input type="image" src="images/pic.png" name="addpic" class="add_pic" id="add_pic"/> 
+                                    <input type="image" src="images/pic.png" name="addpic" class="add_pic" id="add_pic" class = "form-control"/> 
                                     <input type = 'button' value = 'Create' id = 'post-button' class = 'form-control'>
                                 </div>
+                                <p id="submitError"></p>
                             </form>
                         </div>
                     </div>
@@ -116,7 +117,7 @@
                 
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined" ) {
-                        window.location.href = "/fallr/feed"
+                        //window.location.href = "/fallr/feed"
                     }
                 };
 
@@ -137,8 +138,8 @@
                 if(success) {
                     xhttp.open("POST", "http://localhost/fallrAPI/posts", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    xhttp.send("postName=" + document.getElementById("postName").value 
-                        + "&postContent=" + document.getElementById("postContent").value);
+                    xhttp.send("postName=" + document.getElementById("title").value 
+                        + "&postContent=" + document.getElementById("input").value);
                 }
             })
         </script>
