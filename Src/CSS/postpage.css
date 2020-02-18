@@ -52,6 +52,11 @@ img#user_pic{
     padding-bottom: 1em;
 
 }
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+}
 #f{
     display: flex;
     height: fit-content;
@@ -59,7 +64,6 @@ img#user_pic{
 #img_container2{
     text-align: left;
     display: block;
-    width: 10%;
 }
 #user_img{
     height: 50px;
@@ -67,6 +71,7 @@ img#user_pic{
     margin-top: 1em;
     margin-left: 1em;
     margin-bottom: 1em;
+    margin-right: 1em;
 }
 #user_blog{
     width: 90%;
