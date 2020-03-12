@@ -8,7 +8,7 @@
         crossorigin="anonymous">
         <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/admin.css">
+        <link rel="stylesheet" type="text/css" href="CSS/admin.css">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -46,7 +46,7 @@
                             <a class="nav-link" href="admin" id = "active">Admin</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="settings">Settings</a>
+                            <a class="nav-link" href="settings.html">Settings</a>
                         </li>
                         <li class="nav-item">
                             <a id="login-nav" class="nav-link" href="personal_blog">User</a>
@@ -58,14 +58,17 @@
         <div id = 'main'>
                 <div id = 'functions'>
                     <h2>Admin</h2>
+                    <a href="statistics.html" class="float">
+                        <i class="my-float">Statistics</i>
+                    </a>
                     <div id = 'post'>
                         <div id = 'content'>
                             <h5>Search for User</h5>
                             <p>Enter username, email, or post to find user</p>
                             <div id = 'search_form'>
                                 <form>
-                                    <input type = "text" name = "query" id = "search_bar" placeholder="Enter search here">
-                                    <input type = 'submit' name = 'submit' id = "search_bt" value = 'Search'>
+                                    <input type = "text" name = "query" id = "search_bar" placeholder="Enter search here" class = 'form-control'>
+                                    <input type = 'submit' name = 'submit' id = "search_bt" value = 'Search' class = 'form-control'>
                                 </form>
                             </div>
                         </div>
@@ -76,8 +79,8 @@
                             <p>Enter username, email, or post to find user</p>
                             <div id = 'search_form'>
                                 <form>
-                                    <input type = "text" name = "query" id = "search_bar" placeholder="Enter search here">
-                                    <input type = 'submit' name = 'submit' id = "search_bt" value = 'Search'>
+                                    <input type = "text" name = "query" id = "search_bar" placeholder="Enter search here" class = 'form-control'>
+                                    <input type = 'submit' name = 'submit' id = "search_bt" value = 'Search' class = 'form-control'>
                                 </form>
                             </div>
                         </div>
