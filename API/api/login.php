@@ -4,6 +4,9 @@ require_once '../Login.php';
 require_once '../connection.php';
 require_once '../Account.php';
 
+// Allows the server to send data to other site (We are only allowing the current domain) //
+header("Access-Control-Allow-Origin: https://fallr.ca"); 
+
 // Sets the type to be JSON/Javascript
 header("Content-Type:application/javascript");
 
