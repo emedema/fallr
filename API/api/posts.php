@@ -27,6 +27,8 @@ if(isset($_POST['postContent']))
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];
 
+$connection = createConnection();
+
 /* DELETE THE POST */
 
 if($postID && $token 
@@ -60,7 +62,6 @@ else if($postID && $postName && $postContent && $token
 
 // If we have a username we will get the posts for that user //
 else if($username) {
-    $connection = createConnection();
 
     $result = Post::getPosts($connection, $username);
     $feedData = array();
