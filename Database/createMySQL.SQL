@@ -28,6 +28,8 @@ CREATE TABLE fallr.Users
     (
         username VARCHAR(30) NOT NULL UNIQUE, /* As we want each user to have a unique username */
         email VARCHAR(40) NOT NULL UNIQUE, /* As we want each user to have a unique email (avoid duplicates) */
+        active BOOLEAN default true,
+        admin BOOLEAN default false,
         firstName VARCHAR(255),
         lastName VARCHAR(255),
         image TEXT,
@@ -110,3 +112,17 @@ CREATE TABLE fallr.Comments
             ON DELETE CASCADE
             ON UPDATE CASCADE    
     );
+
+CREATE TABLE fallr.UpdatePassword (
+    creationDate DATETIME default CURRENT_TIMESTAMP,
+    email VARCHAR(40),
+    link TEXT,
+    FOREIGN KEY (email)
+            REFERENCES Users(email)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
+);
+
+CREATE EVENT deleteUpdatePassword
+    ON SCHEDULE EVERY 24 HOUR
+    DO DELETE FROM fallr.UpdatePassword WHERE `creationDate` < (CURRENT_TIMESTAMP - INTERVAL 24 HOUR);
