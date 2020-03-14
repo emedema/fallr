@@ -14,15 +14,19 @@ if(isset($_POST['postID']))
     $postID = $_POST['postID'];
 
 if(isset($_POST['comment']))
-    $comment = $_POST['commment'];
+    $comment = $_POST['comment'];
+
+if(isset($_GET['commentID']))
+    $commentID = $_GET['commentID'];
 
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];
 
+$connection = createConnection();
+
+
 if ($postID && $token && $comment) {
  
-    $connection = createConnection();
-
     $loggedIn = Login::checkToken($connection, $token);
 
     // If we are logged in, we try to create the like
@@ -36,7 +40,13 @@ if ($postID && $token && $comment) {
         header("HTTP/1.1 406 Login Invalid");
 }
 
-else if($postID && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
+// Gets a single comment //
+else if($commentID && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    $comment = Comment::getComment($connection, $commentID);
+    echo(json_encode($comment));
+}
+
+else if($commentID && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
     
     $connection = createConnection();
 
@@ -51,7 +61,7 @@ else if($postID && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
             Comment::deleteComment($connection, $commentID);
         }
         else
-            header("HTTP/1.1 406 Login Invalid");
+            header("HTTP/1.1 406 Not Owner");
     }
     else
         header("HTTP/1.1 406 Login Invalid");
