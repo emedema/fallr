@@ -32,7 +32,7 @@ if ($postID && $token && $comment) {
     // If we are logged in, we try to create the like
     if($loggedIn){
         $username = Login::getIDFromToken($token);
-        Comment::createComment($connection, $postID, $username, $comment);
+        $postCreateSuccess = Comment::createComment($connection, $postID, $username, $comment);
         if(!$postCreateSuccess)
             header("HTTP/1.1 405 Create Comment Failure");
     }
