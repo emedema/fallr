@@ -18,4 +18,11 @@
     function getSecretKey() {
         return "9q8he9q8be9q8e69v87q3q7tbc97r238t92qc7r3g897q23t9omawonxd8bq7t93rc";
     }
+
+    function getAWSKey() {
+        return [
+            'key'    => '',
+            'secret' => ''
+        ];
+    }
 ?>

@@ -8,3 +8,4 @@ RewriteRule ^trending$ trending.html [NC,L]
 RewriteRule ^settings$ settings.html [NC,L]
 RewriteRule ^passwordUpdateEmail$ passwordUpdateEmail.html [NC,L]
 RewriteRule ^personal_blog$ personal_blog.html [NC,L]
+RewriteRule ^passwordUpdate([0-9a-zA-Z_-]*)$ passwordUpdate.html?$1

@@ -1,4 +1,11 @@
 <?php
+
+require_once 'vendor/autoload.php';
+require_once 'credentials.php';
+
+// The required AWS libs //
+use Aws\Ses\SesClient;
+use Aws\Exception\AwsException;      
 class Account {
 	
 	public function createHashedPassword($password){
@@ -92,14 +99,70 @@ class Account {
 		$query->bind_param("ss", $email, $url);
 
 		$query->execute();
+
+		                                                                                                                                                                                                                                                                                                                           
+		// If necessary, modify the path in the require statement below to refer to the
+		// location of your Composer autoload.php file.
 		
-		// Sends the email //
-		$to = $email;
-		$subject = "Reset password on fallr.ca";
-		$msg = "Hi there, reset your password here: https://fallr.ca/?uniqueID=" . $url;
-		$msg = wordwrap($msg,70);
-		$headers = "From: reset@fallr.ca";
-		mail($to, $subject, $msg, $headers);
+		// Create an SesClient. Change the value of the region parameter if you're        
+		// using an AWS Region other than US West (Oregon). Change the value of the
+		// profile parameter if you want to use a profile in your credentials file
+		// other than the default.
+		
+		if(mysqli_affected_rows($connection) > 0) {
+			$SesClient = new SesClient([
+				'version' => 'latest',
+				'region' => 'us-east-1',
+				'credentials' => getAWSKey(),
+				]);
+				// Replace sender@example.com with your "From" address.
+				// This address must be verified with Amazon SES.
+				$sender_email = 'reset@mail.fallr.ca';
+				// Replace these sample addresses with the addresses of your recipients. If
+				// your account is still in the sandbox, these addresses must be verified.
+				$recipient_emails = [$email];
+				// Specify a configuration set. If you do not want to use a configuration
+				// set, comment the following variable, and the
+				// 'ConfigurationSetName' => $configuration_set argument below.
+				$configuration_set = 'ConfigSet';
+				$subject = "Reset password on fallr.ca";
+				$plaintext_body = "Hi there, reset your password here: https://fallr.ca/passwordUpdate/?uniqueID=" . $url;
+				$html_body =  "Hi there, reset your password here: <a href=https://fallr.ca/passwordUpdate?uniqueID='" . $url . "'> https://fallr.ca/passwordUpdate?uniqueID=" . $url . "</a>";
+				$char_set = 'UTF-8';
+				
+				try {    
+					$result = $SesClient->sendEmail([
+						'Destination' => [
+							'ToAddresses' => $recipient_emails,
+						],
+						'ReplyToAddresses' => [$sender_email],
+						'Source' => $sender_email,
+						'Message' => [
+							'Body' => [
+								'Html' => [
+									'Charset' => $char_set,
+									'Data' => $html_body,
+								],
+								'Text' => [
+									'Charset' => $char_set,
+									'Data' => $plaintext_body,
+								],
+							],
+							'Subject' => [
+								'Charset' => $char_set,
+								'Data' => $subject,
+							],
+						],
+						]);
+						$messageId = $result['MessageId'];
+						echo("Success");
+					} catch (AwsException $e) {
+						// output error message if fails
+						echo $e->getMessage();
+						echo("The email was not sent");
+						echo "\n";
+					}
+		}
 
 		/* Returns inserted_id */
 		return $query->get_result();

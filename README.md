@@ -1,5 +1,6 @@
 # fallr
 A blogging website for falling into deep holes. Built with MySQL, PHP and JavaScript.
+This project uses Amazon SES for delivering mail.
 
 ## Requirements
 
@@ -44,3 +45,6 @@ in the `credentials.php` file (I have left phony information in there for now, a
 how to properly create this file). You should also update the secret key as it is public on git.
 
 This should be enough to get basic functionality.
+
+## Mail
+This project uses the amazon SES mailing service to send reset emails to the clients.
