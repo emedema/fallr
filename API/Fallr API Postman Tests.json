@@ -1,0 +1,469 @@
+{
+	"info": {
+		"_postman_id": "4b6c1253-a0b9-4bb3-9559-7a8e71a7e967",
+		"name": "Fallr",
+		"description": "This is the test framework for the fallr API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Delete Post",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/posts/id/4",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"posts",
+								"id",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/posts/id/3",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"posts",
+								"id",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "postName",
+									"value": "TestPost",
+									"type": "text"
+								},
+								{
+									"key": "postContent",
+									"value": "Some content for the test post",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/fallrAPI/post",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User's Posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/posts/a",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"posts",
+								"a"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Update User Info",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "first",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "last",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test@email.ca",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/fallrAPI/user/a",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"user",
+								"a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate/Activate User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/users/deactivate/a",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"users",
+								"deactivate",
+								"a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "a",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "a",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/fallrAPI/login",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"login"
+							]
+						},
+						"description": "Creates a login with the server"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hot Feed",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/feed/hot",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"feed",
+								"hot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/users/a",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"users",
+								"a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Feed",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/feed",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"feed"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Comment on Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "postID",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "comment",
+									"value": "Woah this is a cool comment",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/fallrAPI/comment",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/comments/4",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"comments",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Comments for Post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/posts/comments/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"posts",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Comment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/comments/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Following",
+			"item": [
+				{
+					"name": "Follow/Unfollow User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "b",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/fallrAPI/subscribe",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"subscribe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subscriptions for a User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/users/subscriptions/c",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"users",
+								"subscriptions",
+								"c"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Likes",
+			"item": [
+				{
+					"name": "Like/Unlike Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "postID",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost/fallrAPI/like",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Post Likes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/fallrAPI/posts/likes/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"fallrAPI",
+								"posts",
+								"likes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

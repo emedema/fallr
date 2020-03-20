@@ -2,20 +2,22 @@
 
 require_once '../Login.php';
 require_once '../connection.php';
+require_once '../Account.php';
 
-// Allows the server to send data to other site //
-header("Access-Control-Allow-Origin: *"); 
+// Allows the server to send data to other site (We are only allowing the current domain) //
+header("Access-Control-Allow-Origin: https://fallr.ca"); 
 
 // Sets the type to be JSON/Javascript
 header("Content-Type:application/javascript");
 
-if (isset($_POST['username']) && isset($_POST['password'])) {
+$connection = createConnection();
+
+// If the password is set we can simply log the person in //
+if (isset($_POST['username']) && isset($_POST['password']) && ($_SERVER['REQUEST_METHOD'] === 'POST')) {
 
     $password = $_POST['password'];
     $username = $_POST['username'];
     
-    $connection = createConnection();
-
     /* Checks to see if the user and pass are correct */
     $loginResult = Login::loginUser($connection, $username, $password);
     
@@ -26,6 +28,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     else
         header("HTTP/1.1 401 Login Failure");
 }
+
+// Else we are going to send an update password request to an email //
+else if(($_SERVER['REQUEST_METHOD'] === 'POST') && isset( $_POST['email'])) {
+    $email = $_POST['email'];
+    Account::updatePasswordEmail($connection, $email);
+}
+
 else
     header("HTTP/1.1 404 Parameters Not Passed");
 

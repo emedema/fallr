@@ -88,12 +88,12 @@ class Post {
         /* Prepares the function so we can pass in the values from the user */
         $query = $connection->prepare("SELECT username FROM Posts WHERE postID = ?");		
 
-        $query->bind_param("i", $postID);
+        $query->bind_param("s", $postID);
 
         $query->execute();
         
         /* Returns inserted_id */
-        return $query->get_result()["username"];
+        return $query->get_result()->fetch_assoc()["username"];
     }
 }
 

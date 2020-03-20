@@ -1,3 +1,8 @@
+<LimitExcept GET POST DELETE PUT HEAD>
+  Order Allow,Deny
+  Deny from all
+</LimitExcept>
+
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin "https://fallr.ca"
     Header set Access-Control-Allow-Credentials true
@@ -12,7 +17,7 @@ RewriteRule ^login$ login.php [NC,L]
 RewriteRule ^createAccount$ createAccount.php [NC,L] 
 
 # Updates user information
-RewriteRule ^users$ users.php [NC,L] 
+RewriteRule ^user/([A-Za-z0-9]*)$ users.php?updateUser=true&username=$1 [QSA] 
 
 # This creates a post
 RewriteRule ^post$ posts.php [NC,L] 
@@ -57,3 +62,6 @@ RewriteRule ^users/subscriptions/([A-Za-z0-9]*)$ subscribe.php?username=$1 [QSA]
 
 # This gets all likes for a post
 RewriteRule ^posts/likes/([A-Za-z0-9]*)$ like.php?postID=$1 [QSA]
+
+# This gets all likes for a post
+RewriteRule ^users/deactivate/([A-Za-z0-9]*)$ users.php?deactivateUser=true&username=$1 [QSA]

@@ -65,6 +65,14 @@ Requires valid key [Owner].
 POST | [domain]/users
 ``` 
 
+### Deactivate User (Completed)
+
+Admins can activate or deactivate a user by using the following call
+
+```
+POST | [domain]/users/deactivate/[username]
+```
+
 ## Feed
 
 ### Get the feed for a user (Completed)
@@ -106,7 +114,7 @@ GET | [domain]/posts/id/[postID]
 POST | [domain]/posts/id/[postID]
 ```
 
-### Deleting a post (Not Tested)
+### Deleting a post (Completed)
 
 Requires a valid key [Owner].
 
@@ -134,7 +142,7 @@ GET | [domain]/posts/comments/[postID]
 GET | [domain]/comments/[commentID]
 ```
 
-### Delete Comment (Not Tested)
+### Delete Comment (Completed)
 
 Requires a valid key [Owner].
 

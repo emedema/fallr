@@ -1,0 +1,591 @@
+{
+	"info": {
+		"_postman_id": "4b6c1253-a0b9-4bb3-9559-7a8e71a7e967",
+		"name": "Fallr",
+		"description": "This is the test framework for the fallr API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Create Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "postName",
+									"value": "TestPost",
+									"type": "text"
+								},
+								{
+									"key": "postContent",
+									"value": "Some content for the test post",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.fallr.ca/post",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/posts/id/1",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"posts",
+								"id",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User's Posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/posts/d",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"posts",
+								"d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/posts/id/2",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"posts",
+								"id",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "d",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "d",
+									"type": "text"
+								},
+								{
+									"key": "firstName",
+									"value": "d",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "d",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "d@d.ca",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.fallr.ca/createAccount",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"createAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "a",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "a",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.fallr.ca/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "Creates a login with the server"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Info",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "first",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "last",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "nathan@nesbitt.ca",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.fallr.ca/user/d",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"user",
+								"d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate/Activate User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/users/deactivate/d",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"users",
+								"deactivate",
+								"d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "nathan@nesbitt.ca",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.fallr.ca/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hot Feed",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/feed/hot",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"feed",
+								"hot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/users/a",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"users",
+								"a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Feed",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/feed",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"feed"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Comment on Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "postID",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "comment",
+									"value": "Woah this is a cool comment",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.fallr.ca/comment",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/comments/4",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"comments",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Comments for Post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/posts/comments/1",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"posts",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Comment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/comments/1",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Following",
+			"item": [
+				{
+					"name": "Follow/Unfollow User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "d",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.fallr.ca/subscribe",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"subscribe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subscriptions for a User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/users/subscriptions/d",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"users",
+								"subscriptions",
+								"d"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Likes",
+			"item": [
+				{
+					"name": "Like/Unlike Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "postID",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://api.fallr.ca/like",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Post Likes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/posts/likes/2",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"posts",
+								"likes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

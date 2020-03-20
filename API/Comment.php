@@ -40,7 +40,7 @@ class Comment {
 		/* Returns success */
 		$query->execute();
 		
-		return $query->get_result();
+		return $query->get_result()->fetch_assoc();
 	}
 
 	public function deleteComment($connection, $commentID) {
@@ -58,7 +58,7 @@ class Comment {
 		$query->bind_param("i", $commentID);
 		$query->execute();
 		/* Returns success */
-		return $query->get_result();
+		return $query->get_result()->fetch_assoc()["username"];
 	}
 }
 
