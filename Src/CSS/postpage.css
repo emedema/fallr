@@ -1,0 +1,135 @@
+body{
+    background-color: #438173;
+}
+.navbar{
+    background-color: #333333;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: #F0F7F4;
+}
+
+.navbar-light .navbar-nav #active {
+    color: #6F857D;
+  }
+  
+.navbar-light .navbar-nav .nav-link:hover:not(#active) {
+    color: #438173;
+  }
+
+
+#img_container{
+    text-align: center;
+    display: block;
+    margin-top: 2em;
+}
+
+img#user_pic{
+    margin-left: auto;
+    margin-right: auto;
+    height: 90px;
+    border-radius: 70%;
+    margin-bottom: 2em;
+    margin-top: 2em;
+}
+
+#posts{
+    background-color:#3A4B48;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100vh;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+#post{
+    background-color: #6F857D;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding-bottom: 1em;
+
+}
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+}
+#f{
+    display: flex;
+    height: fit-content;
+}
+#img_container2{
+    text-align: left;
+    display: block;
+}
+#user_img{
+    height: 50px;
+    width: 50px;
+    margin-top: 1em;
+    margin-left: 1em;
+    margin-bottom: 1em;
+    margin-right: 1em;
+}
+#user_blog{
+    width: 90%;
+    background-color: #F0F7F4;
+    margin-top: 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    padding-left: 1em;
+}
+#content{
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    background-color: #F0F7F4;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+    height: fit-content;
+    position: relative;
+}
+#content h6{
+    padding-left: 1em;
+}
+#likes{
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 1em;
+    background-color: #F0F7F4;
+    display: flex;
+    align-items: flex-end;
+    bottom: 0;
+    position: absolute;
+}
+#like_bt{
+    width: 50px;
+    height: 50px;
+}
+#comment{
+    border: #6F857D 1px solid;
+    margin: 1em;
+}
+#post_content{
+    border: #6F857D 1px solid;
+    padding:2em;
+    margin: 1em;
+    padding-bottom: 5em;
+}
+@media (max-width: 543px) {
+    /* Makes it so when the screen is small, it shrinks the size*/
+    .container .row {
+      min-height: 400px;
+    }
+  }
+  
+  @media (min-width: 544px) {
+    /* Makes it so when the screen is large, it expands the size*/
+    .container .row {
+      min-height: 600px;
+    }
+  }
+
