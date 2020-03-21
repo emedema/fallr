@@ -136,13 +136,13 @@
                         break;
                 };
                 
-                
                 /* Makes the request if all fields are valid */
                 if(success) {
                     xhttp.open("POST", "http://localhost/fallrAPI/posts", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send("postName=" + document.getElementById("postName").value 
-                        + "&postContent=" + document.getElementById("postContent").value);
+                        + "&postContent=" + document.getElementById("postContent").value)
+                        + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1];
                 }
             })
         </script>
