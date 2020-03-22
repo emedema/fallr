@@ -4,6 +4,7 @@ require_once '../connection.php';
 require_once '../Login.php';
 require_once '../Comment.php';
 
+header("Access-Control-Allow-Origin: https://fallr.ca");
 header('Content-type: application/json');
 
 $postID = NULL;
@@ -21,6 +22,12 @@ if(isset($_GET['commentID']))
 
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];
+
+if(isset($_POST['loggedIn']))
+    $token = $_POST['loggedIn'];
+
+if(isset($_GET['loggedIn']))
+    $token = $_GET['loggedIn'];
 
 $connection = createConnection();
 
