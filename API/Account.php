@@ -127,7 +127,7 @@ class Account {
 				$configuration_set = 'ConfigSet';
 				$subject = "Reset password on fallr.ca";
 				$plaintext_body = "Hi there, reset your password here: https://fallr.ca/passwordUpdate/?uniqueID=" . $url;
-				$html_body =  "Hi there, reset your password here: <a href=https://fallr.ca/passwordUpdate?uniqueID='" . $url . "'> https://fallr.ca/passwordUpdate?uniqueID=" . $url . "</a>";
+				$html_body =  "Hi there, reset your password here: <a href=https://fallr.ca/passwordUpdate?uniqueID=" . $url . "> https://fallr.ca/passwordUpdate?uniqueID=" . $url . "</a>";
 				$char_set = 'UTF-8';
 				
 				try {    
@@ -172,21 +172,30 @@ class Account {
 	// Requires a pre-hased password //
 	public function updatePassword($connection, $url, $password) {
 		// This only allows the request if the email was sent within the last 24 hours //
-		$query = $connection->prepare("SELECT email FROM UpdatePassword WHERE link=?, and creationDate < (NOW()-INTERVAL 1 DAY)");		
-
+		$query = $connection->prepare("SELECT email FROM UpdatePassword WHERE link=? and NOW() < DATE(DATE_ADD(creationDate, INTERVAL 1 DAY))");		
 		$query->bind_param("s", $url);
 
 		$query->execute();
 		
 		// Get the username for the user based on the URL //
-		$email = $query->get_result()->fetch_assoc();
+		$email = $query->get_result()->fetch_assoc()['email'];
 
-		$query = $connection->prepare("UPDATE users SET password = ? WHERE email = ?");		
+		$query = $connection->prepare("UPDATE Users SET password = ? WHERE email = ?");		
 
 		$query->bind_param("ss", $password, $email);
 
 		$query->execute();
-		
+
+		// Finally if this updates successfully we kill the link //
+		if($connection->affected_rows > 0) {
+			Account::deleteUpdatePassword($connection, $url);
+		}	
+	}
+
+	public function deleteUpdatePassword($connection, $url) {
+		$query = $connection->prepare("DELETE FROM UpdatePassword WHERE link = ?");		
+		$query->bind_param("s", $url);
+		$query->execute();
 	}
 
 	public function deactivateAccount($connection, $deactivated_user) {
