@@ -116,6 +116,21 @@
             document.getElementById("profilePictureInput").click();
         });
 
+        // This makes it so that the image shows up in the 
+        document.getElementById("profilePictureInput").addEventListener("change", function () {
+            input = document.getElementById("profilePictureInput");
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    document.getElementById("profilePicture").src = e.target.result;
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+
+        });
         /* Function that takes an element id and checks the validity of the input */
 
         function fieldCheck(fieldID) {
