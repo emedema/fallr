@@ -219,6 +219,39 @@ class Account {
 
 		return true;
 	}
+
+	public function searchUser($connection, $partial_username) {		
+
+		$query = $connection->prepare("SELECT username FROM Users WHERE username LIKE CONCAT('%',?,'%')");	
+		
+		$query->bind_param("s", $partial_username);
+
+		$query->execute();
+
+		return $query->get_result();
+	}
+
+	public function searchPost($connection, $post) {		
+
+		$query = $connection->prepare("SELECT username FROM Posts WHERE postName = ?");	
+		
+		$query->bind_param("s", $post);
+
+		$query->execute();
+
+		return $query->get_result();
+	}
+
+	public function searchEmail($connection, $email) {		
+
+		$query = $connection->prepare("SELECT username FROM Users WHERE email = ?");	
+		
+		$query->bind_param("s", $email);
+
+		$query->execute();
+
+		return $query->get_result();
+	}
 }
 
 ?>

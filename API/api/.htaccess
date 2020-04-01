@@ -68,3 +68,12 @@ RewriteRule ^posts/likes/([A-Za-z0-9]*)$ like.php?postID=$1 [QSA]
 
 # This gets all likes for a post
 RewriteRule ^users/deactivate/([A-Za-z0-9]*)$ users.php?deactivateUser=true&username=$1 [QSA]
+
+# This gets all users similar to search
+RewriteRule ^search/username/([A-Za-z0-9]*)$ search.php?type=username&username=$1 [QSA]
+
+# This gets the user with an email address
+RewriteRule ^search/email/([A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z]{2,})$ search.php?type=email&email=$1 [QSA]
+
+# This gets all users similar to post name
+RewriteRule ^search/post/([A-Za-z0-9]*)$ search.php?type=post&post=$1 [QSA]

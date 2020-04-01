@@ -361,6 +361,72 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Search User on Partial Username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/search/username/na",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"search",
+								"username",
+								"na"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search User on Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/search/email/nathan@nesbitt.ca",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"search",
+								"email",
+								"nathan@nesbitt.ca"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search User on Post Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/search/post/asd",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"search",
+								"post",
+								"asd"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -378,7 +444,7 @@
 							"formdata": [
 								{
 									"key": "postID",
-									"value": "1",
+									"value": "2",
 									"type": "text"
 								},
 								{
