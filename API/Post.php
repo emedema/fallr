@@ -95,6 +95,17 @@ class Post {
         /* Returns inserted_id */
         return $query->get_result()->fetch_assoc()["username"];
     }
+
+    public function searchPosts($connection, $partial_post) {		
+
+      $query = $connection->prepare("SELECT * FROM Posts WHERE postName LIKE CONCAT('%',?,'%')");	
+      
+      $query->bind_param("s", $partial_post);
+  
+      $query->execute();
+  
+      return $query->get_result();
+    }
 }
 
 ?>

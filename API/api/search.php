@@ -2,6 +2,7 @@
 
 require_once '../connection.php';
 require_once '../Account.php';
+require_once '../Post.php';
 
 header("Access-Control-Allow-Origin: https://fallr.ca");
 header('Content-type: application/json');
@@ -47,6 +48,15 @@ else if($type === 'post' && $post) {
         $users[] = $row;
     }
     echo(json_encode($users));
+}
+
+else if($type === 'allPosts' && $post) {
+    $postQuery = Post::searchPosts($connection, $post);
+    $posts = array();
+    while($row = $postQuery->fetch_assoc()){
+        $posts[] = $row;
+    }
+    echo(json_encode($posts));
 }
 
 else

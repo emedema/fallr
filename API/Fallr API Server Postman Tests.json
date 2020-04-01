@@ -108,6 +108,28 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Search Posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/search/allPosts/asd",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"search",
+								"allPosts",
+								"asd"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}

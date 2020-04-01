@@ -77,3 +77,6 @@ RewriteRule ^search/email/([A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z]{2,})$ search.php?
 
 # This gets all users similar to post name
 RewriteRule ^search/post/([A-Za-z0-9]*)$ search.php?type=post&post=$1 [QSA]
+
+# This gets all posts similar to post name
+RewriteRule ^search/allPosts/([A-Za-z0-9]*)$ search.php?type=allPosts&post=$1 [QSA]
