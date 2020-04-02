@@ -80,3 +80,6 @@ RewriteRule ^search/post/([A-Za-z0-9]*)$ search.php?type=post&post=$1 [QSA]
 
 # This gets all posts similar to post name
 RewriteRule ^search/allPosts/([A-Za-z0-9]*)$ search.php?type=allPosts&post=$1 [QSA]
+
+# This gets all statistical data (hour, day, week, month)
+RewriteRule ^stats/posts/([A-Za-z0-9]*)$ statistics.php?type=$1 [QSA]

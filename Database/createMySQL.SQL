@@ -53,6 +53,7 @@ CREATE TABLE fallr.Tokens
 CREATE TABLE fallr.Posts 
     (
         postID INT NOT NULL AUTO_INCREMENT,
+        created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         username VARCHAR(30) NOT NULL,
         postName VARCHAR(128),
         postContent TEXT,
