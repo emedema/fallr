@@ -9,3 +9,5 @@ RewriteRule ^settings$ settings.html [NC,L]
 RewriteRule ^passwordUpdateEmail$ passwordUpdateEmail.html [NC,L]
 RewriteRule ^personal_blog$ personal_blog.html [NC,L]
 RewriteRule ^passwordUpdate([0-9a-zA-Z_-]*)$ passwordUpdate.html?$1
+RewriteRule ^statistics$ statistics.html [NC,L]
+RewriteRule ^admin$ admin.html [NC,L]
