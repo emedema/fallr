@@ -13,6 +13,33 @@ class Account {
 		return password_hash($password, PASSWORD_DEFAULT, $options);
 	}
 
+	function addImageToSystem($imageURL) {
+        // Directory for the images
+        $photoDir = "images/";
+            
+		if($imageURL['name'] == "")
+			return false;
+		
+		$finalImageURL =  $photoDir . time() . $imageURL['name'];
+        move_uploaded_file($imageURL["tmp_name"] , $finalImageURL);
+        
+    
+        return $finalImageURL;
+	}
+	
+	function addImageToUser($connection, $username, $image) {
+			
+		/* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("UPDATE Users SET image = ? WHERE username = ?");
+
+		/* Passes the values into the query */
+		if($query != NULL) {
+			$query->bind_param("ss", $image, $username);	
+			/* Returns success */
+			return $query->execute();
+		}
+	}
+
 	public function createAccount($connection, $username, $password, $firstName, $lastName, $email, $image) {
 		
 		/* Creates a hashed password */
@@ -53,7 +80,7 @@ class Account {
 		return $query->get_result();
 	}
 
-	public function updateUserInfo($connection, $username, $email, $firstName, $lastName, $image=NULL) {
+	public function updateUserInfo($connection, $username, $email, $firstName, $lastName, $image) {
 
 		/* Prepares the function so we can pass in the values from the user */
 		if($image != NULL) {
@@ -190,6 +217,15 @@ class Account {
 		if($connection->affected_rows > 0) {
 			Account::deleteUpdatePassword($connection, $url);
 		}	
+	}
+
+	public function updatePasswordFromUsername($connection, $username, $password) {
+
+		$query = $connection->prepare("UPDATE Users SET password = ? WHERE username = ?");		
+
+		$query->bind_param("ss", $password, $username);
+
+		$query->execute();
 	}
 
 	public function deleteUpdatePassword($connection, $url) {
