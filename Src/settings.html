@@ -59,7 +59,7 @@
 
                     </li>
                     <li class="nav-item">
-                        <a id="login-nav" class="nav-link" href="personal_blog">Username</a>
+                        <a id="login-nav" class="nav-link" href="personal_blog"></a>
                     </li>
                 </ul>
             </div>
@@ -112,6 +112,9 @@
         <p>View the code on <a href="https://github.com/Nathan-Nesbitt/fallr">github</a></p>
     </footer>
     <script>
+        /* Function that sets the username for the link */
+        document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+
         /* Function that selects the image input when you click the image */
         document.getElementById("userPhoto").addEventListener("click", function () {
             document.getElementById("profilePictureInput").click();
@@ -245,7 +248,7 @@
                     document.getElementById("lastName").value = data[0]["lastName"];
                     document.getElementById("email").value = data[0]["email"];
                     // This only sets the image if it is defined //
-                    if(typeof data[0]["image"] !== "undefined")
+                    if(data[0]["image"] !== null && data[0]["image"] !== "")
                         document.getElementById("profilePicture").src = encodeURI(("https://api.fallr.ca/" + data[0]["image"]));
                 }
             };
