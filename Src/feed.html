@@ -143,7 +143,7 @@
           })
         }
       }
-      if(typeof(document.cookie.indexOf('loggedIn')) !== "undefined"){
+      if(typeof(document.cookie.indexOf('loggedIn')) === "undefined"){
         alert("Feed page is unavailable for non-loggedIn users.");
         window.location.href = "trending";
       }
