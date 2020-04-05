@@ -19,7 +19,7 @@ class Post {
 		/* Prepares the function so we can pass in the values from the user */
 		$query = $connection->prepare("INSERT INTO Posts (username, postName, image, postContent) VALUES (?, ?, ?, ?)");
 		/* Passes the values into the query */
-		$query->bind_param("sss", $username, $postName, $image, $postContent);
+		$query->bind_param("ssss", $username, $postName, $image, $postContent);
 		
     $query->execute();
         
