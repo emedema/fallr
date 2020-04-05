@@ -76,47 +76,47 @@
       xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(xhttp.response);
-          var post = document.createElement("div");
-          post.setAttribute("id", "post");
-          posts.appendChild(post);
-          var f = document.createElement("div");
-          f.setAttribute("id", "f");
-          f.setAttribute("class", "row");
-          //create the other div stuff
-          var img = document.createElement("div");
-          img.setAttribute("id", "img_container2");
-          img.setAttribute("class", "media-left");
-          var userImg = document.createElement("img");
-          userImg.setAttribute("id", "user_img");
-          userImg.setAttribute("class", "media-object");
-          userImg.src = "images/placeholder.jpg"
-          var blogName = document.createElement("div");
-          blogName.setAttribute("id", "user_blog");
-          blogName.setAttribute("class", "media-body");
-          var blogP = document.createElement("p");
-          blogP.setAttribute("class", "media-heading");
-          var postContent = document.createElement("div");
-          postContent.setAttribute("class", "media-body");
-          postContent.setAttribute("id", "content");
-          var content = document.createElement("p");
-          content.setAttribute("id", "contents");
-          var likes = document.createElement("div");
-          likes.setAttribute("id", "likes");
-          var likeBtn = document.createElement("input")
-          likeBtn.setAttribute("type", "image");
-          likeBtn.setAttribute("src", "images/like.png");
-          likeBtn.setAttribute("class", "bt_like");
-          likeBtn.setAttribute("id", "like_bt");
-          var num_likes = document.createElement("p");
-          var btn = document.createElement("button");
-          btn.setAttribute("type", "button");
-          btn.setAttribute("class", "btn");
-          btn.setAttribute('onclick', "window.location.href = 'postpage'");
-          btn.innerHTML = "Comment"
 
           //loop through the response
           data.forEach(function(o) {
             if(o.username!=null && o.postContent !=null){
+              var post = document.createElement("div");
+              post.setAttribute("id", "post");
+              posts.appendChild(post);
+              var f = document.createElement("div");
+              f.setAttribute("id", "f");
+              f.setAttribute("class", "row");
+              //create the other div stuff
+              var img = document.createElement("div");
+              img.setAttribute("id", "img_container2");
+              img.setAttribute("class", "media-left");
+              var userImg = document.createElement("img");
+              userImg.setAttribute("id", "user_img");
+              userImg.setAttribute("class", "media-object");
+              userImg.src = "images/placeholder.jpg"
+              var blogName = document.createElement("div");
+              blogName.setAttribute("id", "user_blog");
+              blogName.setAttribute("class", "media-body");
+              var blogP = document.createElement("p");
+              blogP.setAttribute("class", "media-heading");
+              var postContent = document.createElement("div");
+              postContent.setAttribute("class", "media-body");
+              postContent.setAttribute("id", "content");
+              var content = document.createElement("p");
+              content.setAttribute("id", "contents");
+              var likes = document.createElement("div");
+              likes.setAttribute("id", "likes");
+              var likeBtn = document.createElement("input")
+              likeBtn.setAttribute("type", "image");
+              likeBtn.setAttribute("src", "images/like.png");
+              likeBtn.setAttribute("class", "bt_like");
+              likeBtn.setAttribute("id", "like_bt");
+              var num_likes = document.createElement("p");
+              var btn = document.createElement("button");
+              btn.setAttribute("type", "button");
+              btn.setAttribute("class", "btn");
+              btn.setAttribute('onclick', "window.location.href = 'postpage'");
+              btn.innerHTML = "Comment"
               post.appendChild(f);
               f.appendChild(img);
               if(o.image != null){
