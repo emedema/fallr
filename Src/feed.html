@@ -79,6 +79,7 @@
       xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined"){
           data = JSON.parse(xhttp.response);
+          document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
 
           //loop through the response
           data.forEach(function(o) {
@@ -141,6 +142,10 @@
             // to test console.log(o.postID, o.username);
           })
         }
+      }
+      if(typeof(document.cookie.indexOf('loggedIn')) !== "undefined"){
+        alert("Feed page is unavailable for non-loggedIn users.");
+        window.location.href = "trending";
       }
 
       var url = "https://api.fallr.ca/feed";
