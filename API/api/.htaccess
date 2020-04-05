@@ -14,6 +14,7 @@ RewriteEngine On
 
 # Create accounts and login
 RewriteRule ^login$ login.php [NC,L]
+RewriteRule ^logout$ logout.php [NC,L]
 RewriteRule ^createAccount$ createAccount.php [NC,L] 
 
 # Updates user information

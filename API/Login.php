@@ -88,12 +88,21 @@ class Login {
         return $username;
     }
 
-    public function removeSessionToken($connection){
+    public function removeSessionToken($connection, $token){
         $cookie = $_COOKIE["loggedIn"];
-        $username = explode(":", $cookie)[0];
-        $tokenId = explode(":", $cookie)[1];
+        // Gets the ID and username from the token //
+        if($token) {
+            $username = explode(":", $token)[0];
+            $tokenID = explode(":", $token)[1];  
+        }
+        // Else get it from the session //
+        else {
+            $username = explode(":", $cookie)[0];
+            $tokenID = explode(":", $cookie)[1];   
+        }
+
         setcookie('loggedIn', NULL);
-        self::removeToken($connection, $username, $tokenId);
+        self::removeToken($connection, $username, $tokenID);
     }
 }
 ?>
