@@ -3,6 +3,7 @@
 require_once '../connection.php';
 require_once '../Login.php';
 require_once '../Post.php';
+require_once '../Account.php';
 
 header("Access-Control-Allow-Origin: https://fallr.ca");
 header('Content-type: application/json');
@@ -12,6 +13,7 @@ $postID = NULL;
 $postName = NULL;
 $postContent = NULL;
 $token = NULL;
+$image = NULL;
 
 if(isset($_GET['username']))
     $username = $_GET['username'];
@@ -95,7 +97,7 @@ else if ($postName && $postContent && $token) {
 
         $image = Account::addImageToSystem($image);
     
-        $postCreateSuccess = Post::createPost($connection, $userID, $postName, $image, $postContent);
+        $postCreateSuccess = Post::createPost($connection, $userID, $image, $postName, $postContent);
         if(!$postCreateSuccess)
             header("HTTP/1.1 405 Create Post Failure");
     }
