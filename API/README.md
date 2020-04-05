@@ -62,8 +62,16 @@ GET | [domain]/users/[userID]
 Requires valid key [Owner].
 
 ```
-POST | [domain]/users
+POST | [domain]/user/[userID]
 ``` 
+
+### Update user background image
+
+Requires valid key [Owner].
+
+```
+POST | [domain]/user/background/[userID]
+```
 
 ### Deactivate User (Completed)
 
