@@ -242,3 +242,22 @@ Takes:
 ```
 GET | [domain]/posts/likes/[postID]
 ```
+
+## Statistics 
+
+### Get all posts from last hours
+```
+GET | [domain]/stats/posts/hour
+```
+### Get all posts from last 24 hours
+```
+GET | [domain]/stats/posts/day
+```
+### Get all posts from last week
+```
+GET | [domain]/stats/posts/week
+```
+### Get all posts from last month
+```
+GET | [domain]/stats/posts/month
+```
