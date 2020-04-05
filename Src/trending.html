@@ -76,6 +76,7 @@
       xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(xhttp.response);
+          document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
 
           //loop through the response
           data.forEach(function(o) {
