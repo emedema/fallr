@@ -14,6 +14,7 @@ RewriteEngine On
 
 # Create accounts and login
 RewriteRule ^login$ login.php [NC,L]
+RewriteRule ^logout$ logout.php [NC,L]
 RewriteRule ^createAccount$ createAccount.php [NC,L] 
 
 # Updates user information
@@ -36,6 +37,9 @@ RewriteRule ^like$ like.php [NC,L]
 
 # Updates Password
 RewriteRule ^updatePassword$ updatePassword.php [NC,L]
+
+# This deletes a comment for a post
+RewriteRule ^user/background/([A-Za-z0-9]*)$ users.php?updateBackground=true&username=$1 [QSA] 
 
 ## GETTERS 
 

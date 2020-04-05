@@ -32,7 +32,8 @@ CREATE TABLE fallr.Users
         admin BOOLEAN default false,
         firstName VARCHAR(255),
         lastName VARCHAR(255),
-        image TEXT,
+        image TEXT, /* This is the location on the server for the image that they uploaded */
+        backgroundImage TEXT, /* This is the image for the background of their page */
         password CHAR(60) NOT NULL,
         PRIMARY KEY(username)
     );
@@ -57,6 +58,7 @@ CREATE TABLE fallr.Posts
         username VARCHAR(30) NOT NULL,
         postName VARCHAR(128),
         postContent TEXT,
+        image TEXT,
         PRIMARY KEY (postID),
         FOREIGN KEY (username)
             REFERENCES Users(username)

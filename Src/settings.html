@@ -40,10 +40,10 @@
             <div class="collapse navbar-collapse mr-auto" id="navbarNav">
                 <ul id="navbar-ul-left" class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="feed.html">Feed<span class="sr-only"></span></a>
+                        <a class="nav-link" href="feed">Feed<span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="trending.html">Trending<span class="sr-only"></span></a>
+                        <a class="nav-link" href="trending">Trending<span class="sr-only"></span></a>
                     </li>
                 </ul>
                 <ul id="navbar-ul-center" class="navbar-nav ml-auto">
@@ -59,7 +59,7 @@
 
                     </li>
                     <li class="nav-item">
-                        <a id="login-nav" class="nav-link" href="personal_blog">Username</a>
+                        <a id="login-nav" class="nav-link" href="personal_blog"></a>
                     </li>
                 </ul>
             </div>
@@ -112,6 +112,9 @@
         <p>View the code on <a href="https://github.com/Nathan-Nesbitt/fallr">github</a></p>
     </footer>
     <script>
+        /* Function that sets the username for the link */
+        document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+
         /* Function that selects the image input when you click the image */
         document.getElementById("userPhoto").addEventListener("click", function () {
             document.getElementById("profilePictureInput").click();
@@ -125,13 +128,34 @@
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    document.getElementById("profilePicture").src = e.target.result;
+                    // This adds in the new XHTTP request with the image //
+                    xhttp = new XMLHttpRequest();
+                    
+                    // This handles the image information being changed //
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            // If the post to the server succeeds, we change the image //
+                            document.getElementById("profilePicture").src = e.target.result;
+                        }
+                    };
+
+                    var url = "https://api.fallr.ca/user/" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+
+                    var formData = new FormData();
+                    formData.append("updateUser", true);
+                    formData.append("loggedIn", document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+                    formData.append("myfile", document.getElementById("profilePictureInput").files[0]);
+
+                    xhttp.open("POST", url, true);
+                    xhttp.send(formData);
                 };
 
                 reader.readAsDataURL(input.files[0]);
             }
 
+
         });
+
         /* Function that takes an element id and checks the validity of the input */
 
         function fieldCheck(fieldID) {
@@ -145,16 +169,26 @@
 
         document.getElementById("login-button").addEventListener("click", function () {
             xhttp = new XMLHttpRequest();
+            xhttpPassword = new XMLHttpRequest();
 
+            // This handles the user information being changed //
             xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("submitError").innerHTML = "User Information Successfully Changed";
+                }
+            };
+
+            // This handles the passowrd being changed (as it is blank unless the user updates it) //
+            xhttpPassword.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("submitError").innerHTML = "Password Successfully Changed";
                 }
             };
+            
 
             // Checks to see if the user is missing any fields //
 
-            var fields = ["username", "email", "firstName", "lastName", "password"];
+            var fields = ["username", "email", "firstName", "lastName"];
 
             var success;
 
@@ -165,14 +199,65 @@
 
             /* Makes the request if all fields are valid */
             if (success) {
-                xhttp.open("POST", "http://localhost/fallrAPI/updateUser", true);
+                /* 
+                    I hate PHP. There is no good way of parsing this request with the image
+                    which means that I will have to handle the update of images on it's own
+                    and the rest of this as one lump request. 
+
+                    This is because PHP has no way of handling FormData format. :( Sad Pepe
+                */
+
+                var url = "https://api.fallr.ca/user/" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+
+                xhttp.open("POST", url, true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("password=" + document.getElementById("password").value);
+                xhttp.send(
+                    "username=" + document.getElementById("username").value
+                    + "&firstName=" + document.getElementById("firstName").value
+                    + "&lastName=" + document.getElementById("lastName").value
+                    + "&email=" + document.getElementById("email").value
+                    + "&updateUser=" + true
+                    + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+                );
 
                 // Resets the error field to null on success //
                 document.getElementById("submitError").innerHTML = "";
             }
-        })
+
+            // This handles the password update if it is defined //
+            if(document.getElementById("password").value !== "") {
+                var url = "https://api.fallr.ca/user/" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+                xhttpPassword.open("POST", url, true);
+                xhttpPassword.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttpPassword.send(
+                    "password=" + document.getElementById("password").value
+                    + "&updateUser=" + true
+                    + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+                );
+            }
+        });
+
+        // This gets the data for the current user and fills the fields //
+        xhttpRecieve = new XMLHttpRequest();
+
+        xhttpRecieve.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.response);
+                    document.getElementById("username").value = data[0]["username"];
+                    document.getElementById("firstName").value = data[0]["firstName"];
+                    document.getElementById("lastName").value = data[0]["lastName"];
+                    document.getElementById("email").value = data[0]["email"];
+                    // This only sets the image if it is defined //
+                    if(data[0]["image"] !== null && data[0]["image"] !== "")
+                        document.getElementById("profilePicture").src = encodeURI(("https://api.fallr.ca/" + data[0]["image"]));
+                }
+            };
+
+        // This gets the current user's ID from the session token, and opens a request with it for info //
+        var url = "https://api.fallr.ca/users/" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+        xhttpRecieve.open("POST", url, true);
+        xhttpRecieve.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttpRecieve.send("loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
     </script>
 </body>
 
