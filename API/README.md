@@ -58,6 +58,18 @@ Takes:
 - password
 ```
 
+## Logging Out (Completed)
+
+This creates removes session token from the server.
+As this is an API you have to remove the token from
+the client using JavaScript.
+
+```
+POST | [domain]/logout
+Takes:
+- loggedIn
+```
+
 ## User Data
 
 ### Getting user information (Completed)
