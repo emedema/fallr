@@ -10,7 +10,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <link rel="stylesheet" href="CSS/personal_blog.css">
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -57,15 +57,16 @@
                 </div>
             </nav>
         </header>
-        <div class = "image">
+        <div class = "jumbotron">
             <figure>
                 <img src = 'images/placeholder.jpg' alt="blog image" id = 'blog_pic'>
                 <figcaption>Blog Name</figcaption>
             </figure>
         </div>
-        <div id = 'main'>
-            <div id = 'flex'>
-                <div id = 'user_bar'>
+        <div class = "container-fluid" id = "main">
+          <div class = "row">
+                <div class = "col-lg-2">
+                  <div id = 'user_bar'>
                     <div id = 'img_container'>
                         <img src = 'images/placeholder.jpg' alt="user pic" id = 'user_pic'>
                     </div>
@@ -74,39 +75,35 @@
                         <p>Followers</p>
                         <p>Followers</p>
                     </div>
+                  </div>
                 </div>
-                <div id = 'posts'>
+                <div class = "col-lg-10">
+                  <div id = 'posts'>
                     <div id = post>
-                        <div id = "f">
-                            <div id = "img_container2">
-                                <img src = "images/placeholder.jpg" alt="user" id = 'user_img'>
+                        <div id = "f" class = "row">
+                            <div id = "img_container2" class = "media-left">
+                                <img src = "images/placeholder.jpg" alt="user" id = 'user_img' class = "media-object">
                             </div>
-                            <div id = 'user_blog'>
-                                <p>Username or Blog Name</p>
+                            <div id = 'user_blog' class = "media-body">
                             </div>
                         </div>
-                        <div id = "content">
-                            <p>Content</p>
+                        <div id = "content" class = 'media-body'>
+                            <div id = 'likes'>
+                                <input type="image" src="images/like.png" name="like" class="bt_like" id="like_bt"/>
+                                <p>4 likes</p>
+                                <button type="button" class = "btn" onclick="window.location.href = 'postpage.html';">View Comments</button>
+                                <!--
+                                <input type = 'text' name = 'comment' placeholder="Enter your comment" id = 'comment_input'>
+                                <input type = 'submit' name = 'submit' id='comment_submit' value = 'Comment'>-->
+                            </div>
                         </div>
                     </div>
-                    <div id = post>
-                        <div id = "f">
-                            <div id = "img_container2">
-                                <img src = "images/placeholder.jpg" alt="user" id = 'user_img'>
-                            </div>
-                            <div id = 'user_blog'>
-                                <p>Username or Blog Name</p>
-                            </div>
-                        </div>
-                        <div id = "content">
-                            <p>Content</p>
-                        </div>
-                    </div>
-                </div>
+                  </div>
+              </div>
             </div>
-            <a href="createPost.html" class="float">
-                <i class="fa fa-plus my-float"></i>
-            </a>
         </div>
+        <a href="createPost.html" class="float">
+            <i class="fa fa-plus my-float"></i>
+        </a>
     </body>
 </html>

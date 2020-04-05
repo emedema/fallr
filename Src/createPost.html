@@ -3,6 +3,7 @@
     <head lang="en">
         <title>fallr - Create Post</title>
         <meta charset = 'utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
@@ -22,43 +23,44 @@
     <body>
         <header>
             <header>
-                <nav class="navbar sticky-top navbar-expand-lg navbar-light">
-                    <img alt="Brand" src="images/fallr_logo.png" style="width: 50px">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse mr-auto" id="navbarNav">
-                        <ul id="navbar-ul-left" class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="feed">Feed<span class="sr-only"></span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="trending">Trending<span class="sr-only"></span></a>
-                            </li>
-                        </ul>
-                        <ul id="navbar-ul-center" class="navbar-nav ml-auto">
-                            <form id="search-form" class="form-inline my-2 my-lg-0">
-                                <input class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search">
-                            </form>
-                        </ul>
-                        <ul id="navbar-ul-right" class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="createAccount">Sign-Up</a>
-                            </li>
-                            <li class="nav-item">
-                                <a id="login-nav" class="nav-link" href="login">Login</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+              <nav class="navbar sticky-top navbar-expand-lg navbar-light">
+                  <img alt="Brand" src="images/fallr_logo.png" style="width: 50px">
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse mr-auto" id="navbarNav">
+                      <ul id="navbar-ul-left" class="navbar-nav">
+                          <li class="nav-item">
+                              <a class="nav-link" href="feed.html">Feed<span class="sr-only"></span></a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="trending.html">Trending<span class="sr-only"></span></a>
+                          </li>
+                      </ul>
+                      <ul id="navbar-ul-center" class="navbar-nav ml-auto">
+                          <form id="search-form" class="form-inline my-2 my-lg-0">
+                              <input class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search"
+                                  aria-label="Search">
+                          </form>
+                      </ul>
+                      <ul id="navbar-ul-right" class="navbar-nav ml-auto">
+                          <li class="nav-item">
+
+                              <a class="nav-link" href="settings">Settings</a>
+
+                          </li>
+                          <li class="nav-item">
+                              <a id="login-nav" class="nav-link" href="personal_blog">Username</a>
+                          </li>
+                      </ul>
+                  </div>
+              </nav>
             </header>
         </header>
-        <div id = 'main'>
-            <div id = 'posts'>
-                <h2>Create Post</h2>
-                <div id = post>
-                    <div id = 'create'>
+        <div class = "container" id = 'main'>
+            <div id = 'posts' class="row mx-auto justify-content-center">
+                    <div id = 'create' class="row mx-auto justify-content-center">
                         <div id = 'content_create'>
                             <form>
                                 <input type="text" name="postName" placeholder="Post Title" id = "postName" class = 'form-control'>
@@ -66,8 +68,8 @@
                                 </textarea>
                                 <div id = "confirm">
                                     <input type="image" src="images/pic.png" name="addpic" class="add_pic" id="add_pic" class = "form-control"/>
-                                    <input type="file" id="my_file" style="display: none;" /> 
-                                    <input type = 'button' value = 'Create' id = 'post-button' class = 'form-control'>
+                                    <input type="file" id="my_file" style="display: none;" />
+                                    <input type = 'button' value = 'Create Post' id = 'post-button' class = 'form-control'>
                                 </div>
                                 <p id="submitError"></p>
                             </form>
@@ -86,7 +88,7 @@
 
         <!-- Cookie CDN -->
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
-        
+
         <script>
             /*$("#post-button").click(function() {
                 $.ajax({
@@ -109,7 +111,7 @@
             function fieldCheck(fieldID) {
                 element = document.getElementById(fieldID);
                 if(element.value == "") {
-                    document.getElementById("submitError").innerHTML = fieldID + " is required."; 
+                    document.getElementById("submitError").innerHTML = fieldID + " is required.";
                     return false;
                 }
                 return true;
@@ -117,7 +119,7 @@
 
             document.getElementById("post-button").addEventListener("click", function(){
                 xhttp = new XMLHttpRequest();
-                
+
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined" ) {
                         //window.location.href = "/fallr/feed"
@@ -125,7 +127,7 @@
                 };
 
                 // Checks to see if the user is missing any fields //
-                                
+
                 var fields = ["postName", "postContent"];
 
                 var success;

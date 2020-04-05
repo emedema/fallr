@@ -3,6 +3,7 @@
     <head lang="en">
         <title>fallr - Post</title>
         <meta charset = 'utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
@@ -52,35 +53,48 @@
                 </div>
             </nav>
         </header>
-        <div id = 'main'>
+        <div id = 'main' class = "container-fluid">
                 <div id = 'posts'>
                     <div id = post>
-                        <div id = "f">
-                            <div id = "img_container2">
-                                <img src = "images/placeholder.jpg" alt="user" id = 'user_img'>
-                            </div>
-                            <div id = 'user_blog'>
-                                <p>Username or Blog Name</p>
+                      <div id = "f" class = "row">
+                          <div id = "img_container2" class = "media-left">
+                              <img src = "images/placeholder.jpg" alt="user" id = 'user_img' class = "media-object">
+                          </div>
+                          <div id = 'user_blog' class = "media-body">
+                          </div>
+                      </div>
+                      <div id = "content" class = 'media-body'>
+                          <div id = 'likes'>
+                              <input type="image" src="images/like.png" name="like" class="bt_like" id="like_bt"/>
+                              <p>4 likes</p>
+                              <!--
+                              <input type = 'text' name = 'comment' placeholder="Enter your comment" id = 'comment_input'>
+                              <input type = 'submit' name = 'submit' id='comment_submit' value = 'Comment'>-->
+                          </div>
+                      </div>
+                    </div>
+                    <div id = "add_comments" class = "container-fluid">
+                      <h3>Comments</h3>
+                      <div id = "f" class = "row">
+                        <div id = "comment">
+                            <div class="form-group">
+                              <label for="comment">Add a Comment:</label>
+                                <textarea class="form-control" rows="5" id="add_comment"></textarea>
+                                <input id="comment_button" class="form-control" type="button" value="submit">
                             </div>
                         </div>
-                        <div id = "content">
-                            <div id = 'post_content'>
-                                <p>Content</p>
+                      </div>
+                    </div>
+                    <div id = "comments" class = "container-fluid">
+                        <div id = "comment">
+                          <div id = "f" class = "row">
+                            <div id = "img_container2" class = "media-left">
+                                <img src = "images/placeholder.jpg" alt="user" id = 'user_img' class = "media-object">
                             </div>
-                            <div id = 'likes'>
-                                <input type="image" src="images/like.png" name="like" class="bt_like" id="like_bt" />
-                                <p>4 likes</p>
-                            </div>
-                        </div>
-                        <div id = "content">
-                            <h6>Comments</h6>
-                            <div id = 'comment'>
-                                <p>User: this is so good!</p>
-                            </div>
-                            <div id = 'comment'>
-                                <p>User 2: I don't like it...</p>
+                            <div id = 'user_blog' class = "media-body">
                             </div>
                         </div>
+                      </div>
                     </div>
                 </div>
             </div>
