@@ -26,6 +26,19 @@ class Account {
     
         return $finalImageURL;
 	}
+
+	function addBackgroundImageToUser($connection, $username, $image) {
+			
+		/* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("UPDATE Users SET backgroundImage = ? WHERE username = ?");
+
+		/* Passes the values into the query */
+		if($query != NULL) {
+			$query->bind_param("ss", $image, $username);	
+			/* Returns success */
+			return $query->execute();
+		}
+	}
 	
 	function addImageToUser($connection, $username, $image) {
 			
@@ -58,7 +71,7 @@ class Account {
 
 	public function getGeneralUserInfo($connection, $username) {
 		/* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("SELECT username, image FROM Users WHERE username = ?");		
+		$query = $connection->prepare("SELECT username, image, backgroundImage FROM Users WHERE username = ?");		
 
 		$query->bind_param("s", $username);
 
@@ -80,7 +93,7 @@ class Account {
 		return $query->get_result();
 	}
 
-	public function updateUserInfo($connection, $username, $email, $firstName, $lastName, $image) {
+	public function updateUserInfo($connection, $username, $email, $firstName, $lastName, $image=null) {
 
 		/* Prepares the function so we can pass in the values from the user */
 		if($image != NULL) {

@@ -43,6 +43,9 @@ if(isset($_COOKIE['loggedIn']))
 if(isset($_GET['updateUser']))
     $updateUser = true;
 
+if(isset($_GET['updateBackground']))
+    $updateBackground = true;
+
 if(isset($_GET['deactivateUser']))
     $deactivateUser = true;
 
@@ -78,6 +81,26 @@ else if($updateUser && $password && $token && ($_SERVER['REQUEST_METHOD'] === 'P
         // Updates the password //
         $password = Account::createHashedPassword($password);
         $result = Account::updatePasswordFromUsername($connection, $username, $password);
+    }
+    
+    else
+        header("HTTP/1.1 405 Bad Login");
+
+}
+
+// Updating a user background //
+
+else if($updateBackground && $image && $token && ($_SERVER['REQUEST_METHOD'] === 'POST')) {
+
+    $loggedIn = Login::checkToken($connection, $token);
+
+    // If the user is logged in and the username matches the token username //
+    if($loggedIn) {
+        $username = Login::getIDFromToken($token);
+        
+        // Updates the password //
+        $image = Account::addImageToSystem($image);
+        $result = Account::addBackgroundImageToUser($connection, $username, $image);
     }
     
     else

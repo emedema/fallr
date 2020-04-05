@@ -37,6 +37,9 @@ RewriteRule ^like$ like.php [NC,L]
 # Updates Password
 RewriteRule ^updatePassword$ updatePassword.php [NC,L]
 
+# This deletes a comment for a post
+RewriteRule ^user/background/([A-Za-z0-9]*)$ users.php?updateBackground=true&username=$1 [QSA] 
+
 ## GETTERS 
 
 # This gets the data for a user (depending on if logged in as user, personal or not)
