@@ -3,6 +3,8 @@
     <head lang="en">
         <title>fallr - Trending</title>
         <meta charset = 'utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
@@ -54,57 +56,93 @@
                 </div>
             </nav>
         </header>
-        <div id = 'main'>
-                <div id = 'posts'>
-                    <div id = post>
-                        <div id = "f">
-                            <div id = "img_container2">
-                                <img src = "images/placeholder.jpg" alt="user" id = 'user_img'>
-                            </div>
-                            <div id = 'user_blog'>
-                                <p>Username or Blog Name</p>
-                            </div>
-                        </div>
-                        <div id = "content">
-                            <div id = 'post_content'>
-                                <p>Content</p>
-                            </div>
-                            <div id = 'likes'>
-                                <input type="image" src="images/like.png" name="like" class="bt_like" id="like_bt" />
-                                <p>4 likes</p>
-                                <button type="button">View Comments</button>
-                                <input type = 'text' name = 'comment' placeholder="Enter your comment" id = 'comment_input'>
-                                <input type = 'submit' name = 'submit' id='comment_submit' value = 'Comment'>
-                            </div>
-                        </div>
-                    </div>
-                    <div id = post>
-                        <div id = "f">
-                            <div id = "img_container2">
-                                <img src = "images/placeholder.jpg" alt="user" id = 'user_img'>
-                            </div>
-                            <div id = 'user_blog'>
-                                <p>Username or Blog Name</p>
-                            </div>
-                        </div>
-                        <div id = "content">
-                            <div id = 'post_content'>
-                                <p>Content</p>
-                            </div>
-                            <div id = 'likes'>
-                                <input type="image" src="images/like.png" name="like" class="bt_like" id="like_bt" />
-                                <p>4 likes</p>
-                                <button type="button">View Comments</button>
-                                <input type = 'text' name = 'comment' placeholder="Enter your comment" id = 'comment_input'>
-                                <input type = 'submit' name = 'submit' id='comment_submit' value = "Comment">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a href="createPost.html" class="float">
-                <i class="fa fa-plus my-float"></i>
-            </a>
-        </div>
+        <a href="createPost" class="float">
+            <i class="fa fa-plus my-float"></i>
+        </a>
     </body>
+    <script>
+
+      xhttp = new XMLHttpRequest();
+      //create main class
+      var mainDiv = document.createElement("div");
+      mainDiv.setAttribute("class", "container-fluid");
+      mainDiv.setAttribute("id", "main");
+      document.body.appendChild(mainDiv);
+      //create class for posts
+      var posts = document.createElement("div");
+      posts.setAttribute("id", "posts");
+      mainDiv.appendChild(posts);
+      //get response from xhttp request.
+      xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(xhttp.response);
+          var post = document.createElement("div");
+          post.setAttribute("id", "post");
+          posts.appendChild(post);
+          var f = document.createElement("div");
+          f.setAttribute("id", "f");
+          f.setAttribute("class", "row");
+          //create the other div stuff
+          var img = document.createElement("div");
+          img.setAttribute("id", "img_container2");
+          img.setAttribute("class", "media-left");
+          var userImg = document.createElement("img");
+          userImg.setAttribute("id", "user_img");
+          userImg.setAttribute("class", "media-object");
+          userImg.src = "images/placeholder.jpg"
+          var blogName = document.createElement("div");
+          blogName.setAttribute("id", "user_blog");
+          blogName.setAttribute("class", "media-body");
+          var blogP = document.createElement("p");
+          blogP.setAttribute("class", "media-heading");
+          var postContent = document.createElement("div");
+          postContent.setAttribute("class", "media-body");
+          postContent.setAttribute("id", "content");
+          var content = document.createElement("p");
+          content.setAttribute("id", "contents");
+          var likes = document.createElement("div");
+          likes.setAttribute("id", "likes");
+          var likeBtn = document.createElement("input")
+          likeBtn.setAttribute("type", "image");
+          likeBtn.setAttribute("src", "images/like.png");
+          likeBtn.setAttribute("class", "bt_like");
+          likeBtn.setAttribute("id", "like_bt");
+          var num_likes = document.createElement("p");
+          var btn = document.createElement("button");
+          btn.setAttribute("type", "button");
+          btn.setAttribute("class", "btn");
+          btn.setAttribute('onclick', "window.location.href = 'postpage'");
+          btn.innerHTML = "Comment"
+
+          //loop through the response
+          data.forEach(function(o) {
+            if(o.username!=null && o.postContent !=null){
+              post.appendChild(f);
+              f.appendChild(img);
+              if(o.image != null){
+                userImg.src = o.image;
+              }
+              img.appendChild(userImg);
+              blogP.innerHTML = o.username;
+              f.appendChild(blogName);
+              blogName.appendChild(blogP);
+              post.append(postContent);
+              content.innerHTML = o.postContent;
+              postContent.appendChild(content);
+              postContent.appendChild(likes);
+              likes.appendChild(likeBtn);
+              num_likes.innerHTML = o.likes;
+              likes.appendChild(num_likes);
+              likes.appendChild(btn);
+            }
+            // to test console.log(o.postID, o.username);
+          })
+        }
+      }
+
+      var url = "https://api.fallr.ca/feed/hot";
+      xhttp.open("POST", url, true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send();
+    </script>
 </html>

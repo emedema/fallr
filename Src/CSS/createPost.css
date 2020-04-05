@@ -11,14 +11,13 @@ body{
 .navbar-light .navbar-nav #active {
     color: #6F857D;
   }
-  
+
 .navbar-light .navbar-nav .nav-link:hover:not(#active) {
     color: #438173;
   }
 
 #posts{
     background-color:#3A4B48;
-    width: 90%;
     margin-left: auto;
     margin-right: auto;
     padding-top: 1em;
@@ -31,7 +30,6 @@ h2{
 }
 #post{
     background-color: #6F857D;
-    width: 90%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 2em;
@@ -50,8 +48,6 @@ h2{
     position: relative;
 }
 #create{
-    background-color: #6F857D;
-    width: 90%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 2em;
@@ -103,6 +99,37 @@ h2{
     height: fit-content;
     position: relative;
 }
+.container {
+    height: 100vh;
+    background-color: #3A4B48;
+    display: flex;
+    padding-top: 5em;
+}
+
+
+form:not(#search-form) {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 80%;
+}
+
+#login {
+    background-color: #F0F7F4;
+}
+
+form div div img {
+    margin-top: 1em;
+}
+
+form div div {
+    margin: 1em;
+}
+
+form div input:not(#add_pic) {
+    width: 100%;
+}
 
 
 @media (max-width: 543px) {
@@ -111,11 +138,10 @@ h2{
       min-height: 400px;
     }
   }
-  
+
   @media (min-width: 544px) {
     /* Makes it so when the screen is large, it expands the size*/
     .container .row {
       min-height: 600px;
     }
   }
-

@@ -16,8 +16,8 @@
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>      
-        <link rel="stylesheet" type="text/css" href="CSS/login.css">  
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="CSS/login.css">
     </head>
     <body>
         <header>
@@ -63,7 +63,7 @@
                             <input id="username"  class="form-control" type="text" name="username" placeholder="Username">
                         </div>
                         <div>
-                            <input id="password"  class="form-control" type="password" name="password" placeholder="Password">                            
+                            <input id="password"  class="form-control" type="password" name="password" placeholder="Password">
                         </div>
                         <div>
                             <input style="width: 140px;" id="login-button"  class="form-control" type="button" value="Login">
@@ -86,7 +86,7 @@
             function fieldCheck(fieldID) {
                 element = document.getElementById(fieldID);
                 if(element.value == "") {
-                    document.getElementById("submitError").innerHTML = fieldID + " is required."; 
+                    document.getElementById("submitError").innerHTML = fieldID + " is required.";
                     return false;
                 }
                 return true;
@@ -94,7 +94,7 @@
 
             document.getElementById("login-button").addEventListener("click", function(){
                 xhttp = new XMLHttpRequest();
-                
+
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined" ) {
                         window.location.href = "/feed"
@@ -102,7 +102,7 @@
                 };
 
                 // Checks to see if the user is missing any fields //
-                                
+
                 var fields = ["username", "password"];
 
                 var success;
@@ -112,13 +112,13 @@
                     if(!(success = fieldCheck(fields[i])))
                         break;
                 };
-                
-                
+
+
                 /* Makes the request if all fields are valid */
                 if(success) {
                     xhttp.open("POST", "https://api.fallr.ca/login", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    xhttp.send("username=" + document.getElementById("username").value 
+                    xhttp.send("username=" + document.getElementById("username").value
                         + "&password=" + document.getElementById("password").value);
                 }
             })

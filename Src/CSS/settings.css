@@ -20,13 +20,13 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 }
 .container {
     height: 100vh;
     background-color: #3A4B48;
     display: flex;
-    padding-top: 5em;    
+    padding-top: 5em;
 }
 
 
@@ -53,4 +53,3 @@ form div div {
 form div input:not(#login-button) {
     width: 100%;
 }
-
