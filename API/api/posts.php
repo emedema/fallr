@@ -18,6 +18,9 @@ if(isset($_GET['username']))
 
 if(isset($_GET['postID']))
     $postID = $_GET['postID'];
+
+if(isset($_FILES['myfile']))
+    $image = $_FILES['myfile'];
     
 if(isset($_POST['postName']))
     $postName = $_POST['postName'];
@@ -89,8 +92,10 @@ else if ($postName && $postContent && $token) {
 
     if($loggedIn) {
         $userID = Login::getIDFromToken($token);
+
+        $image = Account::addImageToSystem($image);
     
-        $postCreateSuccess = Post::createPost($connection, $userID, $postName, $postContent);
+        $postCreateSuccess = Post::createPost($connection, $userID, $postName, $image, $postContent);
         if(!$postCreateSuccess)
             header("HTTP/1.1 405 Create Post Failure");
     }

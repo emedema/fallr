@@ -230,6 +230,26 @@
 					"response": []
 				},
 				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://api.fallr.ca/logout",
+							"protocol": "https",
+							"host": [
+								"api",
+								"fallr",
+								"ca"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update User Info",
 					"request": {
 						"method": "POST",
@@ -670,6 +690,111 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Statistics",
+			"item": [
+				{
+					"name": "Posts",
+					"item": [
+						{
+							"name": "Get Posts - Hour",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.fallr.ca/stats/posts/hour",
+									"protocol": "https",
+									"host": [
+										"api",
+										"fallr",
+										"ca"
+									],
+									"path": [
+										"stats",
+										"posts",
+										"hour"
+									]
+								},
+								"description": "Gets all posts from the last hour along with the count."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Posts - Day",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.fallr.ca/stats/posts/day",
+									"protocol": "https",
+									"host": [
+										"api",
+										"fallr",
+										"ca"
+									],
+									"path": [
+										"stats",
+										"posts",
+										"day"
+									]
+								},
+								"description": "Gets all posts from the last day along with the count."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Posts - Week",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.fallr.ca/stats/posts/week",
+									"protocol": "https",
+									"host": [
+										"api",
+										"fallr",
+										"ca"
+									],
+									"path": [
+										"stats",
+										"posts",
+										"week"
+									]
+								},
+								"description": "Gets all posts from the last week along with the count."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Posts - Month",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.fallr.ca/stats/posts/month",
+									"protocol": "https",
+									"host": [
+										"api",
+										"fallr",
+										"ca"
+									],
+									"path": [
+										"stats",
+										"posts",
+										"month"
+									]
+								},
+								"description": "Gets all posts from the last month along with the count."
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				}
 			],
 			"protocolProfileBehavior": {}

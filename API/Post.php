@@ -1,14 +1,27 @@
 <?php
 class Post {
 	
-	public function createPost($connection, $username, $postName, $postContent) {
+	function addImageToPost($connection, $postID, $image) {
+			
+		/* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("UPDATE Posts SET image = ? WHERE postID = ?");
+
+		/* Passes the values into the query */
+		if($query != NULL) {
+			$query->bind_param("ss", $image, $postID);	
+			/* Returns success */
+			return $query->execute();
+		}
+	}
+
+	public function createPost($connection, $username, $image, $postName, $postContent) {
 	
 		/* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("INSERT INTO Posts (username, postName, postContent) VALUES (?, ?, ?)");
+		$query = $connection->prepare("INSERT INTO Posts (username, postName, image, postContent) VALUES (?, ?, ?, ?)");
 		/* Passes the values into the query */
-		$query->bind_param("sss", $username, $postName, $postContent);
+		$query->bind_param("sss", $username, $postName, $image, $postContent);
 		
-        $query->execute();
+    $query->execute();
         
 		/* Returns inserted_id */
 		return $query->insert_id;
@@ -38,7 +51,7 @@ class Post {
     
     public function getHot($connection) {
         /* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("SELECT p.postID, p.username, postName, postContent, count(l.username) likes FROM Posts p, Likes l WHERE p.postID = l.postID GROUP BY p.postID ORDER BY likes DESC");		
+		$query = $connection->prepare("SELECT p.postID, p.image, p.username, postName, postContent, count(l.username) likes FROM Posts p, Likes l WHERE p.postID = l.postID GROUP BY p.postID ORDER BY likes DESC");		
         $query->execute();
         
 		/* Returns inserted_id */
@@ -47,10 +60,10 @@ class Post {
 
     public function getFeed($connection, $username) {
          /* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("SELECT s.subscribedUsername, s.username, p.postID, p.username, 
-                                        postName, postContent FROM Posts p, Subscriptions s 
-                                        WHERE s.subscribedUsername = (?)
-                                        AND s.username = p.username");		
+		$query = $connection->prepare("SELECT s.subscribedUsername, s.username, p.postID, p.username,
+      p.image, p.postName, p.postContent, count(l.username) likes 
+      FROM Posts p, Subscriptions s, Likes l WHERE s.subscribedUsername = (?) 
+      AND s.username = p.username AND p.postID = l.postID GROUP BY p.postID, s.subscribedUsername");		
 
         $query->bind_param("s", $username);
 
@@ -62,7 +75,7 @@ class Post {
 
     public function getPosts($connection, $username) {
         /* Prepares the function so we can pass in the values from the user */
-       $query = $connection->prepare("SELECT postID, username, postName, postContent FROM Posts WHERE username = ?");		
+       $query = $connection->prepare("SELECT postID, username, postName, image, postContent FROM Posts WHERE username = ?");		
 
        $query->bind_param("s", $username);
 
@@ -74,7 +87,7 @@ class Post {
 
     public function getPost($connection, $postID) {
         /* Prepares the function so we can pass in the values from the user */
-       $query = $connection->prepare("SELECT postID, username, postName, postContent FROM Posts WHERE postID = ?");		
+       $query = $connection->prepare("SELECT postID, username, postName, image, postContent FROM Posts WHERE postID = ?");		
 
        $query->bind_param("i", $postID);
 

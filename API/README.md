@@ -38,6 +38,13 @@ Takes: username, password, firstName, lastName, email, image
 
 ```
 POST | [domain]/createAccount
+
+Takes:
+- username
+- password
+- firstName
+- lastName
+- email
 ```
 
 ## Logging In (Completed)
@@ -46,6 +53,21 @@ This creates the session token.
 
 ```
 POST | [domain]/login
+Takes:
+- username
+- password
+```
+
+## Logging Out (Completed)
+
+This creates removes session token from the server.
+As this is an API you have to remove the token from
+the client using JavaScript.
+
+```
+POST | [domain]/logout
+Takes:
+- loggedIn
 ```
 
 ## User Data
@@ -55,6 +77,9 @@ Depending on if you are logged in, you will recieve all of the user information 
 
 ```
 GET | [domain]/users/[userID]
+
+Takes:
+- loggedIn (optional depending if you want personal information)
 ```
 
 ### Update user information
@@ -62,8 +87,38 @@ GET | [domain]/users/[userID]
 Requires valid key [Owner].
 
 ```
-POST | [domain]/users
+POST | [domain]/user/[userID]
+
+Takes:
+- username
+- firstName
+- lastName
+- email
 ``` 
+### Update user image
+
+Requires valid key [Owner].
+
+```
+POST | [domain]/user/[userID]
+
+Takes:
+- updateUser=true
+- loggedIn
+- myfile
+```
+
+### Update user background image
+
+Requires valid key [Owner].
+
+```
+POST | [domain]/user/background/[userID]
+
+Takes:
+- loggedIn
+- myfile
+```
 
 ### Deactivate User (Completed)
 
@@ -81,6 +136,9 @@ Requires valid key [Owner].
 
 ```
 GET | [domain]/feed
+
+Takes:
+- loggedIn 
 ```
 
 ### Get the hot feed (Completed)
@@ -94,6 +152,11 @@ GET | [domain]/feed/hot
 ### Create a post (Completed)
 ```
 POST | [domain]/post
+
+Takes:
+    - postName
+    - postContent
+    - loggedIn
 ```
 
 ### Get a users posts (Completed)
@@ -120,6 +183,9 @@ Requires a valid key [Owner].
 
 ```
 DELETE | [domain]/posts/id/[postID]
+
+Takes:
+    - loggedIn
 ```
 
 ### Comment on a post (Completed)
@@ -128,6 +194,11 @@ Requires a valid key [logged in].
 
 ```
 POST | [domain]/comment
+
+Takes:
+    - postID
+    - comment
+    - loggedIn
 ```
 
 ### Get Comments for a post (Completed)
@@ -148,6 +219,9 @@ Requires a valid key [Owner].
 
 ```
 DELETE | [domain]/comments/[commentID]
+
+Takes:
+    - loggedIn
 ```
 
 ## Subscriptions
@@ -155,6 +229,10 @@ DELETE | [domain]/comments/[commentID]
 ### Subscribing/Unsubscribing (Completed)
 ```
 POST | [domain]/subscribe
+
+Takes:
+    - username
+    - loggedIn
 ```
 
 ### Get subscriptions for a user (Completed)
@@ -167,9 +245,31 @@ GET | [domain]/users/subscriptions/[userID]
 ### Liking/UnLiking (Completed)
 ```
 POST | [domain]/like
+Takes:
+    - postID
+    - loggedIn
 ```
 
 ### Get Likes for a post (Completed)
 ```
 GET | [domain]/posts/likes/[postID]
+```
+
+## Statistics 
+
+### Get all posts from last hours
+```
+GET | [domain]/stats/posts/hour
+```
+### Get all posts from last 24 hours
+```
+GET | [domain]/stats/posts/day
+```
+### Get all posts from last week
+```
+GET | [domain]/stats/posts/week
+```
+### Get all posts from last month
+```
+GET | [domain]/stats/posts/month
 ```
