@@ -53,3 +53,25 @@ form div div {
 form div input:not(#login-button) {
     width: 100%;
 }
+
+@media (max-width: 677px){
+    
+    .container {
+        height: 100vh;
+        width: 100vw;
+        background-color: #3A4B48;
+        display: flex;
+        padding-top: 5em;    
+    }
+}
+
+@media (min-width: 668) {
+    
+    .container {
+        height: 100vh;
+        width: 80vw;
+        background-color: #3A4B48;
+        display: flex;
+        padding-top: 5em;    
+    }
+}

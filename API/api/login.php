@@ -24,6 +24,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && ($_SERVER['REQUEST
     if($loginResult) {
         /* Creates a random token to auth the user for the session */
         setcookie('loggedIn', Login::createToken($connection, $username));
+        print(json_encode(array("loggedIn"=> Login::createToken($connection, $username))));  
     }
     else
         header("HTTP/1.1 401 Login Failure");

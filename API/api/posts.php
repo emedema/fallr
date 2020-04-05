@@ -4,6 +4,7 @@ require_once '../connection.php';
 require_once '../Login.php';
 require_once '../Post.php';
 
+header("Access-Control-Allow-Origin: https://fallr.ca");
 header('Content-type: application/json');
 
 $username = NULL;
@@ -23,6 +24,12 @@ if(isset($_POST['postName']))
 
 if(isset($_POST['postContent']))
     $postContent = $_POST['postContent'];
+
+if(isset($_POST['loggedIn']))
+    $token = $_POST['loggedIn'];
+
+if(isset($_GET['loggedIn']))
+    $token = $_GET['loggedIn'];
 
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];

@@ -95,6 +95,28 @@ class Post {
         /* Returns inserted_id */
         return $query->get_result()->fetch_assoc()["username"];
     }
+
+    public function searchPosts($connection, $partial_post) {		
+
+      $query = $connection->prepare("SELECT * FROM Posts WHERE postName LIKE CONCAT('%',?,'%')");	
+      
+      $query->bind_param("s", $partial_post);
+  
+      $query->execute();
+  
+      return $query->get_result();
+    }
+
+    public function getPostsTimePeriod($connection, $hours){
+      // This function gets all posts for a timeperiod (now - hours * n )
+      $query = $connection->prepare("SELECT * FROM Posts WHERE created > (CURRENT_TIMESTAMP - INTERVAL ? HOUR) ");	
+      
+      $query->bind_param("s", $hours);
+  
+      $query->execute();
+  
+      return $query->get_result();
+    }
 }
 
 ?>
