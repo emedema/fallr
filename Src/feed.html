@@ -115,6 +115,7 @@
               likeBtn.setAttribute("src", "images/like.png");
               likeBtn.setAttribute("class", "bt_like");
               likeBtn.setAttribute("id", "like_bt");
+              likeBtn.setAttribute("value", o.postID);
               var num_likes = document.createElement("p");
               var btn = document.createElement("button");
               btn.setAttribute("type", "button");
@@ -152,5 +153,14 @@
       xhttp.open("POST", url, true);
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhttp.send("loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+    </script>
+    <script>
+      $("#like_bt").click(function(){
+        $.post("https://api.fallr.ca/like",
+        {
+          postID: $("#like_bt").val(),
+          loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+        });
+      });
     </script>
 </html>

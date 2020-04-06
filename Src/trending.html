@@ -16,6 +16,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -76,7 +77,9 @@
       xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(xhttp.response);
-          document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          // if(typeof(document.cookie.indexOf('loggedIn')) !== "undefined"){
+          //   document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          // }
 
           //loop through the response
           data.forEach(function(o) {
@@ -113,10 +116,14 @@
               likeBtn.setAttribute("class", "bt_like");
               likeBtn.setAttribute("id", "like_bt");
               var num_likes = document.createElement("p");
+              var form = document.createElement("form");
+              form.setAttribute("method", "post");
+              form.setAttribute("action", "postpage");
               var btn = document.createElement("button");
-              btn.setAttribute("type", "button");
+              btn.setAttribute("type", "submit");
               btn.setAttribute("class", "btn");
-              btn.setAttribute('onclick', "window.location.href = 'postpage'");
+              btn.setAttribute("name", "postid");
+              btn.setAttribute('value', o.postID);
               btn.innerHTML = "Comment"
               post.appendChild(f);
               f.appendChild(img);
@@ -134,7 +141,8 @@
               likes.appendChild(likeBtn);
               num_likes.innerHTML = o.likes;
               likes.appendChild(num_likes);
-              likes.appendChild(btn);
+              likes.appendChild(form);
+              form.appendChild(btn);
             }
             // to test console.log(o.postID, o.username);
           })
@@ -145,5 +153,6 @@
       xhttp.open("POST", url, true);
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhttp.send();
+
     </script>
 </html>

@@ -19,6 +19,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body>
         <header>
@@ -53,51 +54,94 @@
                 </div>
             </nav>
         </header>
-        <div id = 'main' class = "container-fluid">
-                <div id = 'posts'>
-                    <div id = post>
-                      <div id = "f" class = "row">
-                          <div id = "img_container2" class = "media-left">
-                              <img src = "images/placeholder.jpg" alt="user" id = 'user_img' class = "media-object">
-                          </div>
-                          <div id = 'user_blog' class = "media-body">
-                          </div>
-                      </div>
-                      <div id = "content" class = 'media-body'>
-                          <div id = 'likes'>
-                              <input type="image" src="images/like.png" name="like" class="bt_like" id="like_bt"/>
-                              <p>4 likes</p>
-                              <!--
-                              <input type = 'text' name = 'comment' placeholder="Enter your comment" id = 'comment_input'>
-                              <input type = 'submit' name = 'submit' id='comment_submit' value = 'Comment'>-->
-                          </div>
-                      </div>
-                    </div>
-                    <div id = "add_comments" class = "container-fluid">
-                      <h3>Comments</h3>
-                      <div id = "f" class = "row">
-                        <div id = "comment">
-                            <div class="form-group">
-                              <label for="comment">Add a Comment:</label>
-                                <textarea class="form-control" rows="5" id="add_comment"></textarea>
-                                <input id="comment_button" class="form-control" type="button" value="submit">
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div id = "comments" class = "container-fluid">
-                        <div id = "comment">
-                          <div id = "f" class = "row">
-                            <div id = "img_container2" class = "media-left">
-                                <img src = "images/placeholder.jpg" alt="user" id = 'user_img' class = "media-object">
-                            </div>
-                            <div id = 'user_blog' class = "media-body">
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </body>
+    <script>
+      xhttp = new XMLHttpRequest();
+      comments = new XMLHttpRequest();
+
+      var postid = window.location.search.substr(8);
+      console.log(postid);
+      //create main class
+      var mainDiv = document.createElement("div");
+      mainDiv.setAttribute("class", "container-fluid");
+      mainDiv.setAttribute("id", "main");
+      document.body.appendChild(mainDiv);
+      //create class for posts
+      var posts = document.createElement("div");
+      posts.setAttribute("id", "posts");
+      mainDiv.appendChild(posts);
+      //get response from xhttp request.
+      xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(xhttp.response);
+          // if(typeof(document.cookie.indexOf('loggedIn')) !== "undefined"){
+          //   document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          // }
+
+          //loop through the response
+          data.forEach(function(o) {
+            if(o.username!=null && o.postContent !=null){
+              var post = document.createElement("div");
+              post.setAttribute("id", "post");
+              posts.appendChild(post);
+              var f = document.createElement("div");
+              f.setAttribute("id", "f");
+              f.setAttribute("class", "row");
+              //create the other div stuff
+              var img = document.createElement("div");
+              img.setAttribute("id", "img_container2");
+              img.setAttribute("class", "media-left");
+              var userImg = document.createElement("img");
+              userImg.setAttribute("id", "user_img");
+              userImg.setAttribute("class", "media-object");
+              userImg.src = "images/placeholder.jpg"
+              var blogName = document.createElement("div");
+              blogName.setAttribute("id", "user_blog");
+              blogName.setAttribute("class", "media-body");
+              var blogP = document.createElement("p");
+              blogP.setAttribute("class", "media-heading");
+              var postContent = document.createElement("div");
+              postContent.setAttribute("class", "media-body");
+              postContent.setAttribute("id", "content");
+              var content = document.createElement("p");
+              content.setAttribute("id", "contents");
+              var likes = document.createElement("div");
+              likes.setAttribute("id", "likes");
+              var likeBtn = document.createElement("input")
+              likeBtn.setAttribute("type", "image");
+              likeBtn.setAttribute("src", "images/like.png");
+              likeBtn.setAttribute("class", "bt_like");
+              likeBtn.setAttribute("id", "like_bt");
+              var num_likes = document.createElement("p");
+              post.appendChild(f);
+              f.appendChild(img);
+              if(o.image != null){
+                userImg.src = o.image;
+              }
+              img.appendChild(userImg);
+              blogP.innerHTML = o.username;
+              f.appendChild(blogName);
+              blogName.appendChild(blogP);
+              post.append(postContent);
+              content.innerHTML = o.postContent;
+              postContent.appendChild(content);
+              postContent.appendChild(likes);
+              likes.appendChild(likeBtn);
+              num_likes.innerHTML = o.likes;
+              likes.appendChild(num_likes);
+            }
+            // to test console.log(o.postID, o.username);
+          })
+        }
+      }
+
+      var url = "https://api.fallr.ca/posts/id/"+ postid;
+      xhttp.open("POST", url, true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send();
+      var commentURL = "https://api.fallr.ca/posts/comments/"+ postid;
+      comments.open("POST", commentURL, true);
+      comments.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      comments.send();
+    </script>
 </html>
