@@ -77,9 +77,9 @@
       xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(xhttp.response);
-          // if(typeof(document.cookie.indexOf('loggedIn')) !== "undefined"){
-          //   document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
-          // }
+          if (document.cookie.indexOf('_idp_session') != -1){
+            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          }
 
           //loop through the response
           data.forEach(function(o) {
@@ -154,5 +154,19 @@
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhttp.send();
 
+    </script>
+
+    <script>
+    if (document.cookie.indexOf('_idp_session') != -1){
+      $(document).ready(function(){
+        $("#like_bt").click(function(){
+          $.post("https://api.fallr.ca/like",
+          {
+            postID: $("#like_bt").val(),
+            loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+          });
+        });
+      });
+    }
     </script>
 </html>
