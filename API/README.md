@@ -273,3 +273,27 @@ GET | [domain]/stats/posts/week
 ```
 GET | [domain]/stats/posts/month
 ```
+
+# Return Values
+If you are not getting 200 from your requests,
+the following are more specific errors that you
+could encounter. If you get anything else it is
+not controlled, and is assumed to be an error.
+
+## 405 - Creation/Get Failure
+This means that whatever you tried to create or get failed, this cannot be recovered from, and means that someone needs to check the logs.
+
+## 406 - Parameters Not Passed
+This means that you didn't pass enough data to the
+api for it to function. 
+
+## 407 - Login Invalid
+This is used on the login page, it means that you
+failed to login (bad username or password) or you
+are not logged in.
+
+## 408 - Not Owner
+This is when you are trying to update something that
+isn't yours. For example if you try to delete someone
+else's posts it will throw this, as you are not the 
+owner.

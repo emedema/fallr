@@ -27,7 +27,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && ($_SERVER['REQUEST
         print(json_encode(array("loggedIn"=> Login::createToken($connection, $username))));  
     }
     else
-        header("HTTP/1.1 401 Login Failure");
+        header("HTTP/1.1 407 Login Invalid");
 }
 
 // Else we are going to send an update password request to an email //
@@ -37,6 +37,6 @@ else if(($_SERVER['REQUEST_METHOD'] === 'POST') && isset( $_POST['email'])) {
 }
 
 else
-    header("HTTP/1.1 404 Parameters Not Passed");
+    header("HTTP/1.1 406 Parameters Not Passed");
 
 ?>

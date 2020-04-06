@@ -23,6 +23,6 @@ if (isset($loggedIn) && ($_SERVER['REQUEST_METHOD'] === 'POST'))
     Login::removeSessionToken($connection, $loggedIn);
 
 else
-    header("HTTP/1.1 404 Parameters Not Passed");
+    header("HTTP/1.1 406 Parameters Not Passed");
 
 ?>

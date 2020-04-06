@@ -44,7 +44,7 @@ if ($postID && $token && $comment) {
             header("HTTP/1.1 405 Create Comment Failure");
     }
     else
-        header("HTTP/1.1 406 Login Invalid");
+        header("HTTP/1.1 407 Login Invalid");
 }
 
 // Gets a single comment //
@@ -68,10 +68,10 @@ else if($commentID && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
             Comment::deleteComment($connection, $commentID);
         }
         else
-            header("HTTP/1.1 406 Not Owner");
+            header("HTTP/1.1 408 Not Owner");
     }
     else
-        header("HTTP/1.1 406 Login Invalid");
+        header("HTTP/1.1 407 Login Invalid");
 }
 
 else
