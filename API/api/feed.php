@@ -27,7 +27,7 @@ if ($token) {
         $username = Login::getIDFromToken($token);
     
     else
-        header("HTTP/1.1 405 Bad Login");
+        header("HTTP/1.1 407 Login Invalid");
 
     if($username) {
         $result = Post::getFeed($connection, $username);
