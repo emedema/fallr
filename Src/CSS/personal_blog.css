@@ -31,9 +31,10 @@ body{
 .my-float{
 	margin-top:22px;
 }
-figure img#blog_pic{
-    width: 96%;
-    height: 240px;
+#blog_pic{
+    height: 350px;
+    width: 100%;
+    margin-bottom:1em;
 }
 .image{
     text-align: center;
