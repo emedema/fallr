@@ -104,6 +104,9 @@
                         // Redirects back to the main feed //                                                                                                                          
                         window.location.href = "/feed"
                     }
+                    if (this.readyState == 4 && this.status == 401 ) {
+                        document.getElementById("submitError").innerHTML = "Please enter valid login info!";
+                    }
                 };
 
                 // Checks to see if the user is missing any fields //
