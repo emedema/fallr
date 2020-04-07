@@ -9,7 +9,6 @@
         crossorigin="anonymous">
         <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="CSS/postpage.css">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -19,7 +18,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="CSS/postpage.css">
     </head>
     <body>
         <header>
@@ -56,10 +55,9 @@
         </header>
     </body>
     <script>
-      xhttp = new XMLHttpRequest();
-      comments = new XMLHttpRequest();
+      var xhttp = new XMLHttpRequest();
 
-      var postid = window.location.search.substr(8);
+      postid = window.location.search.substr(8);
       console.log(postid);
       //create main class
       var mainDiv = document.createElement("div");
@@ -67,52 +65,48 @@
       mainDiv.setAttribute("id", "main");
       document.body.appendChild(mainDiv);
       //create class for posts
-      var posts = document.createElement("div");
+      posts = document.createElement("div");
       posts.setAttribute("id", "posts");
       mainDiv.appendChild(posts);
+      var post = document.createElement("div");
+      post.setAttribute("id", "post");
+      posts.appendChild(post);
+      var f = document.createElement("div");
+      f.setAttribute("id", "f");
+      f.setAttribute("class", "row");
+      //create the other div for post item
+      var img = document.createElement("div");
+      img.setAttribute("id", "img_container2");
+      img.setAttribute("class", "media-left");
+      var userImg = document.createElement("img");
+      userImg.setAttribute("id", "user_img");
+      userImg.setAttribute("class", "media-object");
+      userImg.src = "images/placeholder.jpg"
+      var blogName = document.createElement("div");
+      blogName.setAttribute("id", "user_blog");
+      blogName.setAttribute("class", "media-body");
+      var blogP = document.createElement("p");
+      blogP.setAttribute("class", "media-heading");
+      var postContent = document.createElement("div");
+      postContent.setAttribute("class", "media-body");
+      postContent.setAttribute("id", "content");
+      var content = document.createElement("p");
+      content.setAttribute("id", "contents");
+      var num_likes = document.createElement("p");
+
+
+
+
       //get response from xhttp request.
       xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(xhttp.response);
-          // if(typeof(document.cookie.indexOf('loggedIn')) !== "undefined"){
-          //   document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
-          // }
-
+          if (document.cookie.indexOf('_idp_session') != -1){
+            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          }
           //loop through the response
           data.forEach(function(o) {
             if(o.username!=null && o.postContent !=null){
-              var post = document.createElement("div");
-              post.setAttribute("id", "post");
-              posts.appendChild(post);
-              var f = document.createElement("div");
-              f.setAttribute("id", "f");
-              f.setAttribute("class", "row");
-              //create the other div stuff
-              var img = document.createElement("div");
-              img.setAttribute("id", "img_container2");
-              img.setAttribute("class", "media-left");
-              var userImg = document.createElement("img");
-              userImg.setAttribute("id", "user_img");
-              userImg.setAttribute("class", "media-object");
-              userImg.src = "images/placeholder.jpg"
-              var blogName = document.createElement("div");
-              blogName.setAttribute("id", "user_blog");
-              blogName.setAttribute("class", "media-body");
-              var blogP = document.createElement("p");
-              blogP.setAttribute("class", "media-heading");
-              var postContent = document.createElement("div");
-              postContent.setAttribute("class", "media-body");
-              postContent.setAttribute("id", "content");
-              var content = document.createElement("p");
-              content.setAttribute("id", "contents");
-              var likes = document.createElement("div");
-              likes.setAttribute("id", "likes");
-              var likeBtn = document.createElement("input")
-              likeBtn.setAttribute("type", "image");
-              likeBtn.setAttribute("src", "images/like.png");
-              likeBtn.setAttribute("class", "bt_like");
-              likeBtn.setAttribute("id", "like_bt");
-              var num_likes = document.createElement("p");
               post.appendChild(f);
               f.appendChild(img);
               if(o.image != null){
@@ -125,6 +119,13 @@
               post.append(postContent);
               content.innerHTML = o.postContent;
               postContent.appendChild(content);
+              var likes = document.createElement("div");
+              likes.setAttribute("id", "likes");
+              var likeBtn = document.createElement("input")
+              likeBtn.setAttribute("type", "image");
+              likeBtn.setAttribute("src", "images/like.png");
+              likeBtn.setAttribute("class", "bt_like");
+              likeBtn.setAttribute("id", "like_bt");
               postContent.appendChild(likes);
               likes.appendChild(likeBtn);
               num_likes.innerHTML = o.likes;
@@ -135,13 +136,131 @@
         }
       }
 
+
+
       var url = "https://api.fallr.ca/posts/id/"+ postid;
-      xhttp.open("POST", url, true);
-      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xhttp.send();
+        xhttp.open("POST", url, true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send();
+
+    </script>
+    <script>
+      var comments = new XMLHttpRequest();
+      var add_comment = document.createElement("div");
+      add_comment.setAttribute("class", "container-fluid");
+      add_comment.setAttribute("id", "add_comments");
+      posts.appendChild(add_comment);
+      var comment_header = document.createElement("h3")
+      comment_header.innerHTML = "Comments";
+      add_comment.appendChild(comment_header);
+      var f2 = document.createElement("div");
+      f2.setAttribute("id", "f");
+      f2.setAttribute("class", "row");
+      add_comment.appendChild(f2);
+      var comment = document.createElement("div");
+      comment.setAttribute("id", "comment");
+      f2.appendChild(comment);
+      var fgroup = document.createElement("div");
+      fgroup.setAttribute("class", "form-group");
+      comment.appendChild(fgroup);
+      var comLabel = document.createElement("h6");
+      comLabel.innerHTML = "Add a Comment:"
+      comLabel.setAttribute("id", "comLabel")
+      fgroup.appendChild(comLabel);
+      var textInput = document.createElement("textarea");
+      textInput.setAttribute("class", "form_control");
+      textInput.setAttribute("rows", "5");
+      textInput.setAttribute("id", "add_comment");
+      fgroup.appendChild(textInput);
+      var addButton = document.createElement("input");
+      addButton.setAttribute("class", "form_control");
+      addButton.setAttribute("type", "button");
+      addButton.setAttribute("id", "comment_button");
+      addButton.setAttribute("value", "submit");
+      fgroup.appendChild(addButton);
+      var user_comments = document.createElement("div");
+      user_comments.setAttribute("id", "comments");
+      user_comments.setAttribute("class", "container-fluid");
+      posts.appendChild(user_comments);
+
+      comments.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(comments.response);
+          if (document.cookie.indexOf('_idp_session') != -1){
+            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          }
+          //loop through the response
+          data.forEach(function(o) {
+            if(o.commentID!=null && o.comment !=null){
+                var comment2 = document.createElement("div")
+                comment2.setAttribute("id", "comment");
+                user_comments.appendChild(comment2);
+                var f3 = document.createElement("div");
+                f3.setAttribute("id", "f");
+                f3.setAttribute("class", "row");
+                comment2.appendChild(f3);
+                var img2 = document.createElement("div");
+                img2.setAttribute("id", "img_container2");
+                img2.setAttribute("class", "media-left");
+                var userImg2 = document.createElement("img");
+                userImg2.setAttribute("id", "user_img");
+                userImg2.setAttribute("class", "media-object");
+                userImg2.src = "images/placeholder.jpg"
+                var blogName2 = document.createElement("div");
+                blogName2.setAttribute("id", "user_blog");
+                blogName2.setAttribute("class", "media-body");
+                var blogP2 = document.createElement("p");
+                blogP2.setAttribute("class", "media-heading");
+                f3.appendChild(img2);
+                if(o.image != null){
+                  userImg2.src = o.image;
+                }
+                img2.appendChild(userImg2);
+                blogP2.innerHTML = o.comment;
+                f3.appendChild(blogName2);
+                blogName2.appendChild(blogP2);
+
+            }
+            // to test console.log(o.postID, o.username);
+          })
+        }
+      }
+      console.log("here");
       var commentURL = "https://api.fallr.ca/posts/comments/"+ postid;
       comments.open("POST", commentURL, true);
       comments.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       comments.send();
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $("#like_bt").click(function(){
+          console.log("like_bt was clicked!");
+          if (document.cookie.indexOf('_idp_session') != -1){
+          $.post("https://api.fallr.ca/like",
+          {
+            postID: $("#like_bt").val(),
+            loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+          });
+        }else{
+          alert("Only logged in Users can like a post!")
+        }});
+      });
+    </script>
+    <script>
+      $(document).ready(function(){
+        $("#comment_button").click(function(){
+          if (document.cookie.indexOf('_idp_session') != -1){
+            $.post("https://api.fallr.ca/comment",
+            {
+              postID: postid,
+              comment: $.trim($("#add_comment").val()),
+              loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+            });
+          }else{
+            alert("Only logged in Users can comment!")
+          }});
+      });
+
     </script>
 </html>
