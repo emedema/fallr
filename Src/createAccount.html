@@ -140,9 +140,33 @@
             document.getElementById("login-button").addEventListener("click", function(){
                 xhttp = new XMLHttpRequest();
 
+                // If the account is successfully created, we can then try to log in //
                 xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        window.location.href = "/feed"
+                    // This handles the case where the user account already exists //
+                    if (this.readyState == 4 && this.status == 405) {
+                        document.getElementById("submitError").innerHTML = "An account with similar information already exists!"
+                    }
+                    else if (this.readyState == 4 && this.status == 200) {
+                        xhttpLogin = new XMLHttpRequest();
+
+                        // If the login request is successful //
+                        xhttpLogin.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                // Gets the data from the response //
+                                data = JSON.parse(xhttpLogin.response);
+                                // Sets the cookie loggedIn which is used to validate future requests //
+                                document.cookie = "loggedIn=" + data.loggedIn
+                                // Redirects back to feed //
+                                window.location.href = "/feed"
+                            }
+                        }
+
+                        // This creates a post request to the login API and send the username and password //
+                        xhttpLogin.open("POST", "https://api.fallr.ca/login", true);
+                        xhttpLogin.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhttpLogin.send("username=" + document.getElementById("username").value
+                            + "&password=" + document.getElementById("password").value);
+
                     }
                 };
 
