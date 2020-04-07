@@ -6,7 +6,7 @@ require_once '../Login.php';
 require_once '../Post.php';
 
 
-
+header("Access-Control-Allow-Origin: *");
 header('Content-type: application/json');
 
 $connection = createConnection();

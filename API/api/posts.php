@@ -5,7 +5,7 @@ require_once '../Login.php';
 require_once '../Post.php';
 require_once '../Account.php';
 
-header("Access-Control-Allow-Origin: https://fallr.ca");
+header("Access-Control-Allow-Origin: *");
 header('Content-type: application/json');
 
 $username = NULL;

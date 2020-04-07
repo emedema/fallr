@@ -4,7 +4,7 @@ require_once '../connection.php';
 require_once '../Account.php';
 require_once '../Post.php';
 
-header("Access-Control-Allow-Origin: https://fallr.ca");
+header("Access-Control-Allow-Origin: *");
 header('Content-type: application/json');
 
 if(isset($_GET['username']))

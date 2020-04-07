@@ -5,7 +5,7 @@ require_once '../connection.php';
 require_once '../Account.php';
 
 // Allows the server to send data to other site (We are only allowing the current domain) //
-header("Access-Control-Allow-Origin: https://fallr.ca"); 
+header('Access-Control-Allow-Origin: *');
 
 // Sets the type to be JSON/Javascript
 header("Content-Type:application/javascript");
@@ -27,7 +27,7 @@ if (isset($_POST['username']) && isset($_POST['password']) && ($_SERVER['REQUEST
         print(json_encode(array("loggedIn"=> Login::createToken($connection, $username))));  
     }
     else
-        header("HTTP/1.1 407 Login Invalid");
+        header("HTTP/1.1 409 Login Invalid");
 }
 
 // Else we are going to send an update password request to an email //

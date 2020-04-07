@@ -4,7 +4,7 @@ require_once '../connection.php';
 require_once '../Login.php';
 require_once '../Account.php';
 
-header("Access-Control-Allow-Origin: https://fallr.ca");
+header("Access-Control-Allow-Origin: *");
 header('Content-type: application/json');
 
 if(isset($_POST['username']))
@@ -104,7 +104,7 @@ else if($updateBackground && $image && $token && ($_SERVER['REQUEST_METHOD'] ===
     }
     
     else
-        header("HTTP/1.1 407 Bad Login");
+        header("HTTP/1.1 409 Bad Login");
 
 }
 
@@ -124,7 +124,7 @@ else if($updateUser && $image && $token && ($_SERVER['REQUEST_METHOD'] === 'POST
     }
     
     else
-        header("HTTP/1.1 407 Bad Login");
+        header("HTTP/1.1 409 Bad Login");
 
 }
 
@@ -140,7 +140,7 @@ else if($updateUser && $username && $token && ($_SERVER['REQUEST_METHOD'] === 'P
     }
     
     else
-        header("HTTP/1.1 407 Bad Login");
+        header("HTTP/1.1 409 Bad Login");
 
 }
 
@@ -160,7 +160,7 @@ else if($username && $token && ($username == Login::getIDFromToken($token))) {
     }
     
     else
-        header("HTTP/1.1 407 Bad Login");
+        header("HTTP/1.1 409 Bad Login");
 
 }
 
