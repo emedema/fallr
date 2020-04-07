@@ -14,6 +14,7 @@ if(isset($_GET['commentID']))
     $commentID = $_GET['commentID'];
 
 header('Content-type: application/json');
+header("Access-Control-Allow-Origin: *");
 
 if ($postID) {
     $connection = createConnection();

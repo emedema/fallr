@@ -3,7 +3,7 @@
 require_once '../connection.php';
 require_once '../Account.php';
 
-header("Access-Control-Allow-Origin: https://fallr.ca");
+header("Access-Control-Allow-Origin: *");
 
 if(isset($_POST['password']))
     $password = $_POST['password'];
