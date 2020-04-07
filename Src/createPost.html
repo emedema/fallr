@@ -121,8 +121,8 @@
                 xhttp = new XMLHttpRequest();
 
                 xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined" ) {
-                        //window.location.href = "/fallr/feed"
+                    if (this.readyState == 4 && this.status == 200 && document.cookie.indexOf('_idp_session') != -1 ) {
+                        window.location.href = "/feed"
                     }
                 };
 
@@ -137,15 +137,22 @@
                     if(!(success = fieldCheck(fields[i])))
                         break;
                 };
-                
+                if (document.cookie.indexOf('_idp_session') != -1){
+                  document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+                  document.getElementById("login-nav").href = "personal_blog";
+
+
                 /* Makes the request if all fields are valid */
-                if(success) {
-                    xhttp.open("POST", "https://api.fallr.ca/post", true);
-                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    xhttp.send("postName=" + document.getElementById("postName").value 
-                        + "&postContent=" + document.getElementById("postContent").value
-                        + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
-                }
+                  if(success) {
+                      xhttp.open("POST", "https://api.fallr.ca/post", true);
+                      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                      xhttp.send("postName=" + document.getElementById("postName").value
+                          + "&postContent=" + document.getElementById("postContent").value
+                          + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+                  }
+              }else{
+                alert("You must be logged in to create a post!");
+              }
             })
         </script>
     </body>
