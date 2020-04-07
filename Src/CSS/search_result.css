@@ -19,7 +19,7 @@ body{
   .btn{
     margin-top: 15%;
   }
-  div#user_blog.media-body{
+  #user_s div#user_blog.media-body{
     height: 10%;
   }
   #img_container{
