@@ -98,6 +98,18 @@ img {
     padding-left: 5em;
     margin-bottom: 0.5em;
 }
+#enable_bar{
+    margin-right: 1em;
+    padding-right: 5em;
+    padding-left: 5em;
+    margin-bottom: 0.5em;
+}
+#disable_bar{
+    margin-right: 1em;
+    padding-right: 5em;
+    padding-left: 5em;
+    margin-bottom: 0.5em;
+}
 form{
     display: inline-block;
 }

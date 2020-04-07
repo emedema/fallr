@@ -16,21 +16,44 @@ body{
     color: #438173;
   }
 
-
+  .btn{
+    margin-top: 15%;
+  }
+  #user_s div#user_blog.media-body{
+    height: 10%;
+  }
   #img_container{
       text-align: center;
       display: block;
+      margin-top: 2em;
   }
 
   img#user_pic{
       margin-left: auto;
       margin-right: auto;
       height: 90px;
-      border-radius: 50%;
+      border-radius: 70%;
       margin-bottom: 2em;
       margin-top: 2em;
   }
-
+  #img_container2{
+      text-align: left;
+      display: block;
+  }
+  img {
+      max-width: 100%;
+      height: auto;
+      width: auto\9; /* ie8 */
+  }
+  #user_img{
+      height: 50px;
+      width: 50px;
+      margin-top: 1em;
+      margin-left: 1em;
+      margin-bottom: 1em;
+      margin-right: 1em;
+      border-radius: 50%;
+  }
   #user_info{
       color: #F0F7F4;
       text-align: center;
@@ -54,7 +77,17 @@ body{
       margin-right: auto;
       margin-top: 2em;
       margin-bottom: 2em;
+      border-radius: 25px;
       padding-bottom: 1em;
+
+  }
+  #user_s{
+      background-color: #6F857D;
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 2em;
+      margin-bottom: 2em;
       border-radius: 25px;
 
   }
@@ -63,25 +96,7 @@ body{
       height: fit-content;
       margin: 0.25em;
   }
-  #img_container2{
-      text-align: left;
-      display: block;
 
-  }
-  img {
-      max-width: 100%;
-      height: auto;
-      width: auto\9; /* ie8 */
-  }
-  #user_img{
-      height: 50px;
-      width: 50px;
-      margin-top: 1em;
-      margin-left: 1em;
-      margin-bottom: 1em;
-      margin-right: 1em;
-      border-radius: 50%;
-  }
   #user_blog{
       width: 94%;
       background-color: #F0F7F4;
@@ -147,7 +162,7 @@ body{
     color: #6F857D;
   }
   #comLabel{
-    color: #3A4B48;
+    color: #ADE6D9;
     padding-left: 2%;
     padding-top: 1%;
   }
@@ -171,7 +186,7 @@ body{
   #user_blog p{
     margin-top: auto;
     margin-bottom: auto;
-    margin-left: 1%;
+    margin-left: 2%;
     padding-top: 1%;
   }
   .form-group{

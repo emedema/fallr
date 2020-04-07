@@ -16,6 +16,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -41,8 +42,8 @@
                         </li>
                     </ul>
                     <ul id="navbar-ul-center" class="navbar-nav ml-auto">
-                        <form id="search-form" class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search">
+                        <form id="search-form" class="form-inline d-flex dropdown" action = "search_result" method = "get">
+                            <input id = "search_bar" class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search" name = "search">
                         </form>
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
@@ -76,7 +77,10 @@
       xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(xhttp.response);
-          document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          if (document.cookie.indexOf('_idp_session') != -1){
+            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+            document.getElementById("login-nav").href = "personal_blog";
+          }
 
           //loop through the response
           data.forEach(function(o) {
@@ -112,11 +116,16 @@
               likeBtn.setAttribute("src", "images/like.png");
               likeBtn.setAttribute("class", "bt_like");
               likeBtn.setAttribute("id", "like_bt");
+              likeBtn.setAttribute('value', o.postID);
               var num_likes = document.createElement("p");
+              var form = document.createElement("form");
+              form.setAttribute("method", "get");
+              form.setAttribute("action", "postpage");
               var btn = document.createElement("button");
-              btn.setAttribute("type", "button");
+              btn.setAttribute("type", "submit");
               btn.setAttribute("class", "btn");
-              btn.setAttribute('onclick', "window.location.href = 'postpage'");
+              btn.setAttribute("name", "postid");
+              btn.setAttribute('value', o.postID);
               btn.innerHTML = "Comment"
               post.appendChild(f);
               f.appendChild(img);
@@ -134,7 +143,8 @@
               likes.appendChild(likeBtn);
               num_likes.innerHTML = o.likes;
               likes.appendChild(num_likes);
-              likes.appendChild(btn);
+              likes.appendChild(form);
+              form.appendChild(btn);
             }
             // to test console.log(o.postID, o.username);
           })
@@ -145,5 +155,38 @@
       xhttp.open("POST", url, true);
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhttp.send();
+
+    </script>
+    <script>
+    if (document.cookie.indexOf('_idp_session') != -1){
+      $(document).ready(function(){
+        $("#like_bt").click(function(){
+          $.post("https://api.fallr.ca/like",
+          {
+            postID: $("#like_bt").val(),
+            loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+          });
+        });
+      });
+    }
+    </script>
+    <script>
+
+    // $(document).ready(function(){
+    //   $("#search_bar").on("keyup", function(){
+    //     if(this.keyCode == 13){
+    //       url = "/search_result?search="+$(this).textinput();
+    //       window.location.href = url;
+    //     }
+    //   }
+    // });
+    // function handle(e){
+	  //    address=document.getElementById("search_bar").textinput();
+    //    if(e.keyCode === 13){
+		// //write your specific code from here
+    // 	 alert("You are searching: " + address);
+    //  }
+	  //   return false;
+    // }
     </script>
 </html>

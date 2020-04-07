@@ -38,9 +38,9 @@
                         </li>
                     </ul>
                     <ul id="navbar-ul-center" class="navbar-nav ml-auto">
-                        <form id="search-form" class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search">
-                        </form>
+                      <form id="search-form" class="form-inline d-flex dropdown" action = "search_result" method = "get">
+                          <input id = "search_bar" class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search" name = "search">
+                      </form>
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -65,7 +65,7 @@
                     <div id = 'post'>
                         <div id = 'content'>
                             <h5>Search for User</h5>
-                            <p>Enter username, email, or post to find user</p>
+                            <p>Enter username, email, or postID to find user.</p>
                             <div id = 'search_form'>
                                 <form>
                                     <input type = "text" name = "query" id = "search_bar" placeholder="Enter search here" class = 'form-control'>
@@ -76,12 +76,12 @@
                     </div>
                     <div id = post>
                         <div id = 'content'>
-                            <h5>Enable/Disable User</h5>
-                            <p>Enter username, email, or post to find user</p>
+                            <h5>Disable/Enable User</h5>
+                            <p>Enter username to disable/enable user.</p>
                             <div id = 'search_form'>
                                 <form>
-                                    <input type = "text" name = "query" id = "search_bar" placeholder="Enter search here" class = 'form-control'>
-                                    <input type = 'submit' name = 'submit' id = "search_bt" value = 'Search' class = 'form-control'>
+                                    <input type = "text" name = "query" id = "disable_bar" placeholder="Enter username here" class = 'form-control'>
+                                    <input type = 'submit' name = 'submit' id = "disable_bt" value = 'Submit' class = 'form-control'>
                                 </form>
                             </div>
                         </div>
@@ -109,6 +109,8 @@
                     xhttp.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined" ) {
                             //show search results
+                            data = JSON.parse(xhttp.reponse);
+                            console.log(data);
                         }
                     };
 
@@ -131,6 +133,55 @@
                         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                         xhttp.send("query=" + document.getElementById("query").value );
                     }
+                })
+            </script>
+            <script>
+
+                /* Function that takes an element id and checks the validity of the input */
+
+                function fieldCheck(fieldID) {
+                    element = document.getElementById(fieldID);
+                    if(element.value == "") {
+                        document.getElementById("submitError").innerHTML = fieldID + " is required.";
+                        return false;
+                    }
+                    return true;
+                }
+
+                document.getElementById("disable_bt").addEventListener("click", function(){
+                    xhttp = new XMLHttpRequest();
+
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined" ) {
+                            //show search results
+                            data = JSON.parse(xhttp.reponse);
+                            console.log(data);
+                        }
+                    };
+
+                    // Checks to see if the user is missing any fields //
+
+                    var fields = ["query"];
+
+                    var success;
+
+                    for(i in fields) {
+                        console.log(fields[i])
+                        if(!(success = fieldCheck(fields[i])))
+                            break;
+                    };
+
+                    if(document.getElementById("disable_bar").value !== null){
+                      var url = "https://api.fallr.ca/users/deactivate/" + document.getElementById("disable_bar").value;
+                      console.log(url);
+                      if(success) {
+                          xhttp.open("POST", url, true);
+                          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                          xhttp.send("query=" + document.getElementById("query").value );
+                      }
+                    }
+                    /* Makes the request if all fields are valid */
+
                 })
             </script>
         </footer>
