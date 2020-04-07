@@ -75,7 +75,7 @@ class Post {
 
     public function getPosts($connection, $username) {
         /* Prepares the function so we can pass in the values from the user */
-       $query = $connection->prepare("SELECT postID, username, postName, image, postContent FROM Posts WHERE username = ?");		
+       $query = $connection->prepare("SELECT p.postID, p.username, p.postName, p.image, p.postContent, count(l.username) likes FROM Posts p, Likes l WHERE p.username = ? AND p.postID = l.postID GROUP BY p.postID");		
 
        $query->bind_param("s", $username);
 
@@ -87,7 +87,7 @@ class Post {
 
     public function getPost($connection, $postID) {
         /* Prepares the function so we can pass in the values from the user */
-       $query = $connection->prepare("SELECT postID, username, postName, image, postContent FROM Posts WHERE postID = ?");		
+       $query = $connection->prepare("SELECT p.postID, p.username, p.postName, p.image, p.postContent, count(l.username) likes FROM Posts p, Likes l WHERE p.postID = ? AND p.postID = l.postID GROUP BY p.postID");		
 
        $query->bind_param("i", $postID);
 
