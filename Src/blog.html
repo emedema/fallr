@@ -45,7 +45,7 @@
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="settings.html">Settings</a>
+                            <a class="nav-link" href="settings">Settings</a>
                         </li>
                         <li class="nav-item">
 
@@ -65,8 +65,8 @@
     <script>
 
           xhttp = new XMLHttpRequest();
-          user = window.location.search.substr(8);
-
+          user = window.location.search.substr(6);
+          console.log(user);
           //create main class
           var cover = document.createElement("img");
           cover.src = 'images/placeholder.jpg';

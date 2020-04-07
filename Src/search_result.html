@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>fallr - Search</title>
+        <meta charset = 'utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+        <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="CSS/search_result.css">
+    </head>
+    <body>
+        <header>
+            <nav class="navbar sticky-top navbar-expand-lg navbar-light">
+                <img alt="Brand" src="images/fallr_logo.png" style="width: 50px">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse mr-auto" id="navbarNav">
+                    <ul id="navbar-ul-left" class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="feed">Feed<span class="sr-only"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="trending">Trending<span class="sr-only"></span></a>
+                        </li>
+                    </ul>
+                    <ul id="navbar-ul-center" class="navbar-nav ml-auto">
+                      <form id="search-form" class="form-inline d-flex dropdown" action = "search_result" method = "get">
+                          <input id = "search_bar" class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search" name = "search">
+                      </form>
+                    </ul>
+                    <ul id="navbar-ul-right" class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a id = 'create_account' class="nav-link" href="settings">Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="login-nav" class="nav-link" href="personal_blog">User</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+    </body>
+    <script>
+      var xhttp = new XMLHttpRequest();
+      var users = false;
+
+      postid = window.location.search.substr(8);
+      console.log(postid);
+      //create main class
+      var mainDiv = document.createElement("div");
+      mainDiv.setAttribute("class", "container-fluid");
+      mainDiv.setAttribute("id", "main");
+      document.body.appendChild(mainDiv);
+      //create class for posts
+      posts = document.createElement("div");
+      posts.setAttribute("id", "posts");
+      mainDiv.appendChild(posts);
+      label = document.createElement("h3");
+      label.setAttribute("id", "comLabel")
+      label.innerHTML = "Users"
+      posts.appendChild(label);
+      post = document.createElement("div");
+      post.setAttribute("id", "user_s");
+      posts.appendChild(post);
+      label2 = document.createElement("h3");
+      label2.setAttribute("id", "comLabel")
+      label2.innerHTML = "Posts"
+      posts.appendChild(label2);
+      user_posts = document.createElement("div");
+      user_posts.setAttribute("id", "comments");
+      user_posts.setAttribute("class", "container-fluid");
+      posts.appendChild(user_posts);
+
+      //create the other div for post item
+
+
+
+      //get response from xhttp request.
+      xhttp.onreadystatechange = function(){
+        users = true;
+        label3.innerHTML = ""
+        if(this.readyState == 4 && this.status == 200){
+          console.log("hi")
+          data = JSON.parse(xhttp.response);
+          if (document.cookie.indexOf('_idp_session') != -1){
+            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+            document.getElementById("login-nav").href = "personal_blog";
+            document.getElementById('create_account').innerHTML = "Settings";
+            document.getElementById('create_account').href = "settings";
+          }
+          //loop through the response
+          data.forEach(function(o) {
+            if(o.username!=null){
+
+              var f3 = document.createElement("div");
+              f3.setAttribute("id", "f");
+              f3.setAttribute("class", "row");
+              post.appendChild(f3);
+              var blogName2 = document.createElement("div");
+              blogName2.setAttribute("id", "user_blog");
+              blogName2.setAttribute("class", "media-body");
+              var blogP2 = document.createElement("p");
+              blogP2.setAttribute("class", "media-heading");
+              blogP2.innerHTML = o.username;
+              f3.appendChild(blogName2);
+              blogName2.appendChild(blogP2);
+              var form = document.createElement("form");
+              form.setAttribute("method", "get");
+              form.setAttribute("action", "blog");
+              var btn = document.createElement("button");
+              btn.setAttribute("type", "submit");
+              btn.setAttribute("class", "btn");
+              btn.setAttribute("name", "user");
+              btn.setAttribute('value', o.username);
+              btn.innerHTML = "See User"
+              f3.appendChild(form);
+              form.appendChild(btn);
+            }
+            // to test console.log(o.postID, o.username);
+          })
+        }
+      }
+
+
+
+      var url = "https://api.fallr.ca/search/username/"+ postid;
+        xhttp.open("POST", url, true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send();
+
+    </script>
+    <script>
+      var comments = new XMLHttpRequest();
+
+      comments.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(comments.response);
+          if (document.cookie.indexOf('_idp_session') != -1){
+            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          }
+          //loop through the response
+          data.forEach(function(o) {
+            if(o.postID!=null && o.postContent !=null){
+              var post2 = document.createElement("div");
+              post2.setAttribute("id", "post");
+              user_posts.appendChild(post2);
+              var f = document.createElement("div");
+              f.setAttribute("id", "f");
+              f.setAttribute("class", "row");
+              //create the other div stuff
+              var img = document.createElement("div");
+              img.setAttribute("id", "img_container2");
+              img.setAttribute("class", "media-left");
+              var userImg = document.createElement("img");
+              userImg.setAttribute("id", "user_img");
+              userImg.setAttribute("class", "media-object");
+              userImg.src = "images/placeholder.jpg"
+              var blogName = document.createElement("div");
+              blogName.setAttribute("id", "user_blog");
+              blogName.setAttribute("class", "media-body");
+              var blogP = document.createElement("p");
+              blogP.setAttribute("class", "media-heading");
+              var postContent = document.createElement("div");
+              postContent.setAttribute("class", "media-body");
+              postContent.setAttribute("id", "content");
+              var content = document.createElement("p");
+              content.setAttribute("id", "contents");
+              var likes = document.createElement("div");
+              likes.setAttribute("id", "likes");
+              var likeBtn = document.createElement("input")
+              likeBtn.setAttribute("type", "image");
+              likeBtn.setAttribute("src", "images/like.png");
+              likeBtn.setAttribute("class", "bt_like");
+              likeBtn.setAttribute("id", "like_bt");
+              likeBtn.setAttribute('value', o.postID);
+              var num_likes = document.createElement("p");
+              var form = document.createElement("form");
+              form.setAttribute("method", "get");
+              form.setAttribute("action", "postpage");
+              var btn = document.createElement("button");
+              btn.setAttribute("type", "submit");
+              btn.setAttribute("class", "btn");
+              btn.setAttribute("name", "postid");
+              btn.setAttribute('value', o.postID);
+              btn.innerHTML = "Comment"
+              post2.appendChild(f);
+              f.appendChild(img);
+              if(o.image != null){
+                userImg.src = o.image;
+              }
+              img.appendChild(userImg);
+              blogP.innerHTML = o.username;
+              f.appendChild(blogName);
+              blogName.appendChild(blogP);
+              post2.append(postContent);
+              content.innerHTML = o.postContent;
+              postContent.appendChild(content);
+              postContent.appendChild(likes);
+              likes.appendChild(likeBtn);
+              num_likes.innerHTML = o.likes;
+              likes.appendChild(num_likes);
+              likes.appendChild(form);
+              form.appendChild(btn);
+            }
+            // to test console.log(o.postID, o.username);
+          })
+        }
+      }
+      console.log("here");
+      var commentURL = "https://api.fallr.ca/search/allPosts/"+ postid;
+      comments.open("POST", commentURL, true);
+      comments.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      comments.send();
+    </script>
+
+
+</html>
