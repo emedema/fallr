@@ -47,7 +47,7 @@
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a id = 'create_account' class="nav-link" href="settings.html">Settings</a>
+                            <a class="nav-link" href="settings.html">Settings</a>
                         </li>
                         <li class="nav-item">
 
@@ -76,14 +76,10 @@
       posts.setAttribute("id", "posts");
       mainDiv.appendChild(posts);
       //get response from xhttp request.
-
       xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined"){
+        if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(xhttp.response);
-            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
-            document.getElementById("login-nav").href = "personal_blog";
-            document.getElementById('create_account').innerHTML = "Settings";
-            document.getElementById('create_account').href = "settings";
+          document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
 
           //loop through the response
           data.forEach(function(o) {
@@ -119,7 +115,6 @@
               likeBtn.setAttribute("src", "images/like.png");
               likeBtn.setAttribute("class", "bt_like");
               likeBtn.setAttribute("id", "like_bt");
-              likeBtn.setAttribute("value", o.postID);
               var num_likes = document.createElement("p");
               var btn = document.createElement("button");
               btn.setAttribute("type", "button");
@@ -148,14 +143,10 @@
           })
         }
       }
-      if (document.cookie.indexOf('_idp_session') === -1){
+      if (document.cookie.indexOf('loggedIn') === -1){
         alert("Feed page is unavailable for non-loggedIn users.");
         window.location.href = "trending";
       }
-      // if(typeof(document.cookie.indexOf('loggedIn')) === "undefined"){
-      //   alert("Feed page is unavailable for non-loggedIn users.");
-      //   window.location.href = "trending";
-      // }
 
       var url = "https://api.fallr.ca/feed";
       xhttp.open("POST", url, true);
@@ -163,12 +154,16 @@
       xhttp.send("loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
     </script>
     <script>
-      $("#like_bt").click(function(){
-        $.post("https://api.fallr.ca/like",
-        {
-          postID: $("#like_bt").val(),
-          loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+    if (document.cookie.indexOf('loggedIn') !== -1){
+      $(document).ready(function(){
+        $("#like_bt").click(function(){
+          $.post("https://api.fallr.ca/like",
+          {
+            postID: $("#like_bt").val(),
+            loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+          });
         });
       });
+    }
     </script>
 </html>

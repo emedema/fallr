@@ -101,7 +101,7 @@
       xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(xhttp.response);
-          if (document.cookie.indexOf('_idp_session') != -1){
+          if (document.cookie.indexOf('loggedIn') !== -1){
             document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
             document.getElementById("login-nav").href = "personal_blog";
             document.getElementById('create_account').innerHTML = "Settings";
@@ -189,7 +189,7 @@
       comments.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(comments.response);
-          if (document.cookie.indexOf('_idp_session') != -1){
+          if (document.cookie.indexOf('loggedIn') !== -1){
             document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
           }
           //loop through the response
@@ -239,7 +239,7 @@
       $(document).ready(function(){
         $("#like_bt").click(function(){
           console.log("like_bt was clicked!");
-          if (document.cookie.indexOf('_idp_session') != -1){
+          if (document.cookie.indexOf('loggedIn') !== -1){
           $.post("https://api.fallr.ca/like",
           {
             postID: $("#like_bt").val(),
@@ -253,7 +253,7 @@
     <script>
       $(document).ready(function(){
         $("#comment_button").click(function(){
-          if (document.cookie.indexOf('_idp_session') != -1){
+          if (document.cookie.indexOf('loggedIn') !== -1){
             $.post("https://api.fallr.ca/comment",
             {
               postID: postid,
