@@ -18,7 +18,7 @@ RewriteRule ^logout$ logout.php [NC,L]
 RewriteRule ^createAccount$ createAccount.php [NC,L] 
 
 # Updates user information
-RewriteRule ^user/([A-Za-z0-9]*)$ users.php?updateUser=true&username=$1 [QSA] 
+RewriteRule ^user/([A-Za-z0-9\ ]*)$ users.php?updateUser=true&username=$1 [QSA] 
 
 # This creates a post
 RewriteRule ^post$ posts.php [NC,L] 
@@ -44,10 +44,10 @@ RewriteRule ^user/background/([A-Za-z0-9]*)$ users.php?updateBackground=true&use
 ## GETTERS 
 
 # This gets the data for a user (depending on if logged in as user, personal or not)
-RewriteRule ^users/([A-Za-z0-9]*)$ users.php?username=$1 [QSA]
+RewriteRule ^users/([A-Za-z0-9\ ]*)$ users.php?username=$1 [QSA]
 
 # This gets the posts for a user
-RewriteRule ^posts/([A-Za-z0-9]*)$ posts.php?username=$1 [QSA]
+RewriteRule ^posts/([A-Za-z0-9\ ]*)$ posts.php?username=$1 [QSA]
 
 # This gets a post based on a postID
 RewriteRule ^posts/id/([0-9]*)$ posts.php?postID=$1 [QSA]
@@ -65,7 +65,7 @@ RewriteRule ^comments/([0-9]*)$ getComments.php?commentID=$1 [QSA]
 RewriteRule ^posts/comments/([0-9]*)$ getComments.php?postID=$1 [QSA]
 
 # This gets the subsciptions for a user
-RewriteRule ^users/subscriptions/([A-Za-z0-9]*)$ subscribe.php?username=$1 [QSA]
+RewriteRule ^users/subscriptions/([A-Za-z0-9\ ]*)$ subscribe.php?username=$1 [QSA]
 
 # This gets all likes for a post
 RewriteRule ^posts/likes/([A-Za-z0-9]*)$ like.php?postID=$1 [QSA]
@@ -74,7 +74,7 @@ RewriteRule ^posts/likes/([A-Za-z0-9]*)$ like.php?postID=$1 [QSA]
 RewriteRule ^users/deactivate/([A-Za-z0-9]*)$ users.php?deactivateUser=true&username=$1 [QSA]
 
 # This gets all users similar to search
-RewriteRule ^search/username/([A-Za-z0-9]*)$ search.php?type=username&username=$1 [QSA]
+RewriteRule ^search/username/([A-Za-z0-9\ ]*)$ search.php?type=username&username=$1 [QSA]
 
 # This gets the user with an email address
 RewriteRule ^search/email/([A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z]{2,})$ search.php?type=email&email=$1 [QSA]
