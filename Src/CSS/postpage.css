@@ -116,7 +116,6 @@ body{
       bottom: 0;
       width: 90%;
       position: absolute;
-      overflow: scroll;
   }
   #likes button{
       margin-left: 1em;

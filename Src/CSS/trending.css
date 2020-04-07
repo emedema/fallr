@@ -35,6 +35,9 @@ body{
 .my-float{
 	margin-top:22px;
 }
+#search-form ul li a{
+  color: #6F857D;
+}
 #img_container{
     text-align: center;
     display: block;
@@ -177,7 +180,6 @@ img {
     bottom: 0;
     width: 90%;
     position: absolute;
-    overflow: scroll;
 }
 #likes button{
     margin-left: 1em;
@@ -196,6 +198,7 @@ img {
     height: 50px;
     border-radius: 25px;
 }
+
 @media (max-width: 543px) {
     /* Makes it so when the screen is small, it shrinks the size*/
     .container .row {

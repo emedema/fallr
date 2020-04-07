@@ -37,9 +37,9 @@
                         </li>
                     </ul>
                     <ul id="navbar-ul-center" class="navbar-nav ml-auto">
-                        <form id="search-form" class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search">
-                        </form>
+                      <form id="search-form" class="form-inline d-flex dropdown" action = "search_result" method = "get">
+                          <input id = "search_bar" class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search" name = "search">
+                      </form>
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -85,38 +85,38 @@
             <script>
 
                 /* Function that takes an element id and checks the validity of the input */
-    
+
                 function fieldCheck(fieldID) {
                     element = document.getElementById(fieldID);
                     if(element.value == "") {
-                        document.getElementById("submitError").innerHTML = fieldID + " is required."; 
+                        document.getElementById("submitError").innerHTML = fieldID + " is required.";
                         return false;
                     }
                     return true;
                 }
-    
+
                 document.getElementById("search_bt").addEventListener("click", function(){
                     xhttp = new XMLHttpRequest();
-                    
+
                     xhttp.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined" ) {
                             //show search results
                         }
                     };
-    
+
                     // Checks to see if the user is missing any fields //
-                                    
+
                     var fields = ["query"];
-    
+
                     var success;
-    
+
                     for(i in fields) {
                         console.log(fields[i])
                         if(!(success = fieldCheck(fields[i])))
                             break;
                     };
-                    
-                    
+
+
                     /* Makes the request if all fields are valid */
                     if(success) {
                         xhttp.open("POST", "http://localhost/fallrAPI/AdminSearch", true);
