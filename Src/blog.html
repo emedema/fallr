@@ -65,6 +65,8 @@
     <script>
 
           xhttp = new XMLHttpRequest();
+          user = window.location.search.substr(8);
+
           //create main class
           var cover = document.createElement("img");
           cover.src = 'images/placeholder.jpg';
@@ -94,7 +96,7 @@
           userinfo.setAttribute("id","user_info");
           userbar.appendChild(userinfo);
           var username = document.createElement("p");
-          username.innerHTML = ""+document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          username.innerHTML = user;
           userinfo.appendChild(username);
           var followers = document.createElement("p");
           followers.innerHTML = "Followers";
@@ -115,7 +117,6 @@
               data = JSON.parse(xhttp.response);
               if (document.cookie.indexOf('_idp_session') != -1){
                 document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
-                document.getElementById("login-nav").href = "personal_blog";
               }
 
               //loop through the response
@@ -187,7 +188,7 @@
             }
           }
 
-          var url = "https://api.fallr.ca/posts/" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          var url = "https://api.fallr.ca/posts/" + user;
           xhttp.open("POST", url, true);
           xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
           xhttp.send();

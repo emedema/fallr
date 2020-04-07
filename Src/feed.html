@@ -47,7 +47,7 @@
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="settings.html">Settings</a>
+                            <a id = 'create_account' class="nav-link" href="settings.html">Settings</a>
                         </li>
                         <li class="nav-item">
 
@@ -80,7 +80,10 @@
       xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined"){
           data = JSON.parse(xhttp.response);
-          document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+            document.getElementById("login-nav").href = "personal_blog";
+            document.getElementById('create_account').innerHTML = "Settings";
+            document.getElementById('create_account').href = "settings";
 
           //loop through the response
           data.forEach(function(o) {
