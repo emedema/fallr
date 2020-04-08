@@ -256,6 +256,11 @@ Takes:
 GET | [domain]/users/subscriptions/[userID]
 ```
 
+### Get followers of a user (Completed)
+```
+GET | [domain]/users/followers/[userID]
+```
+
 ## Likes
 
 ### Liking/UnLiking (Completed)
