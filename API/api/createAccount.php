@@ -29,14 +29,14 @@ if(isset($_POST['lastName']))
 if(isset($_POST['email']))
     $email = $_POST['email'];
 
-if(isset($_FILES['image']))
-    $image = $_FILES['image'];
+if(isset($_FILES['myfile']))
+    $image = $_FILES['myfile'];
 
 
 if ($username && $password && $email) {
  
     $connection = createConnection();
-
+    $image = Account::addImageToSystem($image);
     $createSuccess = Account::createAccount($connection, $username, $password, $firstName, $lastName, $email, $image);
     
     if($createSuccess) {
