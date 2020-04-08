@@ -205,6 +205,33 @@
       addButton.setAttribute("id", "comment_button");
       addButton.setAttribute("value", "submit");
       fgroup.appendChild(addButton);
+      //if user Comments
+
+      addButton.onclick = function(){
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function() {
+          // If the user isn't logged in fail out !
+          if (this.readyState == 4 && this.status == 409) {
+            alert("Please log in to comment on posts.");
+          }
+
+          // Else if it was successful, increment the like counter by 1 //
+          else if (this.readyState == 4 && this.status == 200) {
+            location.reload();
+          }
+        };
+
+        // Make a like request using the value within the button (postID) //
+        xhttp.open("POST", "https://api.fallr.ca/comment", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(
+            "postID=" + postid
+            + "&comment=" + textInput.value
+          + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+        );
+      };
+
       var user_comments = document.createElement("div");
       user_comments.setAttribute("id", "comments");
       user_comments.setAttribute("class", "container-fluid");
@@ -213,7 +240,7 @@
       comments.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(comments.response);
-          if (document.cookie.indexOf('_idp_session') != -1){
+          if (document.cookie.indexOf('loggedIn') != -1){
             document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
           }
           //loop through the response
@@ -259,35 +286,5 @@
       comments.send();
     </script>
 
-    <script>
-      $(document).ready(function(){
-        $("#like_bt").click(function(){
-          console.log("like_bt was clicked!");
-          if (document.cookie.indexOf('_idp_session') != -1){
-          $.post("https://api.fallr.ca/like",
-          {
-            postID: $("#like_bt").val(),
-            loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
-          });
-        }else{
-          alert("Only logged in Users can like a post!")
-        }});
-      });
-    </script>
-    <script>
-      $(document).ready(function(){
-        $("#comment_button").click(function(){
-          if (document.cookie.indexOf('_idp_session') != -1){
-            $.post("https://api.fallr.ca/comment",
-            {
-              postID: postid,
-              comment: $.trim($("#add_comment").val()),
-              loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
-            });
-          }else{
-            alert("Only logged in Users can comment!")
-          }});
-      });
-
-    </script>
+  
 </html>
