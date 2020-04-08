@@ -23,7 +23,7 @@ class Comment {
 	
 	public function getComments($connection, $postID) {
         /* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("SELECT commentID, username, postID, comment FROM Comments WHERE postID = ?");		
+		$query = $connection->prepare("SELECT u.image, c.commentID, c.username, c.postID, c.comment FROM Comments c LEFT JOIN Users as u ON u.username = c.username WHERE postID = ? GROUP BY c.commentID, u.username");		
 		$query->bind_param("i", $postID);
         
 		/* Returns success */
@@ -34,7 +34,7 @@ class Comment {
 
 	public function getComment($connection, $commentID) {
         /* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("SELECT commentID, username, postID, comment FROM Comments WHERE commentID = ?");		
+		$query = $connection->prepare("SELECT u.image, c.commentID, c.username, c.postID, c.comment FROM Comments c LEFT JOIN Users as u ON u.username = c.username WHERE commentID = ? GROUP BY c.commentID, u.username");		
 		$query->bind_param("i", $commentID);
         
 		/* Returns success */
