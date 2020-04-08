@@ -120,7 +120,7 @@
                 xhttp = new XMLHttpRequest();
 
                 xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200 && document.cookie.indexOf('_idp_session') != -1 ) {
+                    if (this.readyState == 4 && this.status == 200 && document.cookie.indexOf('loggedIn') !== -1) {
                         window.location.href = "/feed"
                     }
                 };
@@ -136,7 +136,7 @@
                     if(!(success = fieldCheck(fields[i])))
                         break;
                 };
-                if (document.cookie.indexOf('_idp_session') != -1){
+                if (document.cookie.indexOf('loggedIn') !== -1){
                   document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
                   document.getElementById("login-nav").href = "personal_blog";
 

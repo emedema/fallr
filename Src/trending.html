@@ -158,7 +158,7 @@
 
     </script>
     <script>
-    if (document.cookie.indexOf('_idp_session') != -1){
+    if (document.cookie.indexOf('loggedIn') !== -1){
       $(document).ready(function(){
         $("#like_bt").click(function(){
           $.post("https://api.fallr.ca/like",
