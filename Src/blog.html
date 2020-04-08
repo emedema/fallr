@@ -104,6 +104,38 @@
           var following = document.createElement("p");
           following.innerHTML = "Following";
           userinfo.appendChild(following);
+          var btnFollow = document.createElement("button");
+          btnFollow.setAttribute("class", "btn");
+          btnFollow.innerHTML = "Follow"
+          userinfo.appendChild(btnFollow);
+          btnFollow.onclick = function(){
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+              // If the user isn't logged in fail out !
+              if (this.readyState == 4 && this.status == 409) {
+                alert("Please log in to follow users.");
+              }
+
+              // Else if it was successful, increment the like counter by 1 //
+              else if (this.readyState == 4 && this.status == 200) {
+                if(this.response == 0)
+                  btnFollow.innerHTML = "Follow" ;
+                else
+                  btnFollow.innerHTML = "Following" ;
+
+              }
+            };
+
+            // Make a like request using the value within the button (postID) //
+            xhttp.open("POST", "https://api.fallr.ca/subscribe", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send(
+              "username=" + user
+              + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+            );
+          };
+
           var col10 = document.createElement("div");
           col10.setAttribute("class", "col-lg-10");
           r.appendChild(col10);
@@ -233,4 +265,59 @@
           xhttp.send();
 
     </script>
+    <script>
+    //gets the users the user is following
+      subs = new XMLHttpRequest();
+
+      subs.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(subs.response);
+          if (document.cookie.indexOf('loggedIn') != -1){
+            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          }
+          var count = 0;
+          //loop through the response
+          data.forEach(function(o) {
+              count = count + 1;
+            // to test console.log(o.postID, o.username);
+          })
+          following.innerHTML = "Following: " + count;
+        }
+      }
+
+      var url = "https://api.fallr.ca/users/subscriptions/" + user;
+      subs.open("GET", url, true);
+      subs.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      subs.send();
+    </script>
+    <script>
+    //gets the users the user is following
+      fs = new XMLHttpRequest();
+
+      fs.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(fs.response);
+          if (document.cookie.indexOf('loggedIn') != -1){
+            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+          }
+          var count = 0;
+          //loop through the response
+          data.forEach(function(o) {
+              if (document.cookie.indexOf('loggedIn') != -1){
+                if(o.subscribedUsername === document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0])
+                  btnFollow.innerHTML = "Following"
+              }
+              count = count + 1;
+            // to test console.log(o.postID, o.username);
+          })
+          followers.innerHTML = "Followers: " + count;
+        }
+      }
+
+      var url = "https://api.fallr.ca/users/followers/" + user;
+      fs.open("GET", url, true);
+      fs.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      fs.send();
+    </script>
+
 </html>
