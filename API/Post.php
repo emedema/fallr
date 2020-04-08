@@ -51,7 +51,7 @@ class Post {
     
     public function getHot($connection) {
         /* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("SELECT p.postID, p.image, p.username, postName, postContent, count(l.username) likes FROM Posts p, Likes l WHERE p.postID = l.postID GROUP BY p.postID ORDER BY likes DESC");		
+		$query = $connection->prepare("SELECT p.postID, p.image, p.username, postName, postContent, p.created, count(l.username) likes FROM Posts p, Likes l WHERE p.postID = l.postID GROUP BY p.postID ORDER BY likes DESC");		
         $query->execute();
         
 		/* Returns inserted_id */
@@ -61,7 +61,7 @@ class Post {
     public function getFeed($connection, $username) {
          /* Prepares the function so we can pass in the values from the user */
 		$query = $connection->prepare("SELECT s.subscribedUsername, s.username, p.postID, p.username,
-      p.image, p.postName, p.postContent, count(l.username) likes 
+      p.image, p.postName, p.postContent, p.created, count(l.username) likes 
       FROM Posts p, Subscriptions s, Likes l WHERE s.subscribedUsername = (?) 
       AND s.username = p.username AND p.postID = l.postID GROUP BY p.postID, s.subscribedUsername");		
 
@@ -75,7 +75,7 @@ class Post {
 
     public function getPosts($connection, $username) {
         /* Prepares the function so we can pass in the values from the user */
-       $query = $connection->prepare("SELECT p.postID, p.username, p.postName, p.image, p.postContent, count(l.username) likes FROM Posts p, Likes l WHERE p.username = ? AND p.postID = l.postID GROUP BY p.postID");		
+       $query = $connection->prepare("SELECT p.postID, p.username, p.postName, p.image, p.postContent, p.created, count(l.username) likes FROM Posts p, Likes l WHERE p.username = ? AND p.postID = l.postID GROUP BY p.postID");		
 
        $query->bind_param("s", $username);
 
@@ -87,7 +87,7 @@ class Post {
 
     public function getPost($connection, $postID) {
         /* Prepares the function so we can pass in the values from the user */
-       $query = $connection->prepare("SELECT p.postID, p.username, p.postName, p.image, p.postContent, count(l.username) likes FROM Posts p, Likes l WHERE p.postID = ? AND p.postID = l.postID GROUP BY p.postID");		
+       $query = $connection->prepare("SELECT p.postID, p.username, p.postName, p.image, p.postContent, p.created, count(l.username) likes FROM Posts p, Likes l WHERE p.postID = ? AND p.postID = l.postID GROUP BY p.postID");		
 
        $query->bind_param("i", $postID);
 
@@ -111,8 +111,9 @@ class Post {
 
     public function searchPosts($connection, $partial_post) {		
 
-      $query = $connection->prepare("SELECT * FROM Posts WHERE postName LIKE CONCAT('%',?,'%')");	
-      
+      $query = $connection->prepare("SELECT p.postID, p.username, p.postName, p.image, p.postContent, p.created, count(l.username) likes FROM  
+          Posts p LEFT JOIN Likes AS l ON l.postID=p.postID WHERE p.postName LIKE CONCAT('%',?,'%') GROUP BY p.postID");	
+      print($connection->error);
       $query->bind_param("s", $partial_post);
   
       $query->execute();
@@ -122,8 +123,8 @@ class Post {
 
     public function getPostsTimePeriod($connection, $hours){
       // This function gets all posts for a timeperiod (now - hours * n )
-      $query = $connection->prepare("SELECT * FROM Posts WHERE created > (CURRENT_TIMESTAMP - INTERVAL ? HOUR) ");	
-      
+      $query = $connection->prepare("SELECT p.postID, p.username, p.postName, p.image, p.postContent, p.created, count(l.username) likes FROM  
+      Posts p LEFT JOIN Likes AS l ON l.postID=p.postID WHERE p.created > (CURRENT_TIMESTAMP - INTERVAL ? HOUR) GROUP BY p.postID");	
       $query->bind_param("s", $hours);
   
       $query->execute();
