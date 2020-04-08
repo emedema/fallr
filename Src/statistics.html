@@ -62,7 +62,9 @@
                     <div id = 'post'>
                         <div id = "content">
                             <h5>Usage Graphs</h5>
-                            <div id="my_dataviz"></div>
+                            <div id="my_dataviz">
+                              <canvas id="myChart" style="max-width: 500px;"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -124,6 +126,7 @@
                             title: 'Number of Posts in the Past',
                             barmode: 'stack'
                           };
+                          var config = {responsive: true}
 
                           Plotly.newPlot('my_dataviz', data, layout);
                           loop(i + 1, length);
@@ -131,6 +134,8 @@
                       }
                       request.send();
                     })(0, a.length);
+                    window.onresize = function(){ location.reload(); }
+
             </script>
 
         </footer>
