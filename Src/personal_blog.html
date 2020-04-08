@@ -313,4 +313,28 @@
       fs.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       fs.send();
     </script>
+    <script>
+      //get user background image
+      //user background var is cover
+
+      img = new XMLHttpRequest();
+
+      img.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(img.response);
+
+          //loop through the response
+          if (data[0]['backgroundImage']!=null || data[0]['backgroundImage']!=""){
+              cover.src = encodeURI(("https://api.fallr.ca/" + data[0]['backgroundImage']));
+          }
+
+        }
+      }
+
+      var url = "https://api.fallr.ca/user/background/get/" + user;
+      img.open("GET", url, true);
+      img.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      img.send();
+
+    </script>
 </html>
