@@ -134,6 +134,10 @@ Admins can activate or deactivate a user by using the following call
 POST | [domain]/users/deactivate/[username]
 ```
 
+Return Values:
+    - 0 = Deactivated
+    - 1 = Activated
+
 ## Feed
 
 ### Get the feed for a user (Completed)

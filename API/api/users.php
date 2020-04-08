@@ -60,11 +60,15 @@ if($token && Account::isAdmin($connection, Login::getIDFromToken($token)) &&
     // If the user is logged in, we allow them to update the status
     if($loggedIn) {
         // If they are already active, deactivate
-        if(Account::isActive($connection, $username))
+        if(Account::isActive($connection, $username)){
             Account::deactivateAccount($connection, $username);
+            print("0");
+        }
         // Else we need to activate the account //
-        else
+        else {
             Account::activateAccount($connection, $username);
+            print("1");
+        }
     }
 
 }
@@ -101,6 +105,9 @@ else if($updateBackground && $image && $token && ($_SERVER['REQUEST_METHOD'] ===
         // Updates the password //
         $image = Account::addImageToSystem($image);
         $result = Account::addBackgroundImageToUser($connection, $username, $image);
+
+        print($result);
+
     }
     
     else
