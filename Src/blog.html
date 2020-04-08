@@ -63,7 +63,7 @@
         </a>
     </body>
     <script>
-
+          follower_count = 0;
           xhttp = new XMLHttpRequest();
           user = window.location.search.substr(6);
           console.log(user);
@@ -119,11 +119,15 @@
 
               // Else if it was successful, increment the like counter by 1 //
               else if (this.readyState == 4 && this.status == 200) {
-                if(this.response == 0)
+                if(this.response == 0){
                   btnFollow.innerHTML = "Follow" ;
-                else
+                  follower_count = follower_count -1;
+                  followers.innerHTML = "Followers: " + follower_count;
+                }else{
                   btnFollow.innerHTML = "Following" ;
-
+                  follower_count = follower_count + 1;
+                  followers.innerHTML = "Followers: " + follower_count;
+                }
               }
             };
 
@@ -272,9 +276,7 @@
       subs.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(subs.response);
-          if (document.cookie.indexOf('loggedIn') != -1){
-            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
-          }
+
           var count = 0;
           //loop through the response
           data.forEach(function(o) {
@@ -297,9 +299,7 @@
       fs.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(fs.response);
-          if (document.cookie.indexOf('loggedIn') != -1){
-            document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
-          }
+
           var count = 0;
           //loop through the response
           data.forEach(function(o) {
@@ -310,6 +310,7 @@
               count = count + 1;
             // to test console.log(o.postID, o.username);
           })
+          follower_count = count;
           followers.innerHTML = "Followers: " + count;
         }
       }
