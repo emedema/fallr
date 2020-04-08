@@ -88,6 +88,12 @@ Takes:
 GET | [domain]/user/background/get/[userID]
 ```
 
+### Check if user is admin
+
+```
+GET | [domain]/isAdmin/[userID]
+```
+
 ### Update user information
 
 Requires valid key [Owner].

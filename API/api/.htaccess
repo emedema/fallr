@@ -89,4 +89,7 @@ RewriteRule ^search/allPosts/([A-Za-z0-9]*)$ search.php?type=allPosts&post=$1 [Q
 RewriteRule ^stats/posts/([A-Za-z0-9]*)$ statistics.php?type=$1 [QSA]
 
 # This gets a user's background
-RewriteRule ^user/background/get/([A-Za-z0-9]*)$ users.php?background=true&username=$1 [QSA] 
+RewriteRule ^user/background/get/([A-Za-z0-9\ ]*)$ users.php?background=true&username=$1 [QSA] 
+
+# This gets a user's background
+RewriteRule ^isAdmin/([A-Za-z0-9\ ]*)$ isAdmin.php?username=$1 [QSA] 
