@@ -85,7 +85,7 @@ Takes:
 ### Getting user background image
 
 ```
-GET | [domain]/user/background/[userID]
+GET | [domain]/user/background/get/[userID]
 ```
 
 ### Update user information
@@ -119,7 +119,7 @@ Takes:
 Requires valid key [Owner].
 
 ```
-POST | [domain]/user/background/[userID]
+POST | [domain]/user/background/set
 
 Takes:
 - loggedIn

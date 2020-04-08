@@ -40,14 +40,20 @@ if(isset($_GET['loggedIn']))
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];
 
+if(isset($_POST['loggedIn']))
+    $token = $_POST['loggedIn'];
+
 if(isset($_GET['updateUser']))
     $updateUser = true;
 
-if(isset($_GET['updateBackground']))
-    $updateBackground = true;
-
 if(isset($_GET['deactivateUser']))
     $deactivateUser = true;
+
+if(isset($_GET['background']))
+    $background = true;
+
+if(isset($_POST['background']))
+    $background = true;
 
 $connection = createConnection();
 
@@ -94,10 +100,10 @@ else if($updateUser && $password && $token && ($_SERVER['REQUEST_METHOD'] === 'P
 
 // Updating a user background //
 
-else if($updateBackground && $image && $token && ($_SERVER['REQUEST_METHOD'] === 'POST')) {
+else if($background && !$username && $image && $token && ($_SERVER['REQUEST_METHOD'] === 'POST')) {
 
     $loggedIn = Login::checkToken($connection, $token);
-
+    
     // If the user is logged in and the username matches the token username //
     if($loggedIn) {
         $username = Login::getIDFromToken($token);
@@ -106,8 +112,7 @@ else if($updateBackground && $image && $token && ($_SERVER['REQUEST_METHOD'] ===
         $image = Account::addImageToSystem($image);
         $result = Account::addBackgroundImageToUser($connection, $username, $image);
 
-        print($result);
-
+        print($image);
     }
     
     else
@@ -152,7 +157,7 @@ else if($updateUser && $username && $token && ($_SERVER['REQUEST_METHOD'] === 'P
 }
 
 // If we are getting our own information we must be logged in as us //
-else if($username && $token && ($username == Login::getIDFromToken($token))) {
+else if(!$background && $username && $token && ($username == Login::getIDFromToken($token))) {
     $connection = createConnection();
 
     $loggedIn = Login::checkToken($connection, $token);
@@ -173,7 +178,7 @@ else if($username && $token && ($username == Login::getIDFromToken($token))) {
 
 // Getting a user background //
 
-else if($updateBackground && $username && ($_SERVER['REQUEST_METHOD'] === 'GET')) {
+else if($background && $username && ($_SERVER['REQUEST_METHOD'] === 'GET')) {
     // Gets the user background image //
     $result = Account::getUserBackgroundImage($connection, $username);
     $feedData = array();
