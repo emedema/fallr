@@ -116,7 +116,7 @@ img {
     padding-left: 5em;
     margin-bottom: 0.5em;
 }
-form{
+#form{
     display: inline-block;
 }
 @media (max-width: 543px) {
