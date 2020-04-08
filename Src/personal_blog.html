@@ -39,9 +39,9 @@
                         </li>
                     </ul>
                     <ul id="navbar-ul-center" class="navbar-nav ml-auto">
-                        <form id="search-form" class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search">
-                        </form>
+                      <form id="search-form" class="form-inline d-flex dropdown" action = "search_result" method = "get">
+                          <input id = "search_bar" class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search" name = "search">
+                      </form>
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -63,7 +63,7 @@
         </a>
     </body>
     <script>
-
+          user = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
           xhttp = new XMLHttpRequest();
           //create main class
           var cover = document.createElement("img");
@@ -123,53 +123,54 @@
           mainDiv.setAttribute("class", "container-fluid");
           mainDiv.setAttribute("id", "main");
           document.body.appendChild(mainDiv);
-          
+
           var r = document.createElement("div");
           r.setAttribute("class", "row");
           mainDiv.appendChild(r);
-          
+
           var col2 = document.createElement("div");
           col2.setAttribute("class", "col-lg-2");
           r.appendChild(col2);
-          
+
           var userbar = document.createElement("div");
           userbar.setAttribute("id", "user_bar");
           col2.appendChild(userbar);
-          
+
           var imgContainer = document.createElement("div");
           imgContainer.setAttribute("id", "img_container");
           userbar.appendChild(imgContainer);
-          
+
           var userimg = document.createElement("img");
           userimg.src = "images/placeholder.jpg";
           userimg.setAttribute("id", "user_img");
           imgContainer.appendChild(userimg);
-          
+
           var userinfo = document.createElement("div");
           userinfo.setAttribute("id","user_info");
           userbar.appendChild(userinfo);
-          
+
           var username = document.createElement("p");
           username.innerHTML = ""+document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
           userinfo.appendChild(username);
-          
+
           var followers = document.createElement("p");
           followers.innerHTML = "Followers";
           userinfo.appendChild(followers);
-          
+
           var following = document.createElement("p");
           following.innerHTML = "Following";
           userinfo.appendChild(following);
-          
+
+
           var col10 = document.createElement("div");
           col10.setAttribute("class", "col-lg-10");
           r.appendChild(col10);
           //create class for posts
-          
+
           var posts = document.createElement("div");
           posts.setAttribute("id", "posts");
           col10.appendChild(posts);
-          
+
           //get response from xhttp request.
           xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
@@ -265,5 +266,51 @@
           xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
           xhttp.send();
 
+    </script>
+    <script>
+    //gets the users the user is following
+      subs = new XMLHttpRequest();
+
+      subs.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(subs.response);
+
+          var count = 0;
+          //loop through the response
+          data.forEach(function(o) {
+              count = count + 1;
+            // to test console.log(o.postID, o.username);
+          })
+          following.innerHTML = "Following: " + count;
+        }
+      }
+
+      var url = "https://api.fallr.ca/users/subscriptions/" + user;
+      subs.open("GET", url, true);
+      subs.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      subs.send();
+    </script>
+    <script>
+    //gets the users following the user
+      fs = new XMLHttpRequest();
+
+      fs.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(fs.response);
+
+          var count = 0;
+          //loop through the response
+          data.forEach(function(o) {
+              count = count + 1;
+            // to test console.log(o.postID, o.username);
+          })
+          followers.innerHTML = "Followers: " + count;
+        }
+      }
+
+      var url = "https://api.fallr.ca/users/followers/" + user;
+      fs.open("GET", url, true);
+      fs.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      fs.send();
     </script>
 </html>
