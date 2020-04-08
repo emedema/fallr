@@ -63,12 +63,12 @@
         </a>
     </body>
     <script>
-
+          follower_count = 0;
           xhttp = new XMLHttpRequest();
           user = window.location.search.substr(6);
           console.log(user);
           //create main class
-          var cover = document.createElement("img");
+          cover = document.createElement("img");
           cover.src = 'images/placeholder.jpg';
           cover.setAttribute("id", "blog_pic");
           document.body.appendChild(cover);
@@ -104,6 +104,42 @@
           var following = document.createElement("p");
           following.innerHTML = "Following";
           userinfo.appendChild(following);
+          var btnFollow = document.createElement("button");
+          btnFollow.setAttribute("class", "btn");
+          btnFollow.innerHTML = "Follow"
+          userinfo.appendChild(btnFollow);
+          btnFollow.onclick = function(){
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+              // If the user isn't logged in fail out !
+              if (this.readyState == 4 && this.status == 409) {
+                alert("Please log in to follow users.");
+              }
+
+              // Else if it was successful, increment the like counter by 1 //
+              else if (this.readyState == 4 && this.status == 200) {
+                if(this.response == 0){
+                  btnFollow.innerHTML = "Follow" ;
+                  follower_count = follower_count -1;
+                  followers.innerHTML = "Followers: " + follower_count;
+                }else{
+                  btnFollow.innerHTML = "Following" ;
+                  follower_count = follower_count + 1;
+                  followers.innerHTML = "Followers: " + follower_count;
+                }
+              }
+            };
+
+            // Make a like request using the value within the button (postID) //
+            xhttp.open("POST", "https://api.fallr.ca/subscribe", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send(
+              "username=" + user
+              + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+            );
+          };
+
           var col10 = document.createElement("div");
           col10.setAttribute("class", "col-lg-10");
           r.appendChild(col10);
@@ -233,4 +269,80 @@
           xhttp.send();
 
     </script>
+    <script>
+    //gets the users the user is following
+      subs = new XMLHttpRequest();
+
+      subs.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(subs.response);
+
+          var count = 0;
+          //loop through the response
+          data.forEach(function(o) {
+              count = count + 1;
+            // to test console.log(o.postID, o.username);
+          })
+          following.innerHTML = "Following: " + count;
+        }
+      }
+
+      var url = "https://api.fallr.ca/users/subscriptions/" + user;
+      subs.open("GET", url, true);
+      subs.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      subs.send();
+    </script>
+    <script>
+    //gets the users the user is following
+      fs = new XMLHttpRequest();
+
+      fs.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(fs.response);
+
+          var count = 0;
+          //loop through the response
+          data.forEach(function(o) {
+              if (document.cookie.indexOf('loggedIn') != -1){
+                if(o.subscribedUsername === document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0])
+                  btnFollow.innerHTML = "Following"
+              }
+              count = count + 1;
+            // to test console.log(o.postID, o.username);
+          })
+          follower_count = count;
+          followers.innerHTML = "Followers: " + count;
+        }
+      }
+
+      var url = "https://api.fallr.ca/users/followers/" + user;
+      fs.open("GET", url, true);
+      fs.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      fs.send();
+    </script>
+    <script>
+      //get user background image
+      //user background var is cover
+
+      img = new XMLHttpRequest();
+
+      img.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          data = JSON.parse(img.response);
+
+          //loop through the response
+          if (data[0]['backgroundImage']!=null || data[0]['backgroundImage']!=""){
+              cover.src = encodeURI(("https://api.fallr.ca/" + data[0]['backgroundImage']));
+          }
+
+        }
+      }
+
+      var url = "https://api.fallr.ca/user/background/get/" + user;
+      img.open("GET", url, true);
+      img.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      img.send();
+
+    </script>
+
 </html>

@@ -47,7 +47,7 @@
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="settings.html">Settings</a>
+                            <a class="nav-link" href="settings">Settings</a>
                         </li>
                         <li class="nav-item">
 
@@ -99,6 +99,7 @@
 
               var userImg = document.createElement("input");
               userImg.setAttribute("type", "image");
+              userImg.setAttribute("id", "user_img");
               userImg.setAttribute("class", "media-object");
               userImg.src = "images/placeholder.jpg"
 
@@ -210,7 +211,7 @@
         }
       }
       if (document.cookie.indexOf('loggedIn') === -1){
-        alert("Feed page is unavailable for non-loggedIn users.");
+        //alert("Feed page is unavailable for non-loggedIn users.");
         window.location.href = "trending";
       }
 
