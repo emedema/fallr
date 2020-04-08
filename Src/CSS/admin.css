@@ -15,7 +15,10 @@ body{
 .navbar-light .navbar-nav .nav-link:hover:not(#active) {
     color: #438173;
   }
-
+div.svg-container{
+  margin-left: auto;
+  margin-right: auto;
+}
   .float{
 	position:fixed;
 	width:80px;
@@ -71,6 +74,9 @@ img {
 }
 #img_container{
     text-align: center;
+}
+#my_dataviz{
+  text-align: center;
 }
 
 #content{

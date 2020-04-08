@@ -18,6 +18,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     </head>
     <body>
         <header>
@@ -37,9 +38,9 @@
                         </li>
                     </ul>
                     <ul id="navbar-ul-center" class="navbar-nav ml-auto">
-                      <form id="search-form" class="form-inline d-flex dropdown" action = "search_result" method = "get">
-                          <input id = "search_bar" class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search" name = "search">
-                      </form>
+                        <form id="search-form" class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search">
+                        </form>
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -59,22 +60,10 @@
                 <div id = 'functions'>
                     <h2>Statistics</h2>
                     <div id = 'post'>
-                        <div id = 'content'>
-                            <h5>Search for User</h5>
-                            <p>Enter username, email, or post to find user</p>
-                            <div id = 'search_form'>
-                                <form>
-                                    <input type = "text" name = "query" id = "search_bar" placeholder="Enter search here" class = 'form-control'>
-                                    <input type = 'submit' name = 'submit' id = "search_bt" value = 'Search' class = 'form-control'>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div id = 'post'>
                         <div id = "content">
                             <h5>Usage Graphs</h5>
-                            <div id = "img_container">
-                                <img src="images/placeholder.jpg" id = "graph">
+                            <div id="my_dataviz">
+                              <canvas id="myChart" style="max-width: 500px;"></canvas>
                             </div>
                         </div>
                     </div>
@@ -86,45 +75,69 @@
 
                 /* Function that takes an element id and checks the validity of the input */
 
-                function fieldCheck(fieldID) {
-                    element = document.getElementById(fieldID);
-                    if(element.value == "") {
-                        document.getElementById("submitError").innerHTML = fieldID + " is required.";
-                        return false;
-                    }
-                    return true;
-                }
-
-                document.getElementById("search_bt").addEventListener("click", function(){
                     xhttp = new XMLHttpRequest();
+                    numDay = 0; numHour = 0; numWeek = 0; numMonth=0;
+                    dataArray = new Array(4);
+                    var a = ["hour", "day", "week", "month"];
+                    var request = new XMLHttpRequest();
+                    (function loop(i, length) {
+                      if (i>= length) {
+                        return;
+                      }
+                      var url = "https://api.fallr.ca/stats/posts/" + a[i];
 
-                    xhttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200 && typeof(document.cookie.indexOf('loggedIn')) !== "undefined" ) {
-                            //show search results
+                      request.open("POST", url);
+                      request.onreadystatechange = function() {
+                        if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+                          var data = JSON.parse(request.responseText);
+                          var count = 0;
+                          data.forEach(function(o) {
+                            count = count + 1;
+                          });
+                          switch(i){
+                            case 0: numHour = count; console.log(numHour);break;
+                            case 1: numDay = count; console.log(numDay);break;
+                            case 2: numWeek = count; break;
+                            case 3: numMonth = count; console.log(numMonth);break;
+                          }
+                          var xValue = ['Hour', 'Day', 'Week','Month'];
+                          var yValue = [numHour, numDay, numWeek, numMonth];
+                          console.log(numMonth);
+                          var trace1 = {
+                            x: xValue,
+                            y: yValue,
+                            type: 'bar',
+                            text: yValue.map(String),
+                            textposition: 'auto',
+                            hoverinfo: 'none',
+                            marker: {
+                              color: 'rgb(67,129,115)',
+                              opacity: 0.6,
+                              line: {
+                                color: 'rgb(255,255,255)',
+                                width: 1.5
+                              }
+                            }
+                          };
+
+                          var data = [trace1];
+
+                          var layout = {
+                            title: 'Number of Posts in the Past',
+                            barmode: 'stack'
+                          };
+                          var config = {responsive: true}
+
+                          Plotly.newPlot('my_dataviz', data, layout);
+                          loop(i + 1, length);
                         }
-                    };
+                      }
+                      request.send();
+                    })(0, a.length);
+                    window.onresize = function(){ location.reload(); }
 
-                    // Checks to see if the user is missing any fields //
-
-                    var fields = ["query"];
-
-                    var success;
-
-                    for(i in fields) {
-                        console.log(fields[i])
-                        if(!(success = fieldCheck(fields[i])))
-                            break;
-                    };
-
-
-                    /* Makes the request if all fields are valid */
-                    if(success) {
-                        xhttp.open("POST", "http://localhost/fallrAPI/AdminSearch", true);
-                        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                        xhttp.send("query=" + document.getElementById("query").value );
-                    }
-                })
             </script>
+
         </footer>
     </body>
 </html>
