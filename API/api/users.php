@@ -164,6 +164,17 @@ else if($username && $token && ($username == Login::getIDFromToken($token))) {
 
 }
 
+// Getting a user background //
+
+else if($updateBackground && $username && ($_SERVER['REQUEST_METHOD'] === 'GET')) {
+    // Gets the user background image //
+    $result = Account::getUserBackgroundImage($connection, $username);
+    $feedData = array();
+    while($row = $result->fetch_assoc())
+        $feedData[] = $row;
+    echo(json_encode($feedData));
+}
+
 // Else we are going to get all of the user information for the public //
 else if($username && !$updateUser && !$deactivateUser) {
     $connection = createConnection();

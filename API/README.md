@@ -82,6 +82,12 @@ Takes:
 - loggedIn (optional depending if you want personal information)
 ```
 
+### Getting user background image
+
+```
+GET | [domain]/user/background/[userID]
+```
+
 ### Update user information
 
 Requires valid key [Owner].
