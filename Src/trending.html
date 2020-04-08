@@ -12,6 +12,10 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <link rel="stylesheet" href="CSS/trending.css">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -84,79 +88,39 @@
               var post = document.createElement("div");
               post.setAttribute("id", "post");
               posts.appendChild(post);
-
               var f = document.createElement("div");
               f.setAttribute("id", "f");
               f.setAttribute("class", "row");
               //create the other div stuff
-              
               var img = document.createElement("div");
               img.setAttribute("id", "img_container2");
               img.setAttribute("class", "media-left");
-              
               var userImg = document.createElement("img");
               userImg.setAttribute("id", "user_img");
               userImg.setAttribute("class", "media-object");
               userImg.src = "images/placeholder.jpg"
-              
               var blogName = document.createElement("div");
               blogName.setAttribute("id", "user_blog");
               blogName.setAttribute("class", "media-body");
-              
               var blogP = document.createElement("p");
               blogP.setAttribute("class", "media-heading");
-              
               var postContent = document.createElement("div");
               postContent.setAttribute("class", "media-body");
               postContent.setAttribute("id", "content");
-              
               var content = document.createElement("p");
               content.setAttribute("id", "contents");
-              
               var likes = document.createElement("div");
               likes.setAttribute("id", "likes");
-              
               var likeBtn = document.createElement("input")
               likeBtn.setAttribute("type", "image");
               likeBtn.setAttribute("src", "images/like.png");
               likeBtn.setAttribute("class", "bt_like");
               likeBtn.setAttribute("id", "like_bt");
               likeBtn.setAttribute('value', o.postID);
-              
               var num_likes = document.createElement("p");
-
-              // If the user selects a like button //
-              likeBtn.onclick = function(){
-                var xhttp = new XMLHttpRequest();
-                
-                xhttp.onreadystatechange = function() {
-                  // If the user isn't logged in fail out !
-                  if (this.readyState == 4 && this.status == 409) {
-                    alert("Please log in to like posts.");
-                  }
-
-                  // Else if it was successful, increment the like counter by 1 //
-                  else if (this.readyState == 4 && this.status == 200) {
-                    if(this.response == 0)
-                      likeBtn.nextSibling.innerHTML = parseInt(likeBtn.nextSibling.innerHTML) - 1 ;
-                    else
-                      likeBtn.nextSibling.innerHTML = parseInt(likeBtn.nextSibling.innerHTML) + 1 ;
-                  }
-                };
-
-                // Make a like request using the value within the button (postID) //
-                xhttp.open("POST", "https://api.fallr.ca/like", true);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send(
-                  "postID=" + likeBtn.value
-                  + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
-                );
-              };
-              
               var form = document.createElement("form");
               form.setAttribute("method", "get");
               form.setAttribute("action", "postpage");
-              
               var btn = document.createElement("button");
               btn.setAttribute("type", "submit");
               btn.setAttribute("class", "btn");
@@ -165,11 +129,9 @@
               btn.innerHTML = "Comment"
               post.appendChild(f);
               f.appendChild(img);
-              
               if(o.image != null){
                 userImg.src = o.image;
               }
-              
               img.appendChild(userImg);
               blogP.innerHTML = o.username;
               f.appendChild(blogName);
@@ -189,12 +151,26 @@
         }
       }
 
-      // This gets the data for the hot feed //
       var url = "https://api.fallr.ca/feed/hot";
       xhttp.open("POST", url, true);
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhttp.send();
 
+    </script>
+    <script>
+    if (document.cookie.indexOf('_idp_session') != -1){
+      $(document).ready(function(){
+        $("#like_bt").click(function(){
+          $.post("https://api.fallr.ca/like",
+          {
+            postID: $("#like_bt").val(),
+            loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+          });
+        });
+      });
+    }
+    </script>
+    <script>
 
     // $(document).ready(function(){
     //   $("#search_bar").on("keyup", function(){
