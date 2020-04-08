@@ -47,9 +47,10 @@
                     </li>
                 </ul>
                 <ul id="navbar-ul-center" class="navbar-nav ml-auto">
-                  <form id="search-form" class="form-inline d-flex dropdown" action = "search_result" method = "get">
-                      <input id = "search_bar" class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search" name = "search">
-                  </form>
+                    <form id="search-form" class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search"
+                            aria-label="Search">
+                    </form>
                 </ul>
                 <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                     <li class="nav-item">
@@ -119,7 +120,7 @@
             document.getElementById("profilePictureInput").click();
         });
 
-        // This makes it so that the image shows up in the
+        // This makes it so that the image shows up in the 
         document.getElementById("profilePictureInput").addEventListener("change", function () {
             input = document.getElementById("profilePictureInput");
 
@@ -129,7 +130,7 @@
                 reader.onload = function (e) {
                     // This adds in the new XHTTP request with the image //
                     xhttp = new XMLHttpRequest();
-
+                    
                     // This handles the image information being changed //
                     xhttp.onreadystatechange = function () {
                         if (this.readyState == 4 && this.status == 200) {
@@ -183,7 +184,7 @@
                     document.getElementById("submitError").innerHTML = "Password Successfully Changed";
                 }
             };
-
+            
 
             // Checks to see if the user is missing any fields //
 
@@ -198,10 +199,10 @@
 
             /* Makes the request if all fields are valid */
             if (success) {
-                /*
+                /* 
                     I hate PHP. There is no good way of parsing this request with the image
                     which means that I will have to handle the update of images on it's own
-                    and the rest of this as one lump request.
+                    and the rest of this as one lump request. 
 
                     This is because PHP has no way of handling FormData format. :( Sad Pepe
                 */
