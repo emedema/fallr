@@ -38,8 +38,8 @@ RewriteRule ^like$ like.php [NC,L]
 # Updates Password
 RewriteRule ^updatePassword$ updatePassword.php [NC,L]
 
-# This deletes a comment for a post
-RewriteRule ^user/background/([A-Za-z0-9]*)$ users.php?updateBackground=true&username=$1 [QSA] 
+# Updates background
+RewriteRule ^user/background/set$ users.php?background=true [NC,L]
 
 ## GETTERS 
 
@@ -67,6 +67,9 @@ RewriteRule ^posts/comments/([0-9]*)$ getComments.php?postID=$1 [QSA]
 # This gets the subsciptions for a user
 RewriteRule ^users/subscriptions/([A-Za-z0-9\ ]*)$ subscribe.php?username=$1 [QSA]
 
+# This gets the followers for a user
+RewriteRule ^users/followers/([A-Za-z0-9\ ]*)$ subscribe.php?followers=true&username=$1 [QSA]
+
 # This gets all likes for a post
 RewriteRule ^posts/likes/([A-Za-z0-9]*)$ like.php?postID=$1 [QSA]
 
@@ -87,3 +90,9 @@ RewriteRule ^search/allPosts/([A-Za-z0-9]*)$ search.php?type=allPosts&post=$1 [Q
 
 # This gets all statistical data (hour, day, week, month)
 RewriteRule ^stats/posts/([A-Za-z0-9]*)$ statistics.php?type=$1 [QSA]
+
+# This gets a user's background
+RewriteRule ^user/background/get/([A-Za-z0-9\ ]*)$ users.php?background=true&username=$1 [QSA] 
+
+# This gets a user's background
+RewriteRule ^isAdmin/([A-Za-z0-9\ ]*)$ isAdmin.php?username=$1 [QSA] 

@@ -69,46 +69,107 @@
           var cover = document.createElement("img");
           cover.src = 'images/placeholder.jpg';
           cover.setAttribute("id", "blog_pic");
+
+          // Create an input for the background image //
+          var inputForBackground = document.createElement('input');
+          inputForBackground.style.display = "none";
+          inputForBackground.type = "file";
+
+          document.body.appendChild(inputForBackground);
+
+          // If someone clicks the background image, run input //
+          cover.addEventListener("click", function(){
+            inputForBackground.click();
+          });
+
+          // When the user selects a new profile image //
+          inputForBackground.addEventListener("change", function () {
+
+            if (inputForBackground.files && inputForBackground.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // This adds in the new XHTTP request with the image //
+                    xhttp = new XMLHttpRequest();
+
+                    // This handles the image information being changed //
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            // If the post to the server succeeds, we change the image //
+                            cover.src = e.target.result;
+                        }
+                    };
+
+                    var url = "https://api.fallr.ca/user/background/set";
+
+                    var formData = new FormData();
+                    formData.append("loggedIn", document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+                    formData.append("myfile", inputForBackground.files[0]);
+
+                    xhttp.open("POST", url, true);
+                    xhttp.send(formData);
+                };
+
+                reader.readAsDataURL(inputForBackground.files[0]);
+            }
+
+
+        });
+
+
           document.body.appendChild(cover);
+
           var mainDiv = document.createElement("div");
           mainDiv.setAttribute("class", "container-fluid");
           mainDiv.setAttribute("id", "main");
           document.body.appendChild(mainDiv);
+          
           var r = document.createElement("div");
           r.setAttribute("class", "row");
           mainDiv.appendChild(r);
+          
           var col2 = document.createElement("div");
           col2.setAttribute("class", "col-lg-2");
           r.appendChild(col2);
+          
           var userbar = document.createElement("div");
           userbar.setAttribute("id", "user_bar");
           col2.appendChild(userbar);
+          
           var imgContainer = document.createElement("div");
           imgContainer.setAttribute("id", "img_container");
           userbar.appendChild(imgContainer);
+          
           var userimg = document.createElement("img");
           userimg.src = "images/placeholder.jpg";
           userimg.setAttribute("id", "user_img");
           imgContainer.appendChild(userimg);
+          
           var userinfo = document.createElement("div");
           userinfo.setAttribute("id","user_info");
           userbar.appendChild(userinfo);
+          
           var username = document.createElement("p");
           username.innerHTML = ""+document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
           userinfo.appendChild(username);
+          
           var followers = document.createElement("p");
           followers.innerHTML = "Followers";
           userinfo.appendChild(followers);
+          
           var following = document.createElement("p");
           following.innerHTML = "Following";
           userinfo.appendChild(following);
+          
           var col10 = document.createElement("div");
           col10.setAttribute("class", "col-lg-10");
           r.appendChild(col10);
           //create class for posts
+          
           var posts = document.createElement("div");
           posts.setAttribute("id", "posts");
           col10.appendChild(posts);
+          
           //get response from xhttp request.
           xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){

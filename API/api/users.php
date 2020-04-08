@@ -40,14 +40,20 @@ if(isset($_GET['loggedIn']))
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];
 
+if(isset($_POST['loggedIn']))
+    $token = $_POST['loggedIn'];
+
 if(isset($_GET['updateUser']))
     $updateUser = true;
 
-if(isset($_GET['updateBackground']))
-    $updateBackground = true;
-
 if(isset($_GET['deactivateUser']))
     $deactivateUser = true;
+
+if(isset($_GET['background']))
+    $background = true;
+
+if(isset($_POST['background']))
+    $background = true;
 
 $connection = createConnection();
 
@@ -60,11 +66,15 @@ if($token && Account::isAdmin($connection, Login::getIDFromToken($token)) &&
     // If the user is logged in, we allow them to update the status
     if($loggedIn) {
         // If they are already active, deactivate
-        if(Account::isActive($connection, $username))
+        if(Account::isActive($connection, $username)){
             Account::deactivateAccount($connection, $username);
+            print("0");
+        }
         // Else we need to activate the account //
-        else
+        else {
             Account::activateAccount($connection, $username);
+            print("1");
+        }
     }
 
 }
@@ -90,10 +100,10 @@ else if($updateUser && $password && $token && ($_SERVER['REQUEST_METHOD'] === 'P
 
 // Updating a user background //
 
-else if($updateBackground && $image && $token && ($_SERVER['REQUEST_METHOD'] === 'POST')) {
+else if($background && !$username && $image && $token && ($_SERVER['REQUEST_METHOD'] === 'POST')) {
 
     $loggedIn = Login::checkToken($connection, $token);
-
+    
     // If the user is logged in and the username matches the token username //
     if($loggedIn) {
         $username = Login::getIDFromToken($token);
@@ -101,6 +111,8 @@ else if($updateBackground && $image && $token && ($_SERVER['REQUEST_METHOD'] ===
         // Updates the password //
         $image = Account::addImageToSystem($image);
         $result = Account::addBackgroundImageToUser($connection, $username, $image);
+
+        print($image);
     }
     
     else
@@ -145,7 +157,7 @@ else if($updateUser && $username && $token && ($_SERVER['REQUEST_METHOD'] === 'P
 }
 
 // If we are getting our own information we must be logged in as us //
-else if($username && $token && ($username == Login::getIDFromToken($token))) {
+else if(!$background && $username && $token && ($username == Login::getIDFromToken($token))) {
     $connection = createConnection();
 
     $loggedIn = Login::checkToken($connection, $token);
@@ -162,6 +174,17 @@ else if($username && $token && ($username == Login::getIDFromToken($token))) {
     else
         header("HTTP/1.1 409 Bad Login");
 
+}
+
+// Getting a user background //
+
+else if($background && $username && ($_SERVER['REQUEST_METHOD'] === 'GET')) {
+    // Gets the user background image //
+    $result = Account::getUserBackgroundImage($connection, $username);
+    $feedData = array();
+    while($row = $result->fetch_assoc())
+        $feedData[] = $row;
+    echo(json_encode($feedData));
 }
 
 // Else we are going to get all of the user information for the public //

@@ -39,6 +39,18 @@ class Account {
 			return $query->execute();
 		}
 	}
+
+	public function getUserBackgroundImage($connection, $username) {
+		/* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("SELECT backgroundImage FROM Users WHERE username = ?");		
+
+		$query->bind_param("s", $username);
+
+		$query->execute();
+		
+		/* Returns inserted_id */
+		return $query->get_result();
+	}
 	
 	function addImageToUser($connection, $username, $image) {
 			

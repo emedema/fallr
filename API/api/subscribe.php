@@ -19,8 +19,14 @@ if(isset($_GET['loggedIn']))
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];
 
+if(isset($_POST['loggedIn']))
+    $token = $_POST['loggedIn'];
+
 if(isset($_GET["username"]))
     $username = $_GET["username"];
+
+if(isset($_GET["followers"]))
+    $followers = true;
     
 if ($username && $token && $_SERVER['REQUEST_METHOD'] === 'POST') {
  
@@ -50,20 +56,39 @@ else if($username && $_SERVER['REQUEST_METHOD'] === 'GET') {
     
     $connection = createConnection();
 
-    $subscriptions = Subscription::getSubscriptions($connection, $username);
+    if($followers) {
+        $followersResults = Subscription::getFollowers($connection, $username);
         
-    /* Loop through the data and send it to the user */
-    if($subscriptions) {
-        $subscriptionsData = array();
-        while($row = $subscriptions->fetch_assoc())
-            $subscriptionsData[] = $row;
-        echo(json_encode($subscriptionsData));
+        /* Loop through the data and send it to the user */
+        if($followersResults) {
+            $followersData = array();
+            while($row = $followersResults->fetch_assoc())
+                $followersData[] = $row;
+            echo(json_encode($followersData));
+        }
+        else
+            header("HTTP/1.1 405 Query Error");
+
+
+        $connection->close();
     }
-    else
-        header("HTTP/1.1 406 Parameters Not Passed");
+
+    else {
+        $subscriptions = Subscription::getSubscriptions($connection, $username);
+        
+        /* Loop through the data and send it to the user */
+        if($subscriptions) {
+            $subscriptionsData = array();
+            while($row = $subscriptions->fetch_assoc())
+                $subscriptionsData[] = $row;
+            echo(json_encode($subscriptionsData));
+        }
+        else
+            header("HTTP/1.1 406 Query Error");
 
 
-    $connection->close();
+        $connection->close();
+        }
 }
 
 else

@@ -82,6 +82,18 @@ Takes:
 - loggedIn (optional depending if you want personal information)
 ```
 
+### Getting user background image
+
+```
+GET | [domain]/user/background/get/[userID]
+```
+
+### Check if user is admin
+
+```
+GET | [domain]/isAdmin/[userID]
+```
+
 ### Update user information
 
 Requires valid key [Owner].
@@ -113,7 +125,7 @@ Takes:
 Requires valid key [Owner].
 
 ```
-POST | [domain]/user/background/[userID]
+POST | [domain]/user/background/set
 
 Takes:
 - loggedIn
@@ -127,6 +139,10 @@ Admins can activate or deactivate a user by using the following call
 ```
 POST | [domain]/users/deactivate/[username]
 ```
+
+Return Values:
+    - 0 = Deactivated
+    - 1 = Activated
 
 ## Feed
 
@@ -240,6 +256,11 @@ Takes:
 GET | [domain]/users/subscriptions/[userID]
 ```
 
+### Get followers of a user (Completed)
+```
+GET | [domain]/users/followers/[userID]
+```
+
 ## Likes
 
 ### Liking/UnLiking (Completed)
@@ -297,3 +318,6 @@ owner.
 This is used on the login page, it means that you
 failed to login (bad username or password) or you
 are not logged in.
+
+## 410 - User Deactivated
+The user has been deactivated, contact an admin.

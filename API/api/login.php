@@ -21,10 +21,16 @@ if (isset($_POST['username']) && isset($_POST['password']) && ($_SERVER['REQUEST
     /* Checks to see if the user and pass are correct */
     $loginResult = Login::loginUser($connection, $username, $password);
     
+    $active = Login::isActive($connection, $username);
+
     if($loginResult) {
-        /* Creates a random token to auth the user for the session */
-        setcookie('loggedIn', Login::createToken($connection, $username));
-        print(json_encode(array("loggedIn"=> Login::createToken($connection, $username))));  
+        if($active) {
+            /* Creates a random token to auth the user for the session */
+            setcookie('loggedIn', Login::createToken($connection, $username));
+            print(json_encode(array("loggedIn"=> Login::createToken($connection, $username))));  
+        }
+        else
+            header("HTTP/1.1 410 User Deactivated");
     }
     else
         header("HTTP/1.1 409 Login Invalid");

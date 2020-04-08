@@ -32,6 +32,17 @@ class Subscription {
 		return $query->get_result();
 	}
 
+	public function getFollowers($connection, $yourUsername) {
+		/* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("SELECT * FROM Subscriptions WHERE username = ?");
+		/* Passes the values into the query */
+		$query->bind_param("s", $yourUsername);
+        $query->execute();
+		
+		/* Returns success */
+		return $query->get_result();
+	}
+
 	public function isSubscribed($connection, $yourUsername, $theirUsername){
 		/* Prepares the function so we can pass in the values from the user */
 		$query = $connection->prepare("SELECT EXISTS(SELECT * from Subscriptions WHERE subscribedUsername = ? AND username = ?)");
