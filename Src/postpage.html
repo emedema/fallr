@@ -38,9 +38,9 @@
                         </li>
                     </ul>
                     <ul id="navbar-ul-center" class="navbar-nav ml-auto">
-                        <form id="search-form" class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search">
-                        </form>
+                      <form id="search-form" class="form-inline d-flex dropdown" action = "search_result" method = "get">
+                          <input id = "search_bar" class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search" name = "search">
+                      </form>
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -78,7 +78,8 @@
       var img = document.createElement("div");
       img.setAttribute("id", "img_container2");
       img.setAttribute("class", "media-left");
-      var userImg = document.createElement("img");
+      var userImg = document.createElement("input");
+      userImg.setAttribute("type", "image");
       userImg.setAttribute("id", "user_img");
       userImg.setAttribute("class", "media-object");
       userImg.src = "images/placeholder.jpg"
@@ -101,7 +102,7 @@
       xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(xhttp.response);
-          if (document.cookie.indexOf('_idp_session') != -1){
+          if (document.cookie.indexOf('loggedIn') != -1){
             document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
           }
           //loop through the response
@@ -110,15 +111,32 @@
               post.appendChild(f);
               f.appendChild(img);
               if(o.image != null){
-                userImg.src = o.image;
+                userImg.src = encodeURI(("https://api.fallr.ca/" + data[0]["image"]));
               }
               img.appendChild(userImg);
-              blogP.innerHTML = o.username;
+              userImg.onclick = function(){
+                if (document.cookie.indexOf('loggedIn') != -1){
+                  if(o.username === document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0] ){
+                      window.location.href = "/personal_blog";
+                  }else{
+                    window.location.href = "/blog?user=" + o.username;
+                  }
+                }else{
+                  window.location.href = "/blog?user=" + o.username;
+                }
+              };
+              blogP.innerHTML = o.postName;
               f.appendChild(blogName);
               blogName.appendChild(blogP);
               post.append(postContent);
               content.innerHTML = o.postContent;
               postContent.appendChild(content);
+              var postimg = document.createElement("img");
+              postimg.setAttribute("id", "postimg");
+              if(o.postImage != null && o.postImage != "")
+                postimg.src = encodeURI(("https://api.fallr.ca/" + data[0]["postImage"]));
+              postContent.append(postimg)
+
               var likes = document.createElement("div");
               likes.setAttribute("id", "likes");
               var likeBtn = document.createElement("input")
@@ -129,6 +147,33 @@
               postContent.appendChild(likes);
               likes.appendChild(likeBtn);
               num_likes.innerHTML = o.likes;
+              // If the user selects a like button //
+              likeBtn.onclick = function(){
+                var xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function() {
+                  // If the user isn't logged in fail out !
+                  if (this.readyState == 4 && this.status == 409) {
+                    alert("Please log in to like posts.");
+                  }
+
+                  // Else if it was successful, increment the like counter by 1 //
+                  else if (this.readyState == 4 && this.status == 200) {
+                    if(this.response == 0)
+                      likeBtn.nextSibling.innerHTML = parseInt(likeBtn.nextSibling.innerHTML) - 1 ;
+                    else
+                      likeBtn.nextSibling.innerHTML = parseInt(likeBtn.nextSibling.innerHTML) + 1 ;
+                  }
+                };
+
+                // Make a like request using the value within the button (postID) //
+                xhttp.open("POST", "https://api.fallr.ca/like", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send(
+                  "postID=" + likeBtn.value
+                  + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+                );
+              };
               likes.appendChild(num_likes);
             }
             // to test console.log(o.postID, o.username);
@@ -139,7 +184,7 @@
 
 
       var url = "https://api.fallr.ca/posts/id/"+ postid;
-        xhttp.open("POST", url, true);
+        xhttp.open("GET", url, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
 
@@ -178,6 +223,33 @@
       addButton.setAttribute("id", "comment_button");
       addButton.setAttribute("value", "submit");
       fgroup.appendChild(addButton);
+      //if user Comments
+
+      addButton.onclick = function(){
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function() {
+          // If the user isn't logged in fail out !
+          if (this.readyState == 4 && this.status == 409) {
+            alert("Please log in to comment on posts.");
+          }
+
+          // Else if it was successful, increment the like counter by 1 //
+          else if (this.readyState == 4 && this.status == 200) {
+            location.reload();
+          }
+        };
+
+        // Make a like request using the value within the button (postID) //
+        xhttp.open("POST", "https://api.fallr.ca/comment", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(
+            "postID=" + postid
+            + "&comment=" + textInput.value
+          + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+        );
+      };
+
       var user_comments = document.createElement("div");
       user_comments.setAttribute("id", "comments");
       user_comments.setAttribute("class", "container-fluid");
@@ -186,7 +258,7 @@
       comments.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(comments.response);
-          if (document.cookie.indexOf('_idp_session') != -1){
+          if (document.cookie.indexOf('loggedIn') != -1){
             document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
           }
           //loop through the response
@@ -202,7 +274,8 @@
                 var img2 = document.createElement("div");
                 img2.setAttribute("id", "img_container2");
                 img2.setAttribute("class", "media-left");
-                var userImg2 = document.createElement("img");
+                var userImg2 = document.createElement("input");
+                userImg2.setAttribute("type", "image");
                 userImg2.setAttribute("id", "user_img");
                 userImg2.setAttribute("class", "media-object");
                 userImg2.src = "images/placeholder.jpg"
@@ -213,9 +286,20 @@
                 blogP2.setAttribute("class", "media-heading");
                 f3.appendChild(img2);
                 if(o.image != null){
-                  userImg2.src = o.image;
+                  userImg2.src =  encodeURI(("https://api.fallr.ca/" +o.image));
                 }
                 img2.appendChild(userImg2);
+                userImg2.onclick = function(){
+                  if (document.cookie.indexOf('loggedIn') != -1){
+                    if(o.username === document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0] ){
+                        window.location.href = "/personal_blog";
+                    }else{
+                      window.location.href = "/blog?user=" + o.username;
+                    }
+                  }else{
+                    window.location.href = "/blog?user=" + o.username;
+                  }
+                };
                 blogP2.innerHTML = o.comment;
                 f3.appendChild(blogName2);
                 blogName2.appendChild(blogP2);
@@ -227,12 +311,12 @@
       }
       console.log("here");
       var commentURL = "https://api.fallr.ca/posts/comments/"+ postid;
-      comments.open("POST", commentURL, true);
+      comments.open("GET", commentURL, true);
       comments.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       comments.send();
     </script>
 
-    <script>
+    <!-- <script>
       $(document).ready(function(){
         $("#like_bt").click(function(){
           console.log("like_bt was clicked!");
@@ -262,5 +346,5 @@
           }});
       });
 
-    </script>
+    </script> -->
 </html>

@@ -100,10 +100,9 @@ h2{
     position: relative;
 }
 .container {
-    height: 100vh;
+
     background-color: #3A4B48;
     display: flex;
-    padding-top: 5em;
 }
 
 

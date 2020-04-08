@@ -19,6 +19,13 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+        <script>
+        function imageError() {
+            document.getElementById("profilePicture").onerror = null;
+            document.getElementById("profilePicture").style.borderStyle = "solid";
+            document.getElementById("profilePicture").setAttribute("src", "images/placeholder.jpg");
+        }
+        </script>
     </head>
     <body>
         <header>
@@ -39,10 +46,9 @@
                           </li>
                       </ul>
                       <ul id="navbar-ul-center" class="navbar-nav ml-auto">
-                          <form id="search-form" class="form-inline my-2 my-lg-0">
-                              <input class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search"
-                                  aria-label="Search">
-                          </form>
+                        <form id="search-form" class="form-inline d-flex dropdown" action = "search_result" method = "get">
+                            <input id = "search_bar" class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search" name = "search">
+                        </form>
                       </ul>
                       <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                           <li class="nav-item">
@@ -64,11 +70,17 @@
                         <div id = 'content_create'>
                             <form>
                                 <input type="text" name="postName" placeholder="Post Title" id = "postName" class = 'form-control'>
+                                <div>
+                                    <div id="userPhoto">
+                                        <img id="profilePicture" src="" onerror="imageError();" style="max-width: 350px;"
+                                            alt="User Profile Picture">
+                                    </div>
+                                    <input name="profilePictureInput" type="file" style="display: none"
+                                        id="profilePictureInput">
+                                </div>
                                 <textarea name = 'postContent' rows="10" cols="100" id = "postContent" class="form-control">
                                 </textarea>
                                 <div id = "confirm">
-                                    <input type="image" src="images/pic.png" name="addpic" class="add_pic" id="add_pic" class = "form-control"/>
-                                    <input type="file" id="my_file" style="display: none;" />
                                     <input type = 'button' value = 'Create Post' id = 'post-button' class = 'form-control'>
                                 </div>
                                 <p id="submitError"></p>
@@ -105,55 +117,86 @@
         <script>
 
             /* Function that takes an element id and checks the validity of the input */
-            $("input[type='image']").click(function() {
-                 $("input[id='my_file']").click();
-            });
-            function fieldCheck(fieldID) {
-                element = document.getElementById(fieldID);
-                if(element.value == "") {
-                    document.getElementById("submitError").innerHTML = fieldID + " is required.";
-                    return false;
-                }
-                return true;
-            }
-
-            document.getElementById("post-button").addEventListener("click", function(){
-                xhttp = new XMLHttpRequest();
-
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200 && document.cookie.indexOf('_idp_session') != -1 ) {
-                        window.location.href = "/feed"
-                    }
-                };
-
-                // Checks to see if the user is missing any fields //
-
-                var fields = ["postName", "postContent"];
-
-                var success;
-
-                for(i in fields) {
-                    console.log(fields[i])
-                    if(!(success = fieldCheck(fields[i])))
-                        break;
-                };
-                if (document.cookie.indexOf('_idp_session') != -1){
-                  document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
-                  document.getElementById("login-nav").href = "personal_blog";
+            if (document.cookie.indexOf('loggedIn') != -1){
+              document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+              document.getElementById("login-nav").href = "personal_blog";
 
 
-                /* Makes the request if all fields are valid */
-                  if(success) {
-                      xhttp.open("POST", "https://api.fallr.ca/post", true);
-                      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                      xhttp.send("postName=" + document.getElementById("postName").value
-                          + "&postContent=" + document.getElementById("postContent").value
-                          + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+              document.getElementById("userPhoto").addEventListener("click", function () {
+                  document.getElementById("profilePictureInput").click();
+              });
+
+              // This makes it so that the image shows up in the image box when selected //
+              document.getElementById("profilePictureInput").addEventListener("change", function () {
+                  input = document.getElementById("profilePictureInput");
+
+                  if (input.files && input.files[0]) {
+                      var reader = new FileReader();
+
+                      reader.onload = function (e) {
+                          document.getElementById("profilePicture").src = e.target.result;
+                      };
+                      reader.readAsDataURL(input.files[0]);
                   }
-              }else{
-                alert("You must be logged in to create a post!");
-              }
-            })
-        </script>
+              });
+
+                  /* Function that takes an element id and checks the validity of the input */
+
+                  function fieldCheck(fieldID) {
+                      element = document.getElementById(fieldID);
+                      if(element.value == "") {
+                          document.getElementById("submitError").innerHTML = fieldID + " is required.";
+                          return false;
+                      }
+                      return true;
+                  }
+
+                  document.getElementById("post-button").addEventListener("click", function(){
+                      xhttp = new XMLHttpRequest();
+
+
+                      // If the account is successfully created, we can then try to log in //
+
+                      xhttp.onreadystatechange = function() {
+                          // This handles the case where the user account already exists //
+                          if (this.readyState == 4 && this.status == 405) {
+                              document.getElementById("submitError").innerHTML = "The post failed!"
+                          }
+                          else if (this.readyState == 4 && this.status == 200) {
+
+                                      window.location.href = "/feed"
+
+                          }
+                      };
+
+                      // Checks to see if the user is missing any fields //
+
+                      var fields = ["postName", "postContent"];
+
+                      var success;
+
+                      for(i in fields) {
+                          console.log(fields[i])
+                          if(!(success = fieldCheck(fields[i])))
+                              break;
+                      };
+
+                      /* Makes the request if all fields are valid */
+
+                      if(success) {
+                          formData = new FormData();
+                          formData.append("postName", document.getElementById("postName").value);
+                          formData.append("postContent", document.getElementById("postContent").value);
+                          formData.append("myfile", document.getElementById("profilePictureInput").files[0]);
+                          formData.append("loggedIn", document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+                          xhttp.open("POST", "https://api.fallr.ca/post", true);
+
+                          xhttp.send(formData);
+                      }
+
+                  })
+                }
+      </script>
+
     </body>
 </html>

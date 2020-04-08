@@ -95,7 +95,7 @@
         if(this.readyState == 4 && this.status == 200){
           console.log("hi")
           data = JSON.parse(xhttp.response);
-          if (document.cookie.indexOf('_idp_session') != -1){
+          if (document.cookie.indexOf('loggedIn') != -1){
             document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
             document.getElementById("login-nav").href = "personal_blog";
             document.getElementById('create_account').innerHTML = "Settings";
@@ -164,7 +164,8 @@
               var img = document.createElement("div");
               img.setAttribute("id", "img_container2");
               img.setAttribute("class", "media-left");
-              var userImg = document.createElement("img");
+              var userImg = document.createElement("input");
+              userImg.setAttribute("type", "image");
               userImg.setAttribute("id", "user_img");
               userImg.setAttribute("class", "media-object");
               userImg.src = "images/placeholder.jpg"
@@ -202,6 +203,18 @@
                 userImg.src = o.image;
               }
               img.appendChild(userImg);
+              userImg.onclick = function(){
+                  if (document.cookie.indexOf('loggedIn') != -1){
+                    if(o.username === document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0] ){
+                        window.location.href = "/personal_blog";
+                    }else{
+                      window.location.href = "/blog?user=" + o.username;
+                    }
+                  }else{
+                    window.location.href = "/blog?user=" + o.username;
+                  }
+
+              };
               blogP.innerHTML = o.username;
               f.appendChild(blogName);
               blogName.appendChild(blogP);
