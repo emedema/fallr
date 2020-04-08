@@ -19,6 +19,9 @@ if(isset($_GET['loggedIn']))
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];
 
+if(isset($_POST['loggedIn']))
+    $token = $_POST['loggedIn'];
+
 if(isset($_GET["username"]))
     $username = $_GET["username"];
     
