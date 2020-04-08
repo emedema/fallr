@@ -297,3 +297,6 @@ owner.
 This is used on the login page, it means that you
 failed to login (bad username or password) or you
 are not logged in.
+
+## 410 - User Deactivated
+The user has been deactivated, contact an admin.

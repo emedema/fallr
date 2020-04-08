@@ -104,5 +104,17 @@ class Login {
         setcookie('loggedIn', NULL);
         self::removeToken($connection, $username, $tokenID);
     }
+
+    public function isActive($connection, $username) {
+        /* Function to store the value for the token for a user in the database 
+            Returns the id for the insertion.
+        */
+        $query = $connection->prepare("SELECT active FROM Users WHERE username = ?");
+        $query->bind_param("s", $username);
+        $query->execute();
+        $result = $query->get_result()->fetch_assoc();
+        return $result['active'];
+    }
+
 }
 ?>
