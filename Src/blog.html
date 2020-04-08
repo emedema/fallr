@@ -242,7 +242,7 @@
                     userImg.src = encodeURI(("https://api.fallr.ca/" + o.image));
                   }
                   img.appendChild(userImg);
-                  blogP.innerHTML = o.username;
+                  blogP.innerHTML = o.postName;
                   f.appendChild(blogName);
                   blogName.appendChild(blogP);
                   post.append(postContent);
@@ -331,7 +331,7 @@
           data = JSON.parse(img.response);
 
           //loop through the response
-          if (data[0]['backgroundImage']!=null || data[0]['backgroundImage']!=""){
+          if (data[0]['backgroundImage']!== "null" || data[0]['backgroundImage']!=="" || data[0]['backgroundImage']!==null){
               cover.src = encodeURI(("https://api.fallr.ca/" + data[0]['backgroundImage']));
           }
 
