@@ -116,33 +116,6 @@
               likeBtn.setAttribute("class", "bt_like");
               likeBtn.setAttribute("id", "like_bt");
               var num_likes = document.createElement("p");
-              // If the user selects a like button //
-              likeBtn.onclick = function(){
-                var xhttp = new XMLHttpRequest();
-
-                xhttp.onreadystatechange = function() {
-                  // If the user isn't logged in fail out !
-                  if (this.readyState == 4 && this.status == 409) {
-                    alert("Please log in to like posts.");
-                  }
-
-                  // Else if it was successful, increment the like counter by 1 //
-                  else if (this.readyState == 4 && this.status == 200) {
-                    if(this.response == 0)
-                      likeBtn.nextSibling.innerHTML = parseInt(likeBtn.nextSibling.innerHTML) - 1 ;
-                    else
-                      likeBtn.nextSibling.innerHTML = parseInt(likeBtn.nextSibling.innerHTML) + 1 ;
-                  }
-                };
-
-                // Make a like request using the value within the button (postID) //
-                xhttp.open("POST", "https://api.fallr.ca/like", true);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send(
-                  "postID=" + likeBtn.value
-                  + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
-                );
-              };
               var btn = document.createElement("button");
               btn.setAttribute("type", "button");
               btn.setAttribute("class", "btn");

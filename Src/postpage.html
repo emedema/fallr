@@ -101,7 +101,7 @@
       xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(xhttp.response);
-          if (document.cookie.indexOf('_idp_session') != -1){
+          if (document.cookie.indexOf('loggedIn') != -1){
             document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
           }
           //loop through the response
@@ -166,7 +166,7 @@
 
 
       var url = "https://api.fallr.ca/posts/id/"+ postid;
-        xhttp.open("POST", url, true);
+        xhttp.open("GET", url, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
 
@@ -281,10 +281,40 @@
       }
       console.log("here");
       var commentURL = "https://api.fallr.ca/posts/comments/"+ postid;
-      comments.open("POST", commentURL, true);
+      comments.open("GET", commentURL, true);
       comments.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       comments.send();
     </script>
 
-  
+    <!-- <script>
+      $(document).ready(function(){
+        $("#like_bt").click(function(){
+          console.log("like_bt was clicked!");
+          if (document.cookie.indexOf('_idp_session') != -1){
+          $.post("https://api.fallr.ca/like",
+          {
+            postID: $("#like_bt").val(),
+            loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+          });
+        }else{
+          alert("Only logged in Users can like a post!")
+        }});
+      });
+    </script>
+    <script>
+      $(document).ready(function(){
+        $("#comment_button").click(function(){
+          if (document.cookie.indexOf('_idp_session') != -1){
+            $.post("https://api.fallr.ca/comment",
+            {
+              postID: postid,
+              comment: $.trim($("#add_comment").val()),
+              loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+            });
+          }else{
+            alert("Only logged in Users can comment!")
+          }});
+      });
+
+    </script> -->
 </html>
