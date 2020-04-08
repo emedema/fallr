@@ -60,9 +60,9 @@ class Post {
 
     public function getFeed($connection, $username) {
          /* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("SELECT u.image, s.subscribedUsername, s.username, p.postID, p.username,
+		$query = $connection->prepare("SELECT u.image, s.username, p.postID, p.username,
       p.image AS postImage, p.postName, p.postContent, p.created, count(l.username) likes 
-      FROM Posts p RIGHT JOIN Subscriptions AS s ON s.subscribedUsername = p.username 
+      FROM Posts p RIGHT JOIN Subscriptions AS s ON s.username = p.username 
       LEFT JOIN Likes AS l ON l.postID=p.postID LEFT JOIN Users as u ON u.username = p.username
       WHERE s.subscribedUsername = (?) GROUP BY p.postID, s.subscribedUsername, s.username");		
 
