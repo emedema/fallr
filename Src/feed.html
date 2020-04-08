@@ -179,7 +179,15 @@
 
               img.appendChild(userImg);
               userImg.onclick = function(){
-                window.location.href = "/blog?user=" + o.username;
+                if (document.cookie.indexOf('loggedIn') != -1){
+                  if(o.username === document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0] ){
+                      window.location.href = "/personal_blog";
+                  }else{
+                    window.location.href = "/blog?user=" + o.username;
+                  }
+                }else{
+                  window.location.href = "/blog?user=" + o.username;
+                }
               };
               blogP.innerHTML = o.postName;
               f.appendChild(blogName);
@@ -211,17 +219,5 @@
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhttp.send("loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
     </script>
-    <script>
-    if (document.cookie.indexOf('loggedIn') !== -1){
-      $(document).ready(function(){
-        $("#like_bt").click(function(){
-          $.post("https://api.fallr.ca/like",
-          {
-            postID: $("#like_bt").val(),
-            loggedIn: document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
-          });
-        });
-      });
-    }
-    </script>
+
 </html>

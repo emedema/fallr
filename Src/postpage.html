@@ -115,7 +115,15 @@
               }
               img.appendChild(userImg);
               userImg.onclick = function(){
-                window.location.href = "/blog?user=" + o.username;
+                if (document.cookie.indexOf('loggedIn') != -1){
+                  if(o.username === document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0] ){
+                      window.location.href = "/personal_blog";
+                  }else{
+                    window.location.href = "/blog?user=" + o.username;
+                  }
+                }else{
+                  window.location.href = "/blog?user=" + o.username;
+                }
               };
               blogP.innerHTML = o.postName;
               f.appendChild(blogName);
@@ -282,7 +290,15 @@
                 }
                 img2.appendChild(userImg2);
                 userImg2.onclick = function(){
-                  window.location.href = "/blog?user=" + o.username;
+                  if (document.cookie.indexOf('loggedIn') != -1){
+                    if(o.username === document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0] ){
+                        window.location.href = "/personal_blog";
+                    }else{
+                      window.location.href = "/blog?user=" + o.username;
+                    }
+                  }else{
+                    window.location.href = "/blog?user=" + o.username;
+                  }
                 };
                 blogP2.innerHTML = o.comment;
                 f3.appendChild(blogName2);
