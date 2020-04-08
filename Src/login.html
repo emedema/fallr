@@ -104,8 +104,11 @@
                         // Redirects back to the main feed //
                         window.location.href = "/feed"
                     }
-                    if (this.readyState == 4 && this.status == 409 ) {
+                    else if (this.readyState == 4 && this.status == 409 ) {
                         document.getElementById("submitError").innerHTML = "Please enter valid login info!";
+                    }
+                    else if (this.readyState == 4 && this.status == 410 ) {
+                        document.getElementById("submitError").innerHTML = "Your account is deactivated!";
                     }
                 };
 
