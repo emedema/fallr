@@ -96,10 +96,12 @@
               img.setAttribute("id", "img_container2");
               img.setAttribute("class", "media-left");
 
-              var userImg = document.createElement("img");
+              var userImg = document.createElement("input");
+              userImg.setAttribute("type", "image");
               userImg.setAttribute("id", "user_img");
               userImg.setAttribute("class", "media-object");
               userImg.src = "images/placeholder.jpg"
+
 
               var blogName = document.createElement("div");
               blogName.setAttribute("id", "user_blog");
@@ -114,6 +116,10 @@
 
               var content = document.createElement("p");
               content.setAttribute("id", "contents");
+
+              var postimg = document.createElement("img");
+              postimg.setAttribute("id", "postimg");
+
 
               var likes = document.createElement("div");
               likes.setAttribute("id", "likes");
@@ -168,17 +174,23 @@
               post.appendChild(f);
               f.appendChild(img);
 
-              if(o.image != null){
-                userImg.src = o.image;
+              if(o.image !== null && o.image !== ""){
+                userImg.src = encodeURI(("https://api.fallr.ca/" + o.image));
               }
 
               img.appendChild(userImg);
-              blogP.innerHTML = o.username;
+              userImg.onclick = function(){
+                window.location.href = "/blog?user=" + o.username;
+              };
+              blogP.innerHTML = o.postName;
               f.appendChild(blogName);
               blogName.appendChild(blogP);
               post.append(postContent);
               content.innerHTML = o.postContent;
               postContent.appendChild(content);
+              if(o.postImage !== null && o.postImage!== "")
+                postimg.src = encodeURI(("https://api.fallr.ca/" + o.postImage));
+              postContent.append(postimg)
               postContent.appendChild(likes);
               likes.appendChild(likeBtn);
               num_likes.innerHTML = o.likes;

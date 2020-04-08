@@ -78,7 +78,8 @@
       var img = document.createElement("div");
       img.setAttribute("id", "img_container2");
       img.setAttribute("class", "media-left");
-      var userImg = document.createElement("img");
+      var userImg = document.createElement("input");
+      userImg.setAttribute("type", "image");
       userImg.setAttribute("id", "user_img");
       userImg.setAttribute("class", "media-object");
       userImg.src = "images/placeholder.jpg"
@@ -110,15 +111,24 @@
               post.appendChild(f);
               f.appendChild(img);
               if(o.image != null){
-                userImg.src = o.image;
+                userImg.src = encodeURI(("https://api.fallr.ca/" + data[0]["image"]));
               }
               img.appendChild(userImg);
-              blogP.innerHTML = o.username;
+              userImg.onclick = function(){
+                window.location.href = "/blog?user=" + o.username;
+              };
+              blogP.innerHTML = o.postName;
               f.appendChild(blogName);
               blogName.appendChild(blogP);
               post.append(postContent);
               content.innerHTML = o.postContent;
               postContent.appendChild(content);
+              var postimg = document.createElement("img");
+              postimg.setAttribute("id", "postimg");
+              if(o.postImage != null && o.postImage != "")
+                postimg.src = encodeURI(("https://api.fallr.ca/" + data[0]["postImage"]));
+              postContent.append(postimg)
+
               var likes = document.createElement("div");
               likes.setAttribute("id", "likes");
               var likeBtn = document.createElement("input")
@@ -256,7 +266,8 @@
                 var img2 = document.createElement("div");
                 img2.setAttribute("id", "img_container2");
                 img2.setAttribute("class", "media-left");
-                var userImg2 = document.createElement("img");
+                var userImg2 = document.createElement("input");
+                userImg2.setAttribute("type", "image");
                 userImg2.setAttribute("id", "user_img");
                 userImg2.setAttribute("class", "media-object");
                 userImg2.src = "images/placeholder.jpg"
@@ -267,9 +278,12 @@
                 blogP2.setAttribute("class", "media-heading");
                 f3.appendChild(img2);
                 if(o.image != null){
-                  userImg2.src = o.image;
+                  userImg2.src =  encodeURI(("https://api.fallr.ca/" +o.image));
                 }
                 img2.appendChild(userImg2);
+                userImg2.onclick = function(){
+                  window.location.href = "/blog?user=" + o.username;
+                };
                 blogP2.innerHTML = o.comment;
                 f3.appendChild(blogName2);
                 blogName2.appendChild(blogP2);

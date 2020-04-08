@@ -115,7 +115,7 @@
           xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
               data = JSON.parse(xhttp.response);
-              if (document.cookie.indexOf('_idp_session') != -1){
+              if (document.cookie.indexOf('loggedIn') != -1){
                 document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
               }
 
@@ -136,6 +136,12 @@
                   userImg.setAttribute("id", "user_img");
                   userImg.setAttribute("class", "media-object");
                   userImg.src = "images/placeholder.jpg"
+                  if(o.image !== null && o.image !== ""){
+                    img.src = encodeURI(("https://api.fallr.ca/" + o.image));
+                  }
+                  if(o.image !== null && o.image !== ""){
+                    userimg.src = encodeURI(("https://api.fallr.ca/" + o.image));
+                  }
                   var blogName = document.createElement("div");
                   blogName.setAttribute("id", "user_blog");
                   blogName.setAttribute("class", "media-body");
@@ -146,6 +152,8 @@
                   postContent.setAttribute("id", "content");
                   var content = document.createElement("p");
                   content.setAttribute("id", "contents");
+                  var postimg = document.createElement("img");
+                  postimg.setAttribute("id", "postimg");
                   var likes = document.createElement("div");
                   likes.setAttribute("id", "likes");
                   var likeBtn = document.createElement("input")
@@ -155,6 +163,34 @@
                   likeBtn.setAttribute("id", "like_bt");
                   likeBtn.setAttribute('value', o.postID);
                   var num_likes = document.createElement("p");
+
+                  likeBtn.onclick = function(){
+                    var xhttp = new XMLHttpRequest();
+
+                    xhttp.onreadystatechange = function() {
+                      // If the user isn't logged in fail out !
+                      if (this.readyState == 4 && this.status == 409) {
+                        alert("Please log in to like posts.");
+                      }
+
+                      // Else if it was successful, increment the like counter by 1 //
+                      else if (this.readyState == 4 && this.status == 200) {
+                        if(this.response == 0)
+                          likeBtn.nextSibling.innerHTML = parseInt(likeBtn.nextSibling.innerHTML) - 1 ;
+                        else
+                          likeBtn.nextSibling.innerHTML = parseInt(likeBtn.nextSibling.innerHTML) + 1 ;
+                      }
+                    };
+
+                    // Make a like request using the value within the button (postID) //
+                    xhttp.open("POST", "https://api.fallr.ca/like", true);
+                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhttp.send(
+                      "postID=" + likeBtn.value
+                      + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+                    );
+                  };
+
                   var form = document.createElement("form");
                   form.setAttribute("method", "get");
                   form.setAttribute("action", "postpage");
@@ -166,8 +202,8 @@
                   btn.innerHTML = "Comment"
                   post.appendChild(f);
                   f.appendChild(img);
-                  if(o.image != null){
-                    userImg.src = o.image;
+                  if(o.image !== null && o.image !== ""){
+                    userImg.src = encodeURI(("https://api.fallr.ca/" + o.image));
                   }
                   img.appendChild(userImg);
                   blogP.innerHTML = o.username;
@@ -176,6 +212,9 @@
                   post.append(postContent);
                   content.innerHTML = o.postContent;
                   postContent.appendChild(content);
+                  if(o.postImage !== null && o.postImage!== "")
+                    postimg.src = encodeURI(("https://api.fallr.ca/" + o.postImage));
+                  postContent.append(postimg)
                   postContent.appendChild(likes);
                   likes.appendChild(likeBtn);
                   num_likes.innerHTML = o.likes;
