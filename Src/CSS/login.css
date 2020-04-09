@@ -25,7 +25,6 @@ footer {
 
 #login {
   width: 80%;
-  height: 70%;
   background-color: #F0F7F4;
 }
 
@@ -64,11 +63,16 @@ form div input:not(#login-button) {
     }
     .container {
       height: 100vh;
+      width: 100%;
       background-color: #3A4B48;
       display: flex;
       padding-top: 5em;
       width:100%;
     }  
+
+    #login {
+      height: auto;
+    }
   }
   
   @media (min-width: 668px) {
@@ -79,9 +83,13 @@ form div input:not(#login-button) {
     
     .container {
       height: 100vh;
+      width: 80%;
       background-color: #3A4B48;
       display: flex;
       padding-top: 5em;
       width:80%;
+    }
+    #login {
+      height: 90%;
     }
   }
