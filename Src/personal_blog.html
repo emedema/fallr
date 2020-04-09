@@ -329,7 +329,7 @@
 
       img.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-          data = JSON.parse(img.response);
+          var data = JSON.parse(this.response);
 
           //loop through the response
           if (data[0]['backgroundImage']!== "null" && data[0]['backgroundImage']!=="" && data[0]['backgroundImage']!==null){
