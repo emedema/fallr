@@ -31,6 +31,9 @@ body{
 .my-float{
 	margin-top:22px;
 }
+#message{
+  color: #ADE6D9;
+}
 #blog_pic{
     height: 350px;
     width: 100%;
