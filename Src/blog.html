@@ -335,11 +335,13 @@
 
       img.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-          data = JSON.parse(img.response);
-
+          var data = JSON.parse(this.response);
+        //  console.log(data);
           //loop through the response
-          if (data[0]['backgroundImage']!== "null" || data[0]['backgroundImage']!=="" || data[0]['backgroundImage']!==null){
+          if (data[0]['backgroundImage']!== "null" && data[0]['backgroundImage']!=="" && data[0]['backgroundImage']!==null){
               cover.src = encodeURI(("https://api.fallr.ca/" + data[0]['backgroundImage']));
+          }else{
+            cover.src = 'images/placeholder.jpg';
           }
 
         }
