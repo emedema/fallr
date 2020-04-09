@@ -37,7 +37,6 @@ h2{
 
 }
 #content_create{
-    margin-left: 1em;
     margin-right: 1em;
     margin-bottom: 1em;
     margin-top: 1em;
@@ -136,9 +135,23 @@ form div input:not(#add_pic) {
     .container .row {
       min-height: 400px;
     }
+
+    .container {
+      max-width: 400px;
+      padding-left: 2px;
+      padding-right: 0;
+    }
+
+    #content {
+        padding-left: 5px;
+    }
     
     #search_bar {
         width: 375px;
+    }
+
+    #content_create {
+        margin-left: 0;
     }
   }
 
@@ -147,7 +160,17 @@ form div input:not(#add_pic) {
     .container .row {
       min-height: 600px;
     }
+
+    .container {
+        max-width: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
     #search_bar {
         width: 500px;
+    }
+    #content_create {
+        margin-left: 1em;
     }
   }
