@@ -59,12 +59,12 @@
                 </div>
             </nav>
         </header>
-        <a href="createPost" class="float">
+        <a href="createPost" class="float" id = "c">
             <i class="fa fa-plus my-float"></i>
         </a>
     </body>
     <script>
-
+      document.getElementById("c").style = "z-index: 9999";
       xhttp = new XMLHttpRequest();
       //create main class
       var mainDiv = document.createElement("div");
