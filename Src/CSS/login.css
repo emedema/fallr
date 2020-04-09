@@ -20,12 +20,11 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 }
 
 #login {
   width: 80%;
-  height: 70%;
   background-color: #F0F7F4;
 }
 
@@ -68,15 +67,15 @@ form div input:not(#login-button) {
       display: flex;
       padding-top: 5em;
       width:100%;
-    }  
+    }
   }
-  
+
   @media (min-width: 668px) {
     /* Makes it so when the screen is large, it expands the size*/
     .container .row {
       min-height: 600px;
     }
-    
+
     .container {
       height: 100vh;
       background-color: #3A4B48;
