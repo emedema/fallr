@@ -194,7 +194,6 @@ POST | [domain]/post/update/[postID]
 
 Takes:
     - loggedIn
-    - postID
     - postName
     - postContent
     - myfile
