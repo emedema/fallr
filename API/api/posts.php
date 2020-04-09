@@ -46,7 +46,7 @@ $connection = createConnection();
 if($postID && $token 
     && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
         // We also have to check to see if owner & logged in // 
-        if((Post::getPostOwner($connection, $postID) == Login::getIDFromToken($token)) 
+        if(((Post::getPostOwner($connection, $postID) == Login::getIDFromToken($token) || Account::isAdmin($connection, Login::getIDFromToken($token)))) 
             && (Login::checkToken($connection, $token))) {
             // Try to delete and if fails change HTTP code //
             if(!Post::deletePost($connection, $postID))
