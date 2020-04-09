@@ -39,12 +39,18 @@ if(isset($_GET['loggedIn']))
 if(isset($_COOKIE['loggedIn']))
     $token = $_COOKIE['loggedIn'];
 
+if(isset($_GET['delete']))
+    $delete = $_GET['delete'];
+
+if(isset($_GET['update']))
+    $update = $_GET['update'];
+
 $connection = createConnection();
 
 /* DELETE THE POST */
 
-if($postID && $token 
-    && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
+if($postID && $token && $delete
+    && $_SERVER['REQUEST_METHOD'] === 'POST') {
         // We also have to check to see if owner & logged in // 
         if(((Post::getPostOwner($connection, $postID) == Login::getIDFromToken($token) || Account::isAdmin($connection, Login::getIDFromToken($token)))) 
             && (Login::checkToken($connection, $token))) {
@@ -57,14 +63,16 @@ if($postID && $token
 /* UPDATE THE POST */
 
 // If we have all of the data to update
-else if($postID && $postName && $postContent && $token
+else if($postID && $postName && $postContent && $token && $update
     && $_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // If the user is logged in and is owner of post //
     if((Post::getPostOwner($connection, $postID) == Login::getIDFromToken($token)) 
         && (Login::checkToken($connection, $token))) {
         // Check to see if the post succeeds //
-        if(!Post::updatePost($connection, $postID, $postName, $postContent))
+        $image = Account::addImageToSystem($image);
+        
+        if(!Post::updatePost($connection, $postID, $postName, $postContent, $image))
             header("HTTP/1.1 405 Update Post Failure");
     }
     
