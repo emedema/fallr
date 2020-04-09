@@ -80,7 +80,12 @@
         if(this.readyState == 4 && this.status == 200){
           data = JSON.parse(xhttp.response);
           document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
-
+          if(data.length === 0){
+            var message = document.createElement("h3");
+            message.setAttribute("id", "message");
+            message.innerHTML = "There is nothing in your feed! The feed contains posts from all the people you are following!";
+            posts.appendChild(message);
+          }
           //loop through the response
           data.forEach(function(o) {
             if(o.username!=null && o.postContent !=null){
@@ -219,6 +224,40 @@
       xhttp.open("POST", url, true);
       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       xhttp.send("loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+    </script>
+    <script>
+    if(document.cookie.indexOf('loggedIn') != -1){
+
+      xhttpAdmin = new XMLHttpRequest();
+      xhttpAdmin.onreadystatechange = function () {
+              if (this.readyState == 4 && this.status == 200) {
+                  var data = JSON.parse(this.response);
+                  // If the user is an admin //
+                  if(data.admin === 1) {
+                      // Creates admin element container and it's link //
+                      var admin = document.createElement("li");
+                      admin.classList.add('nav-item');
+
+                      var adminText = document.createElement("a");
+                      adminText.classList.add('nav-link');
+                      adminText.href = 'admin';
+                      adminText.innerHTML = "Admin";
+
+                      // Append the two into eachother and add to the first element in the right of the navbar //
+                      admin.appendChild(adminText);
+                      document.getElementById('navbar-ul-right').insertBefore(admin, document.getElementById('navbar-ul-right').firstChild);
+                  }
+
+              }
+          };
+
+      // Query for admin check //
+      var adminURL = "https://api.fallr.ca/isAdmin/" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+      xhttpAdmin.open("POST", adminURL, true);
+      xhttpAdmin.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttpAdmin.send();
+
+    }
     </script>
 
 </html>

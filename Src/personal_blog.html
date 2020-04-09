@@ -180,85 +180,92 @@
                 document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
                 document.getElementById("login-nav").href = "personal_blog";
               }
+              if(data.length === 0){
+                var message = document.createElement("h3");
+                message.setAttribute("id", "message");
+                message.innerHTML = "This user has no posts!";
+                posts.appendChild(message);
+              }else{
+                //loop through the response
+                data.forEach(function(o) {
+                  if(o.username!=null && o.postContent !=null){
+                    var post = document.createElement("div");
+                    post.setAttribute("id", "post");
+                    posts.appendChild(post);
+                    var f = document.createElement("div");
+                    f.setAttribute("id", "f");
+                    f.setAttribute("class", "row");
+                    //create the other div stuff
+                    var img = document.createElement("div");
+                    img.setAttribute("id", "img_container2");
+                    img.setAttribute("class", "media-left");
+                    var userImg = document.createElement("img");
+                    userImg.setAttribute("id", "user_img");
+                    userImg.setAttribute("class", "media-object");
+                    if(o.image !== null && o.image !== ""){
+                      userImg.src = encodeURI(("https://api.fallr.ca/" + o.image));
+                    }
+                    if(o.image !== null && o.image !== ""){
+                      userimg.src = encodeURI(("https://api.fallr.ca/" + o.image));
+                    }
+                    userimg.setAttribute("id", "user_img");
+                    imgContainer.appendChild(userimg);
+                    var blogName = document.createElement("div");
+                    blogName.setAttribute("id", "user_blog");
+                    blogName.setAttribute("class", "media-body");
+                    var blogP = document.createElement("p");
+                    blogP.setAttribute("class", "media-heading");
+                    var postContent = document.createElement("div");
+                    postContent.setAttribute("class", "media-body");
+                    postContent.setAttribute("id", "content");
+                    var content = document.createElement("p");
+                    content.setAttribute("id", "contents");
+                    var postimg = document.createElement("img");
+                    postimg.setAttribute("id", "postimg");
+                    if(o.postImage !== null && o.postImage!== "")
+                      postimg.src = encodeURI(("https://api.fallr.ca/" + o.postImage));
+                    var likes = document.createElement("div");
+                    likes.setAttribute("id", "likes");
+                    var likeBtn = document.createElement("input")
+                    likeBtn.setAttribute("type", "image");
+                    likeBtn.setAttribute("src", "images/like.png");
+                    likeBtn.setAttribute("class", "bt_like");
+                    likeBtn.setAttribute("id", "like_bt");
+                    likeBtn.setAttribute('value', o.postID);
+                    var num_likes = document.createElement("p");
+                    var form = document.createElement("form");
+                    form.setAttribute("method", "get");
+                    form.setAttribute("action", "postpage");
+                    var btn = document.createElement("button");
+                    btn.setAttribute("type", "submit");
+                    btn.setAttribute("class", "btn");
+                    btn.setAttribute("name", "postid");
+                    btn.setAttribute('value', o.postID);
+                    btn.innerHTML = "Comment"
+                    post.appendChild(f);
+                    f.appendChild(img);
+                    if(o.image !== null && o.image !== ""){
+                      userimg.src = encodeURI(("https://api.fallr.ca/" + o.image));
+                    }
+                    img.appendChild(userImg);
+                    blogP.innerHTML = o.postName;
+                    f.appendChild(blogName);
+                    blogName.appendChild(blogP);
+                    post.append(postContent);
+                    content.innerHTML = o.postContent;
+                    postContent.appendChild(content);
+                    postContent.append(postimg);
+                    postContent.appendChild(likes);
+                    likes.appendChild(likeBtn);
+                    num_likes.innerHTML = o.likes;
+                    likes.appendChild(num_likes);
+                    likes.appendChild(form);
+                    form.appendChild(btn);
+                  }
+                  // to test console.log(o.postID, o.username);
+                })
+              }
 
-              //loop through the response
-              data.forEach(function(o) {
-                if(o.username!=null && o.postContent !=null){
-                  var post = document.createElement("div");
-                  post.setAttribute("id", "post");
-                  posts.appendChild(post);
-                  var f = document.createElement("div");
-                  f.setAttribute("id", "f");
-                  f.setAttribute("class", "row");
-                  //create the other div stuff
-                  var img = document.createElement("div");
-                  img.setAttribute("id", "img_container2");
-                  img.setAttribute("class", "media-left");
-                  var userImg = document.createElement("img");
-                  userImg.setAttribute("id", "user_img");
-                  userImg.setAttribute("class", "media-object");
-                  if(o.image !== null && o.image !== ""){
-                    userImg.src = encodeURI(("https://api.fallr.ca/" + o.image));
-                  }
-                  if(o.image !== null && o.image !== ""){
-                    userimg.src = encodeURI(("https://api.fallr.ca/" + o.image));
-                  }
-                  userimg.setAttribute("id", "user_img");
-                  imgContainer.appendChild(userimg);
-                  var blogName = document.createElement("div");
-                  blogName.setAttribute("id", "user_blog");
-                  blogName.setAttribute("class", "media-body");
-                  var blogP = document.createElement("p");
-                  blogP.setAttribute("class", "media-heading");
-                  var postContent = document.createElement("div");
-                  postContent.setAttribute("class", "media-body");
-                  postContent.setAttribute("id", "content");
-                  var content = document.createElement("p");
-                  content.setAttribute("id", "contents");
-                  var postimg = document.createElement("img");
-                  postimg.setAttribute("id", "postimg");
-                  if(o.postImage !== null && o.postImage!== "")
-                    postimg.src = encodeURI(("https://api.fallr.ca/" + o.postImage));
-                  var likes = document.createElement("div");
-                  likes.setAttribute("id", "likes");
-                  var likeBtn = document.createElement("input")
-                  likeBtn.setAttribute("type", "image");
-                  likeBtn.setAttribute("src", "images/like.png");
-                  likeBtn.setAttribute("class", "bt_like");
-                  likeBtn.setAttribute("id", "like_bt");
-                  likeBtn.setAttribute('value', o.postID);
-                  var num_likes = document.createElement("p");
-                  var form = document.createElement("form");
-                  form.setAttribute("method", "get");
-                  form.setAttribute("action", "postpage");
-                  var btn = document.createElement("button");
-                  btn.setAttribute("type", "submit");
-                  btn.setAttribute("class", "btn");
-                  btn.setAttribute("name", "postid");
-                  btn.setAttribute('value', o.postID);
-                  btn.innerHTML = "Comment"
-                  post.appendChild(f);
-                  f.appendChild(img);
-                  if(o.image !== null && o.image !== ""){
-                    userimg.src = encodeURI(("https://api.fallr.ca/" + o.image));
-                  }
-                  img.appendChild(userImg);
-                  blogP.innerHTML = o.postName;
-                  f.appendChild(blogName);
-                  blogName.appendChild(blogP);
-                  post.append(postContent);
-                  content.innerHTML = o.postContent;
-                  postContent.appendChild(content);
-                  postContent.append(postimg);
-                  postContent.appendChild(likes);
-                  likes.appendChild(likeBtn);
-                  num_likes.innerHTML = o.likes;
-                  likes.appendChild(num_likes);
-                  likes.appendChild(form);
-                  form.appendChild(btn);
-                }
-                // to test console.log(o.postID, o.username);
-              })
             }
           }
 
@@ -336,6 +343,38 @@
       img.open("GET", url, true);
       img.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       img.send();
+
+    </script>
+    <script>
+    //chages the nav bar if logged in user is an admin.
+      xhttpAdmin = new XMLHttpRequest();
+      xhttpAdmin.onreadystatechange = function () {
+              if (this.readyState == 4 && this.status == 200) {
+                  var data = JSON.parse(this.response);
+                  // If the user is an admin //
+                  if(data.admin === 1) {
+                      // Creates admin element container and it's link //
+                      var admin = document.createElement("li");
+                      admin.classList.add('nav-item');
+
+                      var adminText = document.createElement("a");
+                      adminText.classList.add('nav-link');
+                      adminText.href = 'admin';
+                      adminText.innerHTML = "Admin";
+
+                      // Append the two into eachother and add to the first element in the right of the navbar //
+                      admin.appendChild(adminText);
+                      document.getElementById('navbar-ul-right').insertBefore(admin, document.getElementById('navbar-ul-right').firstChild);
+                  }
+
+              }
+          };
+
+      // Query for admin check //
+      var adminURL = "https://api.fallr.ca/isAdmin/" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+      xhttpAdmin.open("POST", adminURL, true);
+      xhttpAdmin.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttpAdmin.send();
 
     </script>
 </html>

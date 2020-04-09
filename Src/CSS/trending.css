@@ -36,6 +36,9 @@ body{
   margin-right: 5%;
   max-width: 90%;
 }
+#message{
+  color: #ADE6D9;
+}
 .my-float{
 	margin-top:22px;
 }

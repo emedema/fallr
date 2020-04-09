@@ -20,7 +20,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 }
 
 #login {
@@ -72,15 +72,16 @@ form div input:not(#login-button) {
 
     #login {
       height: auto;
+
     }
   }
-  
+
   @media (min-width: 668px) {
     /* Makes it so when the screen is large, it expands the size*/
     .container .row {
       min-height: 600px;
     }
-    
+
     .container {
       height: 100vh;
       width: 80%;
@@ -89,6 +90,7 @@ form div input:not(#login-button) {
       padding-top: 5em;
       width:80%;
     }
+
     #login {
       height: 90%;
     }

@@ -235,4 +235,40 @@
 	  //   return false;
     // }
     </script>
+    <script>
+    //checks to see if logged in user is an admin and if so changes nav bar
+    if(document.cookie.indexOf('loggedIn') != -1){
+
+      xhttpAdmin = new XMLHttpRequest();
+      xhttpAdmin.onreadystatechange = function () {
+              if (this.readyState == 4 && this.status == 200) {
+                  var data = JSON.parse(this.response);
+                  // If the user is an admin //
+                  if(data.admin === 1) {
+                      // Creates admin element container and it's link //
+                      var admin = document.createElement("li");
+                      admin.classList.add('nav-item');
+
+                      var adminText = document.createElement("a");
+                      adminText.classList.add('nav-link');
+                      adminText.href = 'admin';
+                      adminText.innerHTML = "Admin";
+
+                      // Append the two into eachother and add to the first element in the right of the navbar //
+                      admin.appendChild(adminText);
+                      document.getElementById('navbar-ul-right').insertBefore(admin, document.getElementById('navbar-ul-right').firstChild);
+                  }
+
+              }
+          };
+
+      // Query for admin check //
+      var adminURL = "https://api.fallr.ca/isAdmin/" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+      xhttpAdmin.open("POST", adminURL, true);
+      xhttpAdmin.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttpAdmin.send();
+
+    }
+
+    </script>
 </html>
