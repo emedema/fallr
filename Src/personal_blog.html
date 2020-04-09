@@ -332,7 +332,7 @@
           data = JSON.parse(img.response);
 
           //loop through the response
-          if (data[0]['backgroundImage']!== "null" || data[0]['backgroundImage']!=="" || data[0]['backgroundImage']!==null){
+          if (data[0]['backgroundImage']!== "null" && data[0]['backgroundImage']!=="" && data[0]['backgroundImage']!==null){
               cover.src = encodeURI(("https://api.fallr.ca/" + data[0]['backgroundImage']));
           }else{
             cover.src = 'images/placeholder.jpg';
