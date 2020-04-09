@@ -179,6 +179,10 @@
               postContent.setAttribute("id", "content");
               var content = document.createElement("p");
               content.setAttribute("id", "contents");
+
+              var postimg = document.createElement("img");
+              postimg.setAttribute("id", "postimg");
+
               var likes = document.createElement("div");
               likes.setAttribute("id", "likes");
               var likeBtn = document.createElement("input")
@@ -249,6 +253,11 @@
               post2.append(postContent);
               content.innerHTML = o.postContent;
               postContent.appendChild(content);
+
+              if(o.postImage !== null && o.postImage!== "")
+                postimg.src = encodeURI(("https://api.fallr.ca/" + o.postImage));
+              postContent.append(postimg)
+
               postContent.appendChild(likes);
               likes.appendChild(likeBtn);
               num_likes.innerHTML = o.likes;
