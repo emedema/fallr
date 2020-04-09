@@ -49,7 +49,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="settings.html">Settings</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id = "personal_blog">
                             <a id="login-nav" class="nav-link" href="personal_blog.html">User</a>
                         </li>
                     </ul>
@@ -160,6 +160,45 @@
               xhttpAdmin.send();
 
             }
+            </script>
+            <script>
+            if (document.cookie.indexOf('loggedIn') !== -1){
+                    // This checks to see if the user is logged in and adds the logout button //
+                    // Creates admin element container and it's link //
+                    var admin = document.createElement("li");
+                    admin.classList.add('nav-item');
+                    admin.id = "logout-button";
+
+                    var adminText = document.createElement("a");
+                    adminText.classList.add('nav-link');
+                    adminText.href = '#';
+                    adminText.innerHTML = "Logout";
+
+                    // Append the two into eachother and add to the first element in the right of the navbar //
+                    admin.appendChild(adminText);
+                    document.getElementById('navbar-ul-right').appendChild(admin);
+
+                    // Sets an onclick for the link //
+                    admin.onclick = function() {
+                        xhttpLogout = new XMLHttpRequest();
+                        xhttpLogout.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    // Remove the button and the token //
+                                    document.getElementById('navbar-ul-right').removeChild(document.getElementById("logout-button"));
+                                    document.cookie = 'loggedIn="";expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                                    // Remove the current user from the navbar //
+                                    document.getElementById('navbar-ul-right').removeChild(document.getElementById("personal_blog"));
+                                    window.location.href = "/trending"
+                                }
+                            };
+
+                        // Query for admin check //
+                        var logoutURL = "https://api.fallr.ca/logout";
+                        xhttpLogout.open("POST", logoutURL, true);
+                        xhttpLogout.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhttpLogout.send("loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+                    }
+                }
             </script>
 
         </footer>
