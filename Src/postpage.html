@@ -241,6 +241,26 @@
 
     </script>
     <script>
+      var reqImg = new XMLHttpRequest();
+
+      reqImg.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          var data = JSON.parse(this.response);
+          data.forEach(function(o){
+            if(o.image !== null && o.image !== ""){
+              console.log("here in req img");
+              uimgVar =  encodeURI(("https://api.fallr.ca/" +o.image));
+            }
+          })
+        }
+      }
+
+      reqImg.open("GET", "https://api.fallr.ca/users/"+ document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0], true);
+      reqImg.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      reqImg.send("loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+    </script>
+    <script>
+      uimgVar = "";
       var comments = new XMLHttpRequest();
       var add_comment = document.createElement("div");
       add_comment.setAttribute("class", "container-fluid");
@@ -287,7 +307,34 @@
 
           // Else if it was successful, increment the like counter by 1 //
           else if (this.readyState == 4 && this.status == 200) {
-            location.reload();
+            var comment2 = document.createElement("div")
+            comment2.setAttribute("id", "comment");
+            user_comments.appendChild(comment2);
+            var f3 = document.createElement("div");
+            f3.setAttribute("id", "f");
+            f3.setAttribute("class", "row");
+            comment2.appendChild(f3);
+            var img2 = document.createElement("div");
+            img2.setAttribute("id", "img_container2");
+            img2.setAttribute("class", "media-left");
+            var userImg2 = document.createElement("input");
+            userImg2.setAttribute("type", "image");
+            userImg2.setAttribute("id", "user_img");
+            userImg2.setAttribute("class", "media-object");
+            userImg2.src = "images/placeholder.jpg"
+            if(uimgVar !== "" && uimgVar !== null){
+              userImg2.src = uimgVar;
+            }
+            var blogName2 = document.createElement("div");
+            blogName2.setAttribute("id", "user_blog");
+            blogName2.setAttribute("class", "media-body");
+            var blogP2 = document.createElement("p");
+            blogP2.setAttribute("class", "media-heading");
+            f3.appendChild(img2);
+            img2.appendChild(userImg2);
+            blogP2.innerHTML = textInput.value;
+            f3.appendChild(blogName2);
+            blogName2.appendChild(blogP2);
           }
         };
 

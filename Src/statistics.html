@@ -3,6 +3,7 @@
     <head lang="en">
         <title>fallr - Admin</title>
         <meta charset = 'utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
@@ -72,7 +73,9 @@
         </div>
         <footer>
             <script>
-
+            if (document.cookie.indexOf('loggedIn') != -1){
+              document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+            }
                 /* Function that takes an element id and checks the validity of the input */
 
                     xhttp = new XMLHttpRequest();

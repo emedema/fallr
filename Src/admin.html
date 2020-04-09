@@ -140,7 +140,9 @@
             <script>
 
                 /* Function that takes an element id and checks the validity of the input */
-
+                if (document.cookie.indexOf('loggedIn') != -1){
+                  document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+                }
                 function fieldCheck(fieldID) {
                     element = document.getElementById(fieldID);
                     if(element.value == "") {
