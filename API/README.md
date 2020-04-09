@@ -190,7 +190,14 @@ GET | [domain]/posts/id/[postID]
 ### Update a post (Not Tested)
 
 ```
-POST | [domain]/posts/id/[postID]
+POST | [domain]/post/update/[postID]
+
+Takes:
+    - loggedIn
+    - postName
+    - postContent
+    - myfile
+
 ```
 
 ### Deleting a post (Completed)
@@ -198,7 +205,7 @@ POST | [domain]/posts/id/[postID]
 Requires a valid key [Owner].
 
 ```
-DELETE | [domain]/posts/id/[postID]
+DELETE | [domain]/post/delete/[postID]
 
 Takes:
     - loggedIn

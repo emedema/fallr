@@ -27,12 +27,12 @@ class Post {
 		return $query->insert_id;
     }
 
-    public function updatePost($connection, $postID, $postName, $postContent) {
+    public function updatePost($connection, $postID, $postName, $postContent, $image) {
 	
 		/* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("UPDATE Posts SET postName = ?, postContent = ? WHERE postID= ?");
+		$query = $connection->prepare("UPDATE Posts SET postName = ?, postContent = ?, image = ? WHERE postID= ?");
 		/* Passes the values into the query */
-		$query->bind_param("ssi", $postName, $postContent, $postID);
+		$query->bind_param("sssi", $postName, $postContent, $image, $postID);
         
 		/* Returns Success */
 		return $query->execute();

@@ -72,7 +72,10 @@ form div input:not(#login-button) {
 
     #login {
       height: auto;
-
+    }
+    
+    #search_bar {
+      width: 375px;
     }
   }
 
@@ -94,4 +97,8 @@ form div input:not(#login-button) {
     #login {
       height: 90%;
     }
+
+    #search_bar {
+      width: 500px;
+  }
   }

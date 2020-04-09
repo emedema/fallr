@@ -124,11 +124,19 @@ img {
     .container .row {
       min-height: 400px;
     }
+    
+    #search_bar {
+        width: 375px;
+    }
   }
 
   @media (min-width: 544px) {
     /* Makes it so when the screen is large, it expands the size*/
     .container .row {
       min-height: 600px;
+    }
+    
+    #search_bar {
+        width: 500px;
     }
   }

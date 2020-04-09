@@ -23,6 +23,12 @@ RewriteRule ^user/([A-Za-z0-9\ ]*)$ users.php?updateUser=true&username=$1 [QSA]
 # This creates a post
 RewriteRule ^post$ posts.php [NC,L] 
 
+# This deletes a post
+RewriteRule ^post/delete/([0-9]*)$ posts.php?delete=true&postID=$1 [NC,L] 
+
+# This updates a post
+RewriteRule ^post/update/([0-9]*)$ posts.php?update=true&postID=$1 [NC,L] 
+
 # This creates a comment for a post 
 RewriteRule ^comment$ comments.php [NC,L]
 
