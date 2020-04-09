@@ -227,8 +227,8 @@
               btn.innerHTML = "Comment"
               post2.appendChild(f);
               f.appendChild(img);
-              if(o.image != null){
-                userImg.src = o.image;
+              if(o.image !== null && o.image !== ""){
+                userImg.src = encodeURI(("https://api.fallr.ca/" + o.image));
               }
               img.appendChild(userImg);
               userImg.onclick = function(){
