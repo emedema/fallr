@@ -193,6 +193,10 @@ img {
         padding-top: 1em;
         padding-bottom: 1em;
     }
+    
+    #search_bar {
+        width: 375px;
+    }
 
   }
 
@@ -214,5 +218,9 @@ img {
         margin-right: auto;
         padding-top: 1em;
         padding-bottom: 1em;
+    }
+
+    #search_bar {
+        width: 500px;
     }
   }

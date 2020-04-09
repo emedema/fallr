@@ -63,6 +63,9 @@ form div input:not(#login-button) {
         display: flex;
         padding-top: 5em;    
     }
+    #search_bar {
+        width: 375px;
+    }
 }
 
 @media (min-width: 668) {
@@ -73,5 +76,9 @@ form div input:not(#login-button) {
         background-color: #3A4B48;
         display: flex;
         padding-top: 5em;    
+    }
+    
+    #search_bar {
+        width: 500px;
     }
 }
