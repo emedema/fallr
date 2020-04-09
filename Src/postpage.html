@@ -57,6 +57,7 @@
     <script>
       var xhttp = new XMLHttpRequest();
 
+      admin = false;
       postid = window.location.search.substr(8);
       console.log(postid);
       //create main class
@@ -166,6 +167,7 @@
                   }
                 };
 
+
                 // Make a like request using the value within the button (postID) //
                 xhttp.open("POST", "https://api.fallr.ca/like", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -175,6 +177,55 @@
                 );
               };
               likes.appendChild(num_likes);
+              if(document.cookie.indexOf('loggedIn') != -1){
+                if(admin === true || o.username === document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0]){
+                  var form = document.createElement("form");
+                  form.setAttribute("method", "get");
+                  form.setAttribute("action", "edit_post");
+                  var edit = document.createElement("button");
+                  edit.setAttribute("id", "editBtn");
+                  edit.setAttribute("value", postid);
+                  edit.setAttribute("class", "btn");
+                  edit.setAttribute("type", "submit");
+                  edit.setAttribute("name", "postID");
+                  edit.innerHTML = "Edit";
+                  likes.appendChild(form);
+                  form.appendChild(edit);
+
+
+                  var del = document.createElement("button");
+                  del.setAttribute("id", "delBtn");
+                  del.setAttribute("value", "Delete");
+                  del.setAttribute("class", "btn");
+                  del.innerHTML = "Delete";
+                  likes.appendChild(del);
+
+                  //onclick
+                  del.onclick = function(){
+                    var dreq = new XMLHttpRequest();
+
+                    dreq.onreadystatechange = function() {
+                      // If the user isn't logged in fail out !
+                      if (this.readyState == 4 && this.status == 409) {
+                        alert("Please log in to delete posts.");
+                      }
+
+                      // Else if it was successful, increment the like counter by 1 //
+                      else if (this.readyState == 4 && this.status == 200) {
+                        window.location.href = '/trending';
+                      }
+                    };
+
+                    dreq.open("POST", "https://api.fallr.ca/post/delete/" + postid, true);
+                    dreq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    dreq.send(
+                      "loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+                    );
+
+                  }
+
+                }
+              }
             }
             // to test console.log(o.postID, o.username);
           })
@@ -325,8 +376,9 @@
                   // If the user is an admin //
                   if(data.admin === 1) {
                       // Creates admin element container and it's link //
-                      var admin = document.createElement("li");
-                      admin.classList.add('nav-item');
+                      admin = true;
+                      var admin1 = document.createElement("li");
+                      admin1.classList.add('nav-item');
 
                       var adminText = document.createElement("a");
                       adminText.classList.add('nav-link');
@@ -334,7 +386,7 @@
                       adminText.innerHTML = "Admin";
 
                       // Append the two into eachother and add to the first element in the right of the navbar //
-                      admin.appendChild(adminText);
+                      admin1.appendChild(adminText);
                       document.getElementById('navbar-ul-right').insertBefore(admin, document.getElementById('navbar-ul-right').firstChild);
                   }
 
