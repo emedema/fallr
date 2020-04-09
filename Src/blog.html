@@ -156,6 +156,7 @@
               }
               if(data.length === 0){
                 var message = document.createElement("h3");
+                message.setAttribute("id", "message");
                 message.innerHTML = "This user has no posts!"
                 posts.appendChild(message);
               }else{

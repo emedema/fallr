@@ -182,7 +182,8 @@
               }
               if(data.length === 0){
                 var message = document.createElement("h3");
-                message.innerHTML = "You have no posts!"
+                message.setAttribute("id", "message");
+                message.innerHTML = "You have no posts!";
                 posts.appendChild(message);
               }else{
                 //loop through the response
