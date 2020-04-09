@@ -64,7 +64,7 @@ class Post {
       p.image AS postImage, p.postName, p.postContent, p.created, count(l.username) likes 
       FROM Posts p RIGHT JOIN Subscriptions AS s ON s.username = p.username 
       LEFT JOIN Likes AS l ON l.postID=p.postID LEFT JOIN Users as u ON u.username = p.username
-      WHERE s.subscribedUsername = (?) GROUP BY p.postID, s.subscribedUsername, s.username");		
+      WHERE s.subscribedUsername = (?) GROUP BY p.postID, s.subscribedUsername, s.username ORDER BY p.created DESC");		
 
         $query->bind_param("s", $username);
 
@@ -76,7 +76,7 @@ class Post {
 
     public function getPosts($connection, $username) {
         /* Prepares the function so we can pass in the values from the user */
-       $query = $connection->prepare("SELECT u.image, p.postID, p.username, p.postName, p.image AS postImage, p.postContent, p.created, count(l.username) likes FROM Posts p LEFT JOIN Likes AS l ON l.postID=p.postID LEFT JOIN Users as u ON u.username = p.username WHERE p.username = ? GROUP BY p.postID");		
+       $query = $connection->prepare("SELECT u.image, p.postID, p.username, p.postName, p.image AS postImage, p.postContent, p.created, count(l.username) likes FROM Posts p LEFT JOIN Likes AS l ON l.postID=p.postID LEFT JOIN Users as u ON u.username = p.username WHERE p.username = ? GROUP BY p.postID ORDER BY p.created DESC");		
 
        $query->bind_param("s", $username);
 
@@ -113,7 +113,7 @@ class Post {
     public function searchPosts($connection, $partial_post) {		
 
       $query = $connection->prepare("SELECT u.image, p.postID, p.username, p.postName, p.image AS postImage, p.postContent, p.created, count(l.username) likes FROM  
-          Posts p LEFT JOIN Likes AS l ON l.postID=p.postID LEFT JOIN Users as u ON u.username = p.username WHERE p.postName LIKE CONCAT('%',?,'%') GROUP BY p.postID");	
+          Posts p LEFT JOIN Likes AS l ON l.postID=p.postID JOIN Users as u ON u.username = p.username WHERE p.postName LIKE CONCAT('%',?,'%') GROUP BY p.postID ORDER BY p.created DESC");	
       $query->bind_param("s", $partial_post);
   
       $query->execute();
@@ -124,7 +124,7 @@ class Post {
     public function getPostsTimePeriod($connection, $hours){
       // This function gets all posts for a timeperiod (now - hours * n )
       $query = $connection->prepare("SELECT u.image, p.postID, p.username, p.postName, p.image AS postImage, p.postContent, p.created, count(l.username) likes FROM  
-      Posts p LEFT JOIN Likes AS l ON l.postID=p.postID LEFT JOIN Users as u ON u.username = p.username WHERE p.created > (CURRENT_TIMESTAMP - INTERVAL ? HOUR) GROUP BY p.postID");	
+      Posts p LEFT JOIN Likes AS l ON l.postID=p.postID LEFT JOIN Users as u ON u.username = p.username WHERE p.created > (CURRENT_TIMESTAMP - INTERVAL ? HOUR) GROUP BY p.postID ORDER BY p.created DESC");	
       $query->bind_param("s", $hours);
   
       $query->execute();
