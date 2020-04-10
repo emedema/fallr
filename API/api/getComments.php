@@ -31,14 +31,11 @@ if ($postID) {
 
 else if ($commentID) {
     $connection = createConnection();
-    $comments = Comment::getComment($connection, $commentID);
-    if(!$comments)
+    $comment = Comment::getComment($connection, $commentID);
+    if(!$comment)
         header("HTTP/1.1 405 Get Single Comment Failure");
     else {
-        $commentData = array();
-        while($row = $comments->fetch_assoc())
-            $commentData[] = $row;
-        echo(json_encode($commentData));
+        echo(json_encode($comment));
     }
 }
 else
