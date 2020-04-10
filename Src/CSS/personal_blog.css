@@ -193,7 +193,7 @@ img {
         padding-top: 1em;
         padding-bottom: 1em;
     }
-    
+
     #search_bar {
         width: 375px;
     }
@@ -213,7 +213,7 @@ img {
 
     #posts{
         background-color:#3A4B48;
-        width: 90%;
+        /*width: 90%;*/
         margin-left: auto;
         margin-right: auto;
         padding-top: 1em;
