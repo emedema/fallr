@@ -3,6 +3,7 @@
 require_once '../connection.php';
 require_once '../Login.php';
 require_once '../Comment.php';
+require_once '../Account.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Content-type: application/json');
@@ -70,7 +71,7 @@ else if($commentID && $comment && $update && $_SERVER['REQUEST_METHOD'] === 'POS
         
         $username = Login::getIDFromToken($token);
 
-        if($username == Comment::getCommentOwner($connection, $commentID) || Account::isAdmin($connection, Login::getIDFromToken($token))) {
+        if(($username == Comment::getCommentOwner($connection, $commentID)) || Account::isAdmin($connection, Login::getIDFromToken($token))) {
             Comment::updateComment($connection, $commentID, $comment);
         }
         else
@@ -91,7 +92,7 @@ else if($commentID && $delete && $_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $username = Login::getIDFromToken($token);
 
-        if($username == Comment::getCommentOwner($connection, $commentID) || Account::isAdmin($connection, Login::getIDFromToken($token))) {
+        if(($username == Comment::getCommentOwner($connection, $commentID)) || Account::isAdmin($connection, Login::getIDFromToken($token))) {
             Comment::deleteComment($connection, $commentID);
         }
         else
