@@ -339,6 +339,18 @@
             blogP2.innerHTML = textInput.value;
             f3.appendChild(blogName2);
             blogName2.appendChild(blogP2);
+            var formC = document.createElement("form");
+            formC.setAttribute("method", "get");
+            formC.setAttribute("action", "edit_comment");
+            formC.style = "margin-top: auto;  margin-bottom: auto;";
+            var editC = document.createElement("button");
+            editC.setAttribute("class", "btn");
+            editC.innerHTML = "Edit";
+            editC.setAttribute("name", "commentID");
+            editC.setAttribute("value", o.commentID);
+            editC.style = "height: fit-content;margin-top: auto;  margin-bottom: auto;";
+            f3.appendChild(formC);
+            formC.appendChild(editC);
           }
         };
 
@@ -405,6 +417,18 @@
                 blogP2.innerHTML = o.comment;
                 f3.appendChild(blogName2);
                 blogName2.appendChild(blogP2);
+                var formC = document.createElement("form");
+                formC.setAttribute("method", "get");
+                formC.setAttribute("action", "edit_comment");
+                formC.style = "margin-top: auto;  margin-bottom: auto;";
+                var editC = document.createElement("button");
+                editC.setAttribute("class", "btn");
+                editC.innerHTML = "Edit";
+                editC.setAttribute("name", "commentID");
+                editC.setAttribute("value", o.commentID);
+                editC.style = "height: fit-content;margin-top: auto;  margin-bottom: auto;";
+                f3.appendChild(formC);
+                formC.appendChild(editC);
 
             }
             // to test console.log(o.postID, o.username);

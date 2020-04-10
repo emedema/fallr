@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>fallr - Edit Comment</title>
+        <meta charset = 'utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+        <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="CSS/createPost.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    </head>
+    <body>
+        <header>
+            <header>
+              <nav class="navbar sticky-top navbar-expand-lg navbar-light">
+                  <img alt="Brand" src="images/fallr_logo.png" style="width: 50px">
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse mr-auto" id="navbarNav">
+                      <ul id="navbar-ul-left" class="navbar-nav">
+                          <li class="nav-item">
+                              <a class="nav-link" href="feed.html">Feed<span class="sr-only"></span></a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="trending.html">Trending<span class="sr-only"></span></a>
+                          </li>
+                      </ul>
+                      <ul id="navbar-ul-center" class="navbar-nav ml-auto">
+                        <form id="search-form" class="form-inline d-flex dropdown" action = "search_result" method = "get">
+                            <input id = "search_bar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name = "search">
+                        </form>
+                      </ul>
+                      <ul id="navbar-ul-right" class="navbar-nav ml-auto">
+                          <li class="nav-item">
+
+                              <a class="nav-link" href="settings">Settings</a>
+
+                          </li>
+                          <li class="nav-item" id = "personal_blog">
+                              <a id="login-nav" class="nav-link" href="personal_blog">Username</a>
+                          </li>
+                      </ul>
+                  </div>
+              </nav>
+            </header>
+        </header>
+        <div class = "container" id = 'main'>
+            <div id = 'posts' class="row mx-auto justify-content-center">
+                    <div id = 'create' class="row mx-auto justify-content-center">
+                        <div id = 'content_create'>
+                            <form>
+                                <textarea name = 'comment' rows="10" cols="100" id = "postContent" class="form-control">
+                                </textarea>
+                                <div id = "confirm">
+                                    <input type = 'button' value = 'Edit Comment' id = 'post-button' class = 'form-control'>
+                                </div>
+                                <div id = "delete">
+                                  <input type = "button" value = "Delete Comment" id = "delete-btn" class = 'form-control'>
+                                </div>
+                                <p id="submitError"></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <footer>
+
+        </footer>
+        <script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous">
+        </script>
+
+        <!-- Cookie CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+
+        <script>
+            /*$("#post-button").click(function() {
+                $.ajax({
+                    url: 'http://localhost/fallrAPI/posts/',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: $('form').serialize(),
+                    success: function(data) {
+                        console.log("success");
+                    }
+                });
+            }); */
+        </script>
+        <script>
+          commentid = window.location.search.substr(11);
+          console.log(commentid);
+
+           xhttpRecieve = new XMLHttpRequest();
+
+           xhttpRecieve.onreadystatechange = function () {
+                  if (this.readyState == 4 && this.status == 200) {
+                      var data = JSON.parse(this.response);
+                      //console.log(data[0]["postImage"]);
+                      console.log(data["comment"]);
+                      document.getElementById("postContent").value = data["comment"];
+                      // This only sets the image if it is defined //
+                  }
+              };
+
+          // This gets the current user's ID from the session token, and opens a request with it for info //
+          var url = "https://api.fallr.ca/comments/" + commentid;
+          xhttpRecieve.open("POST", url, true);
+          xhttpRecieve.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhttpRecieve.send();
+
+            /* Function that takes an element id and checks the validity of the input */
+            if (document.cookie.indexOf('loggedIn') != -1){
+              document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+              document.getElementById("login-nav").href = "personal_blog";
+
+
+                  /* Function that takes an element id and checks the validity of the input */
+
+                  function fieldCheck(fieldID) {
+                      element = document.getElementById(fieldID);
+                      if(element.value == "") {
+                          document.getElementById("submitError").innerHTML = fieldID + " is required.";
+                          return false;
+                      }
+                      return true;
+                  }
+
+                  document.getElementById("post-button").addEventListener("click", function(){
+                      xhttp = new XMLHttpRequest();
+
+
+                      // If the account is successfully created, we can then try to log in //
+
+                      xhttp.onreadystatechange = function() {
+                          // This handles the case where the user account already exists //
+                          if (this.readyState == 4 && this.status == 405) {
+                              document.getElementById("submitError").innerHTML = "The post failed!"
+                          }
+                          else if (this.readyState == 4 && this.status == 200) {
+
+                                      window.location.href = "/feed"
+
+                          }else{
+                            document.getElementById("submitError").innerHTML = "You cannot change this comment!";
+                          }
+                      };
+
+                      // Checks to see if the user is missing any fields //
+
+                      var fields = ["postContent"];
+
+                      var success;
+
+                      for(i in fields) {
+                          console.log(fields[i])
+                          if(!(success = fieldCheck(fields[i])))
+                              break;
+                      };
+
+                      /* Makes the request if all fields are valid */
+
+                      if(success) {
+                          formData = new FormData();
+                          formData.append("comment", document.getElementById("postContent").value);
+                          formData.append("loggedIn", document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+                          xhttp.open("POST", "https://api.fallr.ca/comments/update/" + commentid, true);
+
+                          xhttp.send(formData);
+                      }
+
+                  })
+                }
+      </script>
+      <script>
+      if(document.cookie.indexOf('loggedIn') != -1){
+
+        xhttpAdmin = new XMLHttpRequest();
+        xhttpAdmin.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.response);
+                    // If the user is an admin //
+                    if(data.admin === 1) {
+                        // Creates admin element container and it's link //
+                        var admin = document.createElement("li");
+                        admin.classList.add('nav-item');
+
+                        var adminText = document.createElement("a");
+                        adminText.classList.add('nav-link');
+                        adminText.href = 'admin';
+                        adminText.innerHTML = "Admin";
+
+                        // Append the two into eachother and add to the first element in the right of the navbar //
+                        admin.appendChild(adminText);
+                        document.getElementById('navbar-ul-right').insertBefore(admin, document.getElementById('navbar-ul-right').firstChild);
+                    }
+
+                }
+            };
+
+        // Query for admin check //
+        var adminURL = "https://api.fallr.ca/isAdmin/" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+        xhttpAdmin.open("POST", adminURL, true);
+        xhttpAdmin.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttpAdmin.send();
+
+      }
+      document.getElementById("delete-btn").addEventListener("click", function(){
+        del = new XMLHttpRequest();
+        del.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location.href = '/feed';
+                    }
+
+                };
+                // Query for admin check //
+        var delURL = "https://api.fallr.ca/comments/delete/" + commentid;
+        del.open("POST", delURL, true);
+        del.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        del.send("loggedIn="+ document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+
+      })
+
+      </script>
+      <script>
+      if (document.cookie.indexOf('loggedIn') !== -1){
+              // This checks to see if the user is logged in and adds the logout button //
+              // Creates admin element container and it's link //
+              var admin = document.createElement("li");
+              admin.classList.add('nav-item');
+              admin.id = "logout-button";
+
+              var adminText = document.createElement("a");
+              adminText.classList.add('nav-link');
+              adminText.href = '#';
+              adminText.innerHTML = "Logout";
+
+              // Append the two into eachother and add to the first element in the right of the navbar //
+              admin.appendChild(adminText);
+              document.getElementById('navbar-ul-right').appendChild(admin);
+
+              // Sets an onclick for the link //
+              admin.onclick = function() {
+                  xhttpLogout = new XMLHttpRequest();
+                  xhttpLogout.onreadystatechange = function () {
+                          if (this.readyState == 4 && this.status == 200) {
+                              // Remove the button and the token //
+                              document.getElementById('navbar-ul-right').removeChild(document.getElementById("logout-button"));
+                              document.cookie = 'loggedIn="";expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                              // Remove the current user from the navbar //
+                              document.getElementById('navbar-ul-right').removeChild(document.getElementById("personal_blog"));
+                              window.location.href = "/trending"
+                          }
+                      };
+
+                  // Query for admin check //
+                  var logoutURL = "https://api.fallr.ca/logout";
+                  xhttpLogout.open("POST", logoutURL, true);
+                  xhttpLogout.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                  xhttpLogout.send("loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+              }
+          }
+      </script>
+
+    </body>
+</html>
