@@ -141,7 +141,7 @@
           imgContainer.setAttribute("id", "img_container");
           userbar.appendChild(imgContainer);
 
-          var userimg = document.createElement("img");
+          userimg = document.createElement("img");
           userimg.src = "images/placeholder.jpg";
           userimg.setAttribute("id", "user_img");
           imgContainer.appendChild(userimg);
@@ -205,9 +205,7 @@
                     if(o.image !== null && o.image !== ""){
                       userImg.src = encodeURI(("https://api.fallr.ca/" + o.image));
                     }
-                    if(o.image !== null && o.image !== ""){
-                      userimg.src = encodeURI(("https://api.fallr.ca/" + o.image));
-                    }
+
                     userimg.setAttribute("id", "user_img");
                     imgContainer.appendChild(userimg);
                     var blogName = document.createElement("div");
@@ -274,6 +272,24 @@
           xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
           xhttp.send();
 
+    </script>
+    <script>
+      uimg = new XMLHttpRequest();
+
+      uimg.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          var data = JSON.parse(this.response);
+          //loop through the response
+          console.log(data[0]["image"]);
+          userimg.src = encodeURI(("https://api.fallr.ca/" + data[0]["image"]));
+            // to test console.log(o.postID, o.username);
+        }
+      }
+
+      var url = "https://api.fallr.ca/users/" + user;
+      uimg.open("GET", url, true);
+      uimg.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      uimg.send();
     </script>
     <script>
     //gets the users the user is following
