@@ -44,10 +44,10 @@
                     </ul>
                     <ul id="navbar-ul-right" class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="settings">Settings</a>
+                            <a id = "create_a" class="nav-link" href="createAccount">Sign-Up</a>
                         </li>
-                        <li class="nav-item">
-                            <a id="login-nav" class="nav-link" href="personal_blog">User</a>
+                        <li class="nav-item" id = "personal_blog">
+                            <a id="login-nav" class="nav-link" href="login">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -57,6 +57,7 @@
     <script>
       var xhttp = new XMLHttpRequest();
 
+      admin = false;
       postid = window.location.search.substr(8);
       console.log(postid);
       //create main class
@@ -104,6 +105,9 @@
           data = JSON.parse(xhttp.response);
           if (document.cookie.indexOf('loggedIn') != -1){
             document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+            document.getElementById("login-nav").href = "personal_blog";
+            document.getElementById('create_a').innerHTML = "Settings";
+            document.getElementById('create_a').href = "settings";
           }
           //loop through the response
           data.forEach(function(o) {
@@ -150,6 +154,7 @@
               // If the user selects a like button //
               likeBtn.onclick = function(){
                 var xhttp = new XMLHttpRequest();
+                //console.log(likeBtn.value);
 
                 xhttp.onreadystatechange = function() {
                   // If the user isn't logged in fail out !
@@ -166,15 +171,65 @@
                   }
                 };
 
+
                 // Make a like request using the value within the button (postID) //
                 xhttp.open("POST", "https://api.fallr.ca/like", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.send(
-                  "postID=" + likeBtn.value
+                  "postID=" + postid
                   + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
                 );
               };
               likes.appendChild(num_likes);
+              if(document.cookie.indexOf('loggedIn') != -1){
+                if(admin === true || o.username === document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0]){
+                  var form = document.createElement("form");
+                  form.setAttribute("method", "get");
+                  form.setAttribute("action", "edit_post");
+                  var edit = document.createElement("button");
+                  edit.setAttribute("id", "editBtn");
+                  edit.setAttribute("value", postid);
+                  edit.setAttribute("class", "btn");
+                  edit.setAttribute("type", "submit");
+                  edit.setAttribute("name", "postID");
+                  edit.innerHTML = "Edit";
+                  likes.appendChild(form);
+                  form.appendChild(edit);
+
+
+                  var del = document.createElement("button");
+                  del.setAttribute("id", "delBtn");
+                  del.setAttribute("value", "Delete");
+                  del.setAttribute("class", "btn");
+                  del.innerHTML = "Delete";
+                  likes.appendChild(del);
+
+                  //onclick
+                  del.onclick = function(){
+                    var dreq = new XMLHttpRequest();
+
+                    dreq.onreadystatechange = function() {
+                      // If the user isn't logged in fail out !
+                      if (this.readyState == 4 && this.status == 409) {
+                        alert("Please log in to delete posts.");
+                      }
+
+                      // Else if it was successful, increment the like counter by 1 //
+                      else if (this.readyState == 4 && this.status == 200) {
+                        window.location.href = '/trending';
+                      }
+                    };
+
+                    dreq.open("POST", "https://api.fallr.ca/post/delete/" + postid, true);
+                    dreq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    dreq.send(
+                      "loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
+                    );
+
+                  }
+
+                }
+              }
             }
             // to test console.log(o.postID, o.username);
           })
@@ -190,6 +245,26 @@
 
     </script>
     <script>
+      var reqImg = new XMLHttpRequest();
+
+      reqImg.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          var data = JSON.parse(this.response);
+          data.forEach(function(o){
+            if(o.image !== null && o.image !== ""){
+              console.log("here in req img");
+              uimgVar =  encodeURI(("https://api.fallr.ca/" +o.image));
+            }
+          })
+        }
+      }
+
+      reqImg.open("GET", "https://api.fallr.ca/users/"+ document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0], true);
+      reqImg.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      reqImg.send("loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+    </script>
+    <script>
+      uimgVar = "";
       var comments = new XMLHttpRequest();
       var add_comment = document.createElement("div");
       add_comment.setAttribute("class", "container-fluid");
@@ -236,7 +311,34 @@
 
           // Else if it was successful, increment the like counter by 1 //
           else if (this.readyState == 4 && this.status == 200) {
-            location.reload();
+            var comment2 = document.createElement("div")
+            comment2.setAttribute("id", "comment");
+            user_comments.appendChild(comment2);
+            var f3 = document.createElement("div");
+            f3.setAttribute("id", "f");
+            f3.setAttribute("class", "row");
+            comment2.appendChild(f3);
+            var img2 = document.createElement("div");
+            img2.setAttribute("id", "img_container2");
+            img2.setAttribute("class", "media-left");
+            var userImg2 = document.createElement("input");
+            userImg2.setAttribute("type", "image");
+            userImg2.setAttribute("id", "user_img");
+            userImg2.setAttribute("class", "media-object");
+            userImg2.src = "images/placeholder.jpg"
+            if(uimgVar !== "" && uimgVar !== null){
+              userImg2.src = uimgVar;
+            }
+            var blogName2 = document.createElement("div");
+            blogName2.setAttribute("id", "user_blog");
+            blogName2.setAttribute("class", "media-body");
+            var blogP2 = document.createElement("p");
+            blogP2.setAttribute("class", "media-heading");
+            f3.appendChild(img2);
+            img2.appendChild(userImg2);
+            blogP2.innerHTML = textInput.value;
+            f3.appendChild(blogName2);
+            blogName2.appendChild(blogP2);
           }
         };
 
@@ -325,8 +427,9 @@
                   // If the user is an admin //
                   if(data.admin === 1) {
                       // Creates admin element container and it's link //
-                      var admin = document.createElement("li");
-                      admin.classList.add('nav-item');
+                      admin = true;
+                      var admin1 = document.createElement("li");
+                      admin1.classList.add('nav-item');
 
                       var adminText = document.createElement("a");
                       adminText.classList.add('nav-link');
@@ -334,7 +437,7 @@
                       adminText.innerHTML = "Admin";
 
                       // Append the two into eachother and add to the first element in the right of the navbar //
-                      admin.appendChild(adminText);
+                      admin1.appendChild(adminText);
                       document.getElementById('navbar-ul-right').insertBefore(admin, document.getElementById('navbar-ul-right').firstChild);
                   }
 
@@ -348,5 +451,44 @@
       xhttpAdmin.send();
 
     }
+    </script>
+    <script>
+    if (document.cookie.indexOf('loggedIn') !== -1){
+            // This checks to see if the user is logged in and adds the logout button //
+            // Creates admin element container and it's link //
+            var admin = document.createElement("li");
+            admin.classList.add('nav-item');
+            admin.id = "logout-button";
+
+            var adminText = document.createElement("a");
+            adminText.classList.add('nav-link');
+            adminText.href = '#';
+            adminText.innerHTML = "Logout";
+
+            // Append the two into eachother and add to the first element in the right of the navbar //
+            admin.appendChild(adminText);
+            document.getElementById('navbar-ul-right').appendChild(admin);
+
+            // Sets an onclick for the link //
+            admin.onclick = function() {
+                xhttpLogout = new XMLHttpRequest();
+                xhttpLogout.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            // Remove the button and the token //
+                            document.getElementById('navbar-ul-right').removeChild(document.getElementById("logout-button"));
+                            document.cookie = 'loggedIn="";expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                            // Remove the current user from the navbar //
+                            document.getElementById('navbar-ul-right').removeChild(document.getElementById("personal_blog"));
+                            window.location.href = "/trending"
+                        }
+                    };
+
+                // Query for admin check //
+                var logoutURL = "https://api.fallr.ca/logout";
+                xhttpLogout.open("POST", logoutURL, true);
+                xhttpLogout.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttpLogout.send("loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
+            }
+        }
     </script>
 </html>

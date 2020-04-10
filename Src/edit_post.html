@@ -47,7 +47,7 @@
                       </ul>
                       <ul id="navbar-ul-center" class="navbar-nav ml-auto">
                         <form id="search-form" class="form-inline d-flex dropdown" action = "search_result" method = "get">
-                            <input id = "search_bar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name = "search">
+                            <input id = "search_bar" class="form-control mr-sm-2" style="width:500px" type="search" placeholder="Search" aria-label="Search" name = "search">
                         </form>
                       </ul>
                       <ul id="navbar-ul-right" class="navbar-nav ml-auto">
@@ -81,7 +81,7 @@
                                 <textarea name = 'postContent' rows="10" cols="100" id = "postContent" class="form-control">
                                 </textarea>
                                 <div id = "confirm">
-                                    <input type = 'button' value = 'Create Post' id = 'post-button' class = 'form-control'>
+                                    <input type = 'button' value = 'Edit Post' id = 'post-button' class = 'form-control'>
                                 </div>
                                 <p id="submitError"></p>
                             </form>
@@ -102,17 +102,27 @@
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 
         <script>
-            /*$("#post-button").click(function() {
-                $.ajax({
-                    url: 'http://localhost/fallrAPI/posts/',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: $('form').serialize(),
-                    success: function(data) {
-                        console.log("success");
-                    }
-                });
-            }); */
+          postid = window.location.search.substr(8);
+          console.log(postid);
+          xhttpRecieve = new XMLHttpRequest();
+
+          xhttpRecieve.onreadystatechange = function () {
+                  if (this.readyState == 4 && this.status == 200) {
+                      var data = JSON.parse(this.response);
+                      //console.log(data[0]["postImage"]);
+                      document.getElementById("postName").value = data[0]["postName"];
+                      document.getElementById("postContent").value = data[0]["postContent"];
+                      // This only sets the image if it is defined //
+                      if(data[0]["postImage"] !== null && data[0]["postImage"] !== "")
+                          document.getElementById("profilePicture").src = encodeURI(("https://api.fallr.ca/" + data[0]["postImage"]));
+                  }
+              };
+
+          // This gets the current user's ID from the session token, and opens a request with it for info //
+          var url = "https://api.fallr.ca/posts/id/" + postid;
+          xhttpRecieve.open("POST", url, true);
+          xhttpRecieve.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhttpRecieve.send();
         </script>
         <script>
 
@@ -164,7 +174,8 @@
                           }
                           else if (this.readyState == 4 && this.status == 200) {
 
-                                      window.location.href = "/feed"
+                                    window.location.href = "/feed"
+                                  //  console.log("success");
 
                           }
                       };
@@ -189,7 +200,7 @@
                           formData.append("postContent", document.getElementById("postContent").value);
                           formData.append("myfile", document.getElementById("profilePictureInput").files[0]);
                           formData.append("loggedIn", document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]);
-                          xhttp.open("POST", "https://api.fallr.ca/post", true);
+                          xhttp.open("POST", "https://api.fallr.ca/post/update/"+ postid, true);
 
                           xhttp.send(formData);
                       }
