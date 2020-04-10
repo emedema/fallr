@@ -29,6 +29,9 @@ if(isset($_POST['loggedIn']))
 if(isset($_GET['loggedIn']))
     $token = $_GET['loggedIn'];
 
+if(isset($_GET['delete']))
+    $delete = $_GET['delete'];
+
 $connection = createConnection();
 
 
@@ -53,7 +56,7 @@ else if($commentID && $_SERVER['REQUEST_METHOD'] === 'GET') {
     echo(json_encode($comment));
 }
 
-else if($commentID && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
+else if($commentID && $delete && $_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $connection = createConnection();
 
