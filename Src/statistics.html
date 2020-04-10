@@ -72,7 +72,16 @@
         </div>
         <footer>
             <script>
+<<<<<<< Updated upstream
 
+=======
+            /* This checks to see if the user is logged in and redirects away if not */
+            if(document.cookie.indexOf('loggedIn') == -1)
+              window.location.href = "/trending";
+            else
+              document.getElementById("login-nav").innerHTML = document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1].split(":")[0];
+                
+>>>>>>> Stashed changes
                 /* Function that takes an element id and checks the validity of the input */
 
                     xhttp = new XMLHttpRequest();
