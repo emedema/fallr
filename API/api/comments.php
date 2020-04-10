@@ -70,7 +70,7 @@ else if($commentID && $comment && $update && $_SERVER['REQUEST_METHOD'] === 'POS
         
         $username = Login::getIDFromToken($token);
 
-        if($username == Comment::getCommentOwner($connection, $commentID)) {
+        if($username == Comment::getCommentOwner($connection, $commentID) || Account::isAdmin($connection, Login::getIDFromToken($token))) {
             Comment::updateComment($connection, $commentID, $comment);
         }
         else
@@ -91,7 +91,7 @@ else if($commentID && $delete && $_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $username = Login::getIDFromToken($token);
 
-        if($username == Comment::getCommentOwner($connection, $commentID)) {
+        if($username == Comment::getCommentOwner($connection, $commentID) || Account::isAdmin($connection, Login::getIDFromToken($token))) {
             Comment::deleteComment($connection, $commentID);
         }
         else
