@@ -204,6 +204,8 @@
                     userImg.setAttribute("class", "media-object");
                     if(o.image !== null && o.image !== ""){
                       userImg.src = encodeURI(("https://api.fallr.ca/" + o.image));
+                    }else{
+                      userImg.src = 'images/placeholder.jpg';
                     }
 
                     userimg.setAttribute("id", "user_img");
@@ -281,7 +283,12 @@
           var data = JSON.parse(this.response);
           //loop through the response
           console.log(data[0]["image"]);
-          userimg.src = encodeURI(("https://api.fallr.ca/" + data[0]["image"]));
+          if(data[0]["image"] !== null && data[0]["image"] !== ""){
+            userImg.src = encodeURI(("https://api.fallr.ca/" + data[0]["image"]));
+          }else{
+            userImg.src = 'images/placeholder.jpg';
+          }
+          //userimg.src = encodeURI(("https://api.fallr.ca/" + data[0]["image"]));
             // to test console.log(o.postID, o.username);
         }
       }
