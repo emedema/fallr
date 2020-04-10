@@ -241,7 +241,7 @@ GET | [domain]/comments/[commentID]
 Requires a valid key [Owner].
 
 ```
-DELETE | [domain]/comments/[commentID]
+POST | [domain]/comments/delete/[commentID]
 
 Takes:
     - loggedIn
