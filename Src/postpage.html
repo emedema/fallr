@@ -154,6 +154,7 @@
               // If the user selects a like button //
               likeBtn.onclick = function(){
                 var xhttp = new XMLHttpRequest();
+                //console.log(likeBtn.value);
 
                 xhttp.onreadystatechange = function() {
                   // If the user isn't logged in fail out !
@@ -175,7 +176,7 @@
                 xhttp.open("POST", "https://api.fallr.ca/like", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.send(
-                  "postID=" + likeBtn.value
+                  "postID=" + postid
                   + "&loggedIn=" + document.cookie.split(";")[document.cookie.indexOf("loggedIn")].split("=")[1]
                 );
               };
