@@ -28,14 +28,20 @@ class Post {
     }
 
     public function updatePost($connection, $postID, $postName, $postContent, $image) {
-	
-		/* Prepares the function so we can pass in the values from the user */
-		$query = $connection->prepare("UPDATE Posts SET postName = ?, postContent = ?, image = ? WHERE postID= ?");
-		/* Passes the values into the query */
-		$query->bind_param("sssi", $postName, $postContent, $image, $postID);
+      
+      /* Prepares the function so we can pass in the values from the user */
+      if($image == NULL) {
+        $query = $connection->prepare("UPDATE Posts SET postName = ?, postContent = ? WHERE postID= ?");
+        $query->bind_param("ssi", $postName, $postContent, $postID);
+      }
+      else {
+        $query = $connection->prepare("UPDATE Posts SET postName = ?, postContent = ?, image = ? WHERE postID= ?");
+        /* Passes the values into the query */
+        $query->bind_param("sssi", $postName, $postContent, $image, $postID);
+      }
         
-		/* Returns Success */
-		return $query->execute();
+      /* Returns Success */
+      return $query->execute();
     }
 
     public function deletePost($connection, $postID) {
