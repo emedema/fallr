@@ -450,10 +450,10 @@
                   var data = JSON.parse(this.response);
                   // If the user is an admin //
                   if(data.admin === 1) {
+                      console.log("foobar");
                       // Creates admin element container and it's link //
-                      admin = true;
-                      var admin1 = document.createElement("li");
-                      admin1.classList.add('nav-item');
+                      var admin = document.createElement("li");
+                      admin.classList.add('nav-item');
 
                       var adminText = document.createElement("a");
                       adminText.classList.add('nav-link');
@@ -461,7 +461,7 @@
                       adminText.innerHTML = "Admin";
 
                       // Append the two into eachother and add to the first element in the right of the navbar //
-                      admin1.appendChild(adminText);
+                      admin.appendChild(adminText);
                       document.getElementById('navbar-ul-right').insertBefore(admin, document.getElementById('navbar-ul-right').firstChild);
                   }
 

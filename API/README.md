@@ -31,7 +31,7 @@ This will be done in the following pattern:
 
 3. If the user has admin privileges, the API will check to see if they are able to access/modify the information.
 
-## Create Account (Completed)
+## Create Account
 This creates an account and creates a session token.
 
 Takes: username, password, firstName, lastName, email, image
@@ -47,7 +47,7 @@ Takes:
 - email
 ```
 
-## Logging In (Completed)
+## Logging In 
 
 This creates the session token.
 
@@ -58,7 +58,7 @@ Takes:
 - password
 ```
 
-## Logging Out (Completed)
+## Logging Out
 
 This creates removes session token from the server.
 As this is an API you have to remove the token from
@@ -72,7 +72,7 @@ Takes:
 
 ## User Data
 
-### Getting user information (Completed)
+### Getting user information
 Depending on if you are logged in, you will recieve all of the user information or just what the public has been allowed to see.
 
 ```
@@ -132,7 +132,7 @@ Takes:
 - myfile
 ```
 
-### Deactivate User (Completed)
+### Deactivate User
 
 Admins can activate or deactivate a user by using the following call
 
@@ -146,7 +146,7 @@ Return Values:
 
 ## Feed
 
-### Get the feed for a user (Completed)
+### Get the feed for a user 
 
 Requires valid key [Owner].
 
@@ -157,7 +157,7 @@ Takes:
 - loggedIn 
 ```
 
-### Get the hot feed (Completed)
+### Get the hot feed 
 
 ```
 GET | [domain]/feed/hot
@@ -165,7 +165,7 @@ GET | [domain]/feed/hot
 
 ## Posts
 
-### Create a post (Completed)
+### Create a post 
 ```
 POST | [domain]/post
 
@@ -175,19 +175,19 @@ Takes:
     - loggedIn
 ```
 
-### Get a users posts (Completed)
+### Get a users posts 
 
 ```
 GET | [domain]/posts/[username]
 ```
 
-### Get a post (Completed)
+### Get a post
 
 ```
 GET | [domain]/posts/id/[postID]
 ```
 
-### Update a post (Not Tested)
+### Update a post 
 
 ```
 POST | [domain]/post/update/[postID]
@@ -200,7 +200,7 @@ Takes:
 
 ```
 
-### Deleting a post (Completed)
+### Deleting a post 
 
 Requires a valid key [Owner].
 
@@ -211,7 +211,7 @@ Takes:
     - loggedIn
 ```
 
-### Comment on a post (Completed)
+### Comment on a post 
 
 Requires a valid key [logged in].
 
@@ -224,32 +224,44 @@ Takes:
     - loggedIn
 ```
 
-### Get Comments for a post (Completed)
+### Get Comments for a post 
 
 ```
 GET | [domain]/posts/comments/[postID]
 ```
 
-### Get Comment (Completed)
+### Get Comment 
 
 ```
 GET | [domain]/comments/[commentID]
 ```
 
-### Delete Comment (Completed)
+### Delete Comment
 
 Requires a valid key [Owner].
 
 ```
-DELETE | [domain]/comments/[commentID]
+POST | [domain]/comments/delete/[commentID]
 
 Takes:
     - loggedIn
 ```
 
+### Update Comment
+
+Requires a valid key [Owner].
+
+```
+POST | [domain]/comments/update/[commentID]
+
+Takes:
+    - comment
+    - loggedIn
+```
+
 ## Subscriptions
 
-### Subscribing/Unsubscribing (Completed)
+### Subscribing/Unsubscribing
 ```
 POST | [domain]/subscribe
 
@@ -258,19 +270,19 @@ Takes:
     - loggedIn
 ```
 
-### Get subscriptions for a user (Completed)
+### Get subscriptions for a user
 ```
 GET | [domain]/users/subscriptions/[userID]
 ```
 
-### Get followers of a user (Completed)
+### Get followers of a user
 ```
 GET | [domain]/users/followers/[userID]
 ```
 
 ## Likes
 
-### Liking/UnLiking (Completed)
+### Liking/UnLiking
 ```
 POST | [domain]/like
 Takes:
@@ -278,7 +290,7 @@ Takes:
     - loggedIn
 ```
 
-### Get Likes for a post (Completed)
+### Get Likes for a post
 ```
 GET | [domain]/posts/likes/[postID]
 ```

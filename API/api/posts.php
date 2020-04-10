@@ -67,7 +67,7 @@ else if($postID && $postName && $postContent && $token && $update
     && $_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // If the user is logged in and is owner of post //
-    if((Post::getPostOwner($connection, $postID) == Login::getIDFromToken($token)) 
+    if((Post::getPostOwner($connection, $postID) == Login::getIDFromToken($token) || Account::isAdmin($connection, Login::getIDFromToken($token))) 
         && (Login::checkToken($connection, $token))) {
         // Check to see if the post succeeds //
         $image = Account::addImageToSystem($image);

@@ -33,7 +33,10 @@ RewriteRule ^post/update/([0-9]*)$ posts.php?update=true&postID=$1 [NC,L]
 RewriteRule ^comment$ comments.php [NC,L]
 
 # This deletes a comment for a post
-RewriteRule ^comments/([0-9]*)$ comments.php?commentID=$1 [NC,L]
+RewriteRule ^comments/delete/([0-9]*)$ comments.php?delete=true&commentID=$1 [NC,L]
+
+# This updates a comment for a post
+RewriteRule ^comments/update/([0-9]*)$ comments.php?update=true&commentID=$1 [NC,L]
 
 # This subscribes / Unsubscribes from a user
 RewriteRule ^subscribe$ subscribe.php [NC,L]

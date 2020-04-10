@@ -43,6 +43,15 @@ class Comment {
 		return $query->get_result()->fetch_assoc();
 	}
 
+	public function updateComment($connection, $commentID, $comment) {
+        /* Prepares the function so we can pass in the values from the user */
+		$query = $connection->prepare("UPDATE Comments SET comment = ? WHERE commentID = ?");		
+		$query->bind_param("si", $comment, $commentID);
+        
+		/* Returns success */
+		return $query->execute();
+	}
+
 	public function deleteComment($connection, $commentID) {
         /* Prepares the function so we can pass in the values from the user */
 		$query = $connection->prepare("DELETE FROM Comments WHERE commentID = ?");		

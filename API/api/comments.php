@@ -3,6 +3,7 @@
 require_once '../connection.php';
 require_once '../Login.php';
 require_once '../Comment.php';
+require_once '../Account.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Content-type: application/json');
@@ -29,6 +30,12 @@ if(isset($_POST['loggedIn']))
 if(isset($_GET['loggedIn']))
     $token = $_GET['loggedIn'];
 
+if(isset($_GET['delete']))
+    $delete = $_GET['delete'];
+
+if(isset($_GET['update']))
+    $update = $_GET['update'];
+
 $connection = createConnection();
 
 
@@ -44,7 +51,7 @@ if ($postID && $token && $comment) {
             header("HTTP/1.1 405 Create Comment Failure");
     }
     else
-        header("HTTP/1.1 407 Login Invalid");
+        header("HTTP/1.1 409 Login Invalid");
 }
 
 // Gets a single comment //
@@ -53,7 +60,7 @@ else if($commentID && $_SERVER['REQUEST_METHOD'] === 'GET') {
     echo(json_encode($comment));
 }
 
-else if($commentID && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
+else if($commentID && $comment && $update && $_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $connection = createConnection();
 
@@ -64,14 +71,35 @@ else if($commentID && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
         
         $username = Login::getIDFromToken($token);
 
-        if($username == Comment::getCommentOwner($connection, $commentID)) {
+        if(($username == Comment::getCommentOwner($connection, $commentID)) || Account::isAdmin($connection, Login::getIDFromToken($token))) {
+            Comment::updateComment($connection, $commentID, $comment);
+        }
+        else
+            header("HTTP/1.1 408 Not Owner");
+    }
+    else
+        header("HTTP/1.1 409 Login Invalid");
+}
+
+else if($commentID && $delete && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    $connection = createConnection();
+
+    $loggedIn = Login::checkToken($connection, $token);
+
+    // If we are logged in, we try to create the like //
+    if($loggedIn){
+        
+        $username = Login::getIDFromToken($token);
+
+        if(($username == Comment::getCommentOwner($connection, $commentID)) || Account::isAdmin($connection, Login::getIDFromToken($token))) {
             Comment::deleteComment($connection, $commentID);
         }
         else
             header("HTTP/1.1 408 Not Owner");
     }
     else
-        header("HTTP/1.1 407 Login Invalid");
+        header("HTTP/1.1 409 Login Invalid");
 }
 
 else
