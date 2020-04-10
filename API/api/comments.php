@@ -50,7 +50,7 @@ if ($postID && $token && $comment) {
             header("HTTP/1.1 405 Create Comment Failure");
     }
     else
-        header("HTTP/1.1 407 Login Invalid");
+        header("HTTP/1.1 409 Login Invalid");
 }
 
 // Gets a single comment //
@@ -77,7 +77,7 @@ else if($commentID && $comment && $update && $_SERVER['REQUEST_METHOD'] === 'POS
             header("HTTP/1.1 408 Not Owner");
     }
     else
-        header("HTTP/1.1 407 Login Invalid");
+        header("HTTP/1.1 409 Login Invalid");
 }
 
 else if($commentID && $delete && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -98,7 +98,7 @@ else if($commentID && $delete && $_SERVER['REQUEST_METHOD'] === 'POST') {
             header("HTTP/1.1 408 Not Owner");
     }
     else
-        header("HTTP/1.1 407 Login Invalid");
+        header("HTTP/1.1 409 Login Invalid");
 }
 
 else
