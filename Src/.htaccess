@@ -16,3 +16,4 @@ RewriteRule ^createPost$ createPost.html [NC,L]
 RewriteRule ^search_result([0-9a-zA-Z_-]*)$ search_result.html?$1
 RewriteRule ^blog([0-9a-zA-Z_-]*)$ blog.html?$1
 RewriteRule ^edit_post$ edit_post.html
+RewriteRule ^edit_comment$ edit_comment.html
